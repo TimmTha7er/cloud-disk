@@ -14,13 +14,16 @@ app.use('/api/auth', authRouter)
 
 const start = async () => {
 	try {
-		await mongoose.connect(URL)
-		
-		app.listen(PORT, () => {
-			console.log('Server started on port', PORT)
-		})
-	} catch (error) {
-		console.log(error)
+			await mongoose.connect(URL, {
+					useNewUrlParser:true,
+					useUnifiedTopology:true
+			})
+
+			app.listen(PORT, () => {
+					console.log('Server started on port ', PORT)
+			})
+	} catch (e) {
+			console.log(e)
 	}
 }
 
