@@ -3,8 +3,10 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const Router = require('express')
 const User = require('../models/User')
+const File = require('../models/File')
 const { check, validationResult } = require('express-validator')
 const authMiddleware = require('../middleware/auth.middleware')
+const fileService = require('../services/fileService')
 
 const router = new Router()
 
@@ -38,6 +40,7 @@ router.post(
       const user = new User({ email, password: hashPassword })
 
       await user.save()
+      await fileService.createDir(new File({ user: user.id, name: '' }))
 
       return res.json({ message: 'User was created' })
     } catch (error) {
