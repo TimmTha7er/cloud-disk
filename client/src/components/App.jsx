@@ -6,7 +6,8 @@ import Registration from './authorization/Registration'
 import Login from './authorization/Login'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { auth } from "../actions/user";
+import { auth } from '../actions/user'
+import Disk from './disk/Disk'
 
 function App() {
   const isAuth = useSelector((state) => state.user.isAuth)
@@ -20,10 +21,16 @@ function App() {
     <BrowserRouter>
       <div className='app'>
         <Navbar></Navbar>
-        {!isAuth && (
+        {!isAuth ? (
           <Routes>
-            <Route path='/registration' element={<Registration />}></Route>
-            <Route path='/login' element={<Login />}></Route>
+            <Route path='/registration' element={<Registration />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='*' element={<Login />} />
+          </Routes>
+        ) : (
+          <Routes>
+            <Route path='/' element={<Disk />} />
+            <Route path='*' element={<Disk />} />
           </Routes>
         )}
       </div>
