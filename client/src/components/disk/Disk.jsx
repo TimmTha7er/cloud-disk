@@ -1,11 +1,10 @@
-import React from 'react'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getFiles } from '../../actions/file'
+import { createDir, getFiles, uploadFile } from '../../actions/file'
 import FileList from './fileList/FileList'
 import './disk.css'
-import { setCurrentDir, setPopupDisplay } from '../../reducers/fileReducer'
 import Popup from './Popup'
+import { setCurrentDir, setPopupDisplay } from '../../reducers/fileReducer'
 
 const Disk = () => {
   const dispatch = useDispatch()
@@ -16,20 +15,43 @@ const Disk = () => {
     dispatch(getFiles(currentDir))
   }, [currentDir])
 
-  const createDirHandle = () => {
+  const showPopupHandler = () => {
     dispatch(setPopupDisplay('flex'))
   }
 
-  const backClickHandle = () => {
+  const backClickHandler = () => {
     const backDirId = dirStack.pop()
+
     dispatch(setCurrentDir(backDirId))
+  }
+
+  const fileUploadHandler = (event) => {
+    const files = [...event.target.files]
+
+    files.forEach((file) => dispatch(uploadFile(file, currentDir)))
   }
 
   return (
     <div className='disk'>
       <div className='disk__btns'>
-        <button className='disk__back' onClick={() => backClickHandle()}>Назад</button>
-        <button className='disk__create' onClick={() => createDirHandle()}>Создать папку</button>
+        <button className='disk__back' onClick={() => backClickHandler()}>
+          Назад
+        </button>
+        <button className='disk__create' onClick={() => showPopupHandler()}>
+          Создать папку
+        </button>
+        <div className='disk__upload'>
+          <label htmlFor='disk__upload-input' className='disk__upload-label'>
+            Загрузить файл
+          </label>
+          <input
+            multiple={true}
+            onChange={(event) => fileUploadHandler(event)}
+            type='file'
+            id='disk__upload-input'
+            className='disk__upload-input'
+          />
+        </div>
       </div>
       <FileList />
       <Popup />
