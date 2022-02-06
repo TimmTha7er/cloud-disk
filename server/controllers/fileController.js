@@ -74,6 +74,7 @@ class FileController {
       if (fs.existsSync(filePath)) {
         return res.status(400).json({ message: 'File already exist' })
       }
+      
       file.mv(filePath)
 
       const type = file.name.split('.').pop()
@@ -93,6 +94,22 @@ class FileController {
     } catch (e) {
       console.log(e)
       return res.status(500).json({ message: 'Upload error' })
+    }
+  }
+
+  async downloadFile(req, res) {
+    try {
+      const file = await File.findOne({_id: req.query.id, user: req.user.id})
+      const filePath = path.resolve('files', req.user.id, file.path, file.name)
+
+      if (fs.existsSync(filePath)) {
+        return res.download(filePath, file.name)
+      }
+
+      return res.status(400).json({message: 'Download error'})
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({message: "Download error"})
     }
   }
 }
