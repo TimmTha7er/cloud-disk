@@ -4,7 +4,7 @@ import './file.css'
 import dirLogo from '../../../../assets/img/dir.svg'
 import fileLogo from '../../../../assets/img/file.svg'
 import { pushToStack, setCurrentDir } from '../../../../reducers/fileReducer'
-import { downloadFile } from '../../../../actions/file'
+import { deleteFile, downloadFile } from '../../../../actions/file'
 
 const File = ({ file }) => {
   const dispatch = useDispatch()
@@ -20,6 +20,11 @@ const File = ({ file }) => {
   const downloadClickHandler = (event) => {
     event.stopPropagation()
     downloadFile(file)
+  }
+
+  const deleteClickHandler = (event) => {
+    event.stopPropagation()
+    dispatch(deleteFile(file))
   }
 
   return (
@@ -41,7 +46,12 @@ const File = ({ file }) => {
           скачать
         </button>
       )}
-      <button className='file__btn file__delete'>удалить</button>
+      <button
+        className='file__btn file__delete'
+        onClick={(event) => deleteClickHandler(event)}
+      >
+        удалить
+      </button>
     </div>
   )
 }
