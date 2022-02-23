@@ -21,18 +21,20 @@ function App() {
     <BrowserRouter>
       <div className='app'>
         <Navbar></Navbar>
-        {!isAuth ? (
-          <Routes>
-            <Route path='/registration' element={<Registration />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='*' element={<Login />} />
-          </Routes>
-        ) : (
-          <Routes>
-            <Route path='/' element={<Disk />} />
-            <Route path='*' element={<Disk />} />
-          </Routes>
-        )}
+        <div className="wrap">
+          {!isAuth ? (
+            <Routes>
+              <Route path='/registration' element={<Registration />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='*' element={<Login />} />
+            </Routes>
+          ) : (
+            <Routes>
+              <Route path='/' element={<Disk />} />
+              <Route path='*' element={<Disk />} />
+            </Routes>
+          )}
+        </div>
       </div>
     </BrowserRouter>
   )

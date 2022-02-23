@@ -13,7 +13,7 @@ export function getFiles(dirId, sort) {
       dispatch(showLoader())
 
       const dirIdQuery = dirId ? `parent=${dirId}&` : ''
-      const sortQuery = sort ? `sort=${sort}`: ''
+      const sortQuery = sort ? `sort=${sort}` : ''
       const url = `http://localhost:5000/api/files?${dirIdQuery}${sortQuery}`
 
       const response = await axios.get(url, {
@@ -22,7 +22,7 @@ export function getFiles(dirId, sort) {
 
       dispatch(setFiles(response.data))
     } catch (error) {
-      console.log(error.response.data.message)
+      console.error(error.response.data.message)
     } finally {
       dispatch(hideLoader())
     }
@@ -41,7 +41,7 @@ export function createDir(dirId, name) {
       )
       dispatch(addFile(response.data))
     } catch (error) {
-      console.log(error.response.data.message)
+      console.error(error.response.data.message)
     }
   }
 }
@@ -73,7 +73,7 @@ export function uploadFile(file, dirId) {
                   'x-decompressed-content-length'
                 )
 
-            // console.log('total', totalLength)
+            // console.error('total', totalLength)
 
             if (totalLength) {
               uploadFile.progress = Math.round(
@@ -82,7 +82,7 @@ export function uploadFile(file, dirId) {
 
               dispatch(changeUploadFile(uploadFile))
 
-              // console.log(progress)
+              // console.error(progress)
             }
           },
         }
@@ -130,9 +130,29 @@ export function deleteFile(file) {
       )
 
       dispatch(deleteFileAction(file._id))
-      console.log(response.data.message)
+      console.error(response.data.message)
     } catch (error) {
-      console.log(error?.response?.data?.message)
+      console.error(error?.response?.data?.message)
+    }
+  }
+}
+
+export function searchFiles(search) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/files/search?search=${search}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      )
+      dispatch(setFiles(response.data))
+    } catch (error) {
+      console.error(error?.response?.data?.message)
+    } finally {
+      dispatch(hideLoader())
     }
   }
 }

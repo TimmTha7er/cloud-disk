@@ -42,7 +42,7 @@ class FileController {
         user: req.user.id,
         parent: req.query.parent,
       }).sort({ [sort]: 1 })
-      
+
       return res.json(files)
     } catch (error) {
       console.log(error)
@@ -143,6 +143,18 @@ class FileController {
     } catch (e) {
       console.log(e)
       return res.status(400).json({ message: 'Dir is not empty' })
+    }
+  }
+
+  async searchFiles(req, res) {
+    try {
+      const searchName = req.query.search
+      const files = await File.find({ user: req.user.id })
+      const sortedFiles = files.filter((file) => file.name.includes(searchName))
+
+      return res.json(sortedFiles)
+    } catch (error) {
+      return res.status(400).json({ message: 'Search error' })
     }
   }
 }
