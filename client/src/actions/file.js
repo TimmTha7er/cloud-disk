@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { hideLoader, showLoader } from '../reducers/appReducer'
 import { addFile, deleteFileAction, setFiles } from '../reducers/fileReducer'
 import {
   addUploadFile,
@@ -9,6 +10,8 @@ import {
 export function getFiles(dirId, sort) {
   return async (dispatch) => {
     try {
+      dispatch(showLoader())
+
       const dirIdQuery = dirId ? `parent=${dirId}&` : ''
       const sortQuery = sort ? `sort=${sort}`: ''
       const url = `http://localhost:5000/api/files?${dirIdQuery}${sortQuery}`
@@ -20,6 +23,8 @@ export function getFiles(dirId, sort) {
       dispatch(setFiles(response.data))
     } catch (error) {
       console.log(error.response.data.message)
+    } finally {
+      dispatch(hideLoader())
     }
   }
 }
