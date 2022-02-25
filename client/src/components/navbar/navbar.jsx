@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import './navbar.css'
 import Logo from '../../assets/img/navbar-logo.svg'
+import avatarLogo from '../../assets/img/avatar.svg'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../reducers/userReducer'
 import { showLoader } from '../../reducers/appReducer'
 import { getFiles, searchFiles } from '../../actions/file'
+import { API_URL } from '../../config'
 
 const Navbar = () => {
   const [searchName, setSearchName] = useState('')
@@ -13,11 +15,18 @@ const Navbar = () => {
 
   const isAuth = useSelector((state) => state.user.isAuth)
   const currentDir = useSelector((state) => state.files.currentDir)
+  const currentUser = useSelector((state) => state.user.currentUser)
   const dispatch = useDispatch()
+
+  console.log('currentUser', currentUser)
+
+  const avatar = currentUser.avatar
+    ? `${API_URL + currentUser.avatar}`
+    : avatarLogo
 
   const searchChangeHandler = (event) => {
     setSearchName(event.target.value)
-    
+
     if (searchTimeout !== false) {
       clearTimeout(searchTimeout)
     }
@@ -67,6 +76,12 @@ const Navbar = () => {
           <div className='navbar__login' onClick={() => dispatch(logout())}>
             Выход
           </div>
+        )}
+
+        {isAuth && (
+          <NavLink to='/profile'>
+            <img className='navbar__avatar' src={avatar} alt='' />
+          </NavLink>
         )}
       </div>
     </div>

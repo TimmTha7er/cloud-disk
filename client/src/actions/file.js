@@ -1,6 +1,10 @@
 import axios from 'axios'
 import { hideLoader, showLoader } from '../reducers/appReducer'
-import { addFile, deleteFileAction, setFiles } from '../reducers/fileReducer'
+import {
+  addFile,
+  deleteFileAction,
+  setFiles,
+} from '../reducers/fileReducer'
 import {
   addUploadFile,
   changeUploadFile,
