@@ -1,5 +1,7 @@
 const path = require('path')
 const fs = require('fs')
+const Uuid = require('uuid')
+
 const fileService = require('../services/fileService')
 const User = require('../models/User')
 const File = require('../models/File')
@@ -155,6 +157,38 @@ class FileController {
       return res.json(sortedFiles)
     } catch (error) {
       return res.status(400).json({ message: 'Search error' })
+    }
+  }
+
+  async uploadAvatar(req, res) {
+    try {
+      const file = req.files.file
+      const user = await User.findById(req.user.id)
+      const avatarName = Uuid.v4() + '.jpg'
+      const filePath = path.resolve('static', avatarName)
+
+      file.mv(filePath)
+      user.avatar = avatarName
+      await user.save()
+
+      return res.json(user)
+    } catch (error) {
+      return res.status(400).json({ message: 'Upload avatar error' })
+    }
+  }
+
+  async deleteAvatar(req, res) {
+    try {
+      const user = await User.findById(req.user.id)
+      const filePath = path.resolve('static', user.avatar)
+
+      fs.unlinkSync(filePath)
+      user.avatar = null
+      await user.save()
+
+      return res.json(user)
+    } catch (error) {
+      return res.status(400).json({ message: 'Delete avatar error' })
     }
   }
 }
