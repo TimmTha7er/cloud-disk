@@ -2,8 +2,8 @@ const fs = require('fs')
 const path = require('path')
 
 class FileService {
-  createDir(file) {
-    const filePath = path.resolve('files', file.user.toString(), file.path.toString())
+  createDir(req, file) {
+    const filePath = this.getPath(req, file)
 
     return new Promise((resolve, reject) => {
       try {
@@ -20,8 +20,8 @@ class FileService {
     })
   }
 
-  deleteFile(file) {
-    const path = this.getPath(file)
+  deleteFile(req, file) {
+    const path = this.getPath(req, file)
 
     if (file.type === 'dir') {
       fs.rmdirSync(path)
@@ -30,8 +30,8 @@ class FileService {
     }
   }
 
-  getPath(file) {
-    return path.resolve('files', file.user.toString(), file.path.toString())
+  getPath(req, file) {
+    return path.resolve(req.filePath, file.user.toString(), file.path.toString())
   }
 }
 

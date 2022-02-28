@@ -20,10 +20,10 @@ class FileController {
 
       if (!parentFile) {
         file.path = name
-        await fileService.createDir(file)
+        await fileService.createDir(req, file)
       } else {
         file.path = path.join(parentFile.path, file.name)
-        await fileService.createDir(file)
+        await fileService.createDir(req, file)
         parentFile.children.push(file._id)
         await parentFile.save()
       }
@@ -115,7 +115,7 @@ class FileController {
   async downloadFile(req, res) {
     try {
       const file = await File.findOne({ _id: req.query.id, user: req.user.id })
-      const filePath = fileService.getPath(file)
+      const filePath = fileService.getPath(req, file)
 
       if (fs.existsSync(filePath)) {
         return res.download(filePath, file.name)
@@ -132,13 +132,11 @@ class FileController {
     try {
       const file = await File.findOne({ _id: req.query.id, user: req.user.id })
 
-      console.log('file')
-
       if (!file) {
         return res.status(400).json({ message: 'file not found' })
       }
 
-      fileService.deleteFile(file)
+      fileService.deleteFile(req, file)
       await file.remove()
 
       return res.json({ message: 'File was deleted' })
