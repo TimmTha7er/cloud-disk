@@ -1,4 +1,3 @@
-const config = require('config')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const Router = require('express')
@@ -13,7 +12,7 @@ const router = new Router()
 router.post(
   '/registration',
   [
-    check('email', 'Uncorrect email').isEmail(),
+    check('email', 'Incorrect email').isEmail(),
     check(
       'password',
       'Password must be longer than 3 and shorter than 12'
@@ -65,7 +64,7 @@ router.post('/login', async (req, res) => {
       return res.status(404).json({ message: 'Invalid password' })
     }
 
-    const secretKey = config.get('secretKey')
+    const secretKey = process.env.SECRET_KEY
     const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '1h' })
 
     return res.json({
@@ -87,7 +86,7 @@ router.post('/login', async (req, res) => {
 router.get('/auth', authMiddleware, async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.user.id })
-    const secretKey = config.get('secretKey')
+    const secretKey = process.env.SECRET_KEY
     const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '1h' })
 
     return res.json({
