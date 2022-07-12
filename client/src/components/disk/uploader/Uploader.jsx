@@ -2,7 +2,7 @@ import React from 'react'
 import UploadFile from './UploadFile'
 import './uploader.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { hideUploader } from '../../../reducers/uploadReducer'
+import { hideUploader } from '../../../store/actions/upload'
 
 const Uploader = () => {
     const files = useSelector((state) => state.upload.files)

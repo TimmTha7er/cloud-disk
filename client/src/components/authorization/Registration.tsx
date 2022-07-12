@@ -2,16 +2,16 @@ import React, { useState } from 'react'
 import './authorization.css'
 import Input from '../../utils/input/Input'
 import { useDispatch } from "react-redux";
-import { login } from "../../actions/user";
+import { registration } from '../../store/actions/user'
 
-const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-	const dispatch = useDispatch()
+const Registration: React.FC = () => {
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const dispatch = useDispatch()
 
   return (
     <div className='authorization'>
-      <div className='authorization__header'>Авторизация</div>
+      <div className='authorization__header'>Регистрация</div>
       <Input
         value={email}
         setValue={setEmail}
@@ -26,12 +26,12 @@ const Login = () => {
       />
       <button
         className='authorization__btn'
-        onClick={() => dispatch(login(email, password))}
+        onClick={() => dispatch(registration(email, password))}
       >
-        Войти
+        Зарегистрироваться
       </button>
     </div>
   )
 }
 
-export default Login
+export default Registration

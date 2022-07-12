@@ -1,0 +1,104 @@
+const UserModel = require('../models/user-model')
+const bcrypt = require('bcrypt')
+const uuid = require('uuid')
+
+const mailService = require('./mail-service')
+const tokenService = require('./token-service')
+const UserDto = require('../dtos/user.dto')
+const ApiError = require('../exceptions/api-error')
+
+class UserService {
+  registration = async (email, password) => {
+    const candidate = await UserModel.findOne({ email })
+
+    if (candidate) {
+      throw ApiError.BadRequest(
+        `Пользователь с почтовым адресом ${email} уже существует`
+      )
+    }
+
+    const hashPassword = await bcrypt.hash(password, 3)
+    const activationId = uuid.v4()
+    const activationLink = `${process.env.API_URL}/api/auth/activate/${activationId}`
+    const user = await UserModel.create({
+      email,
+      password: hashPassword,
+      activationId,
+    })
+    const authUser = await this._authorizeUser(user)
+
+    await mailService.sendActivationMail(email, activationLink)
+
+    return authUser
+  }
+
+  activate = async (activationId) => {
+    const user = await UserModel.findOne({ activationId })
+
+    if (!user) {
+      throw ApiError.BadRequest('Неккоректная ссылка активации')
+    }
+
+    user.isActivated = true
+    await user.save()
+  }
+
+  login = async (email, password) => {
+    const user = await UserModel.findOne({ email })
+
+    if (!user) {
+      throw ApiError.BadRequest('Пользователь с таким email не найден')
+    }
+
+    const isPassEquals = await bcrypt.compare(password, user.password)
+
+    if (!isPassEquals) {
+      throw ApiError.BadRequest('Неверный пароль')
+    }
+
+    const authUser = await this._authorizeUser(user)
+
+    return authUser
+  }
+
+  logout = async (refreshToken) => {
+    const token = await tokenService.removeToken(refreshToken)
+
+    return token
+  }
+
+  refresh = async (refreshToken) => {
+    if (!refreshToken) {
+      throw ApiError.UnauthorizedError()
+    }
+
+    const userData = tokenService.validateRefreshToken(refreshToken)
+    const tokenFromDb = await tokenService.findToken(refreshToken)
+
+    if (!userData || !tokenFromDb) {
+      throw ApiError.UnauthorizedError()
+    }
+
+    const user = await UserModel.findById(userData.id)
+    const authUser = await this._authorizeUser(user)
+
+    return authUser
+  }
+
+  getAllUsers = async () => {
+    const users = await UserModel.find()
+
+    return users
+  }
+
+  _authorizeUser = async (user) => {
+    const userDto = new UserDto(user)
+    const authUser = tokenService.addTokens(userDto)
+
+    await tokenService.saveToken(authUser.id, authUser.refreshToken)
+
+    return authUser
+  }
+}
+
+module.exports = new UserService()

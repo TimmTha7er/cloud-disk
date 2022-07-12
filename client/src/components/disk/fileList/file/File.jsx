@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import './file.css'
 import dirLogo from '../../../../assets/img/dir.svg'
 import fileLogo from '../../../../assets/img/file.svg'
-import { pushToStack, setCurrentDir } from '../../../../reducers/fileReducer'
-import { deleteFile, downloadFile } from '../../../../actions/file'
+import {
+  pushToStack,
+  setCurrentDir,
+} from '../../../../store/actions/file'
+import { deleteFile, downloadFile } from '../../../../store/actions/file'
 import sizeFormat from '../../../../utils/sizeFormat'
 
 const File = ({ file }) => {

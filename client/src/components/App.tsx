@@ -6,16 +6,18 @@ import Registration from './authorization/Registration'
 import Login from './authorization/Login'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { auth } from '../actions/user'
+import { checkAuth } from '../store/actions/user'
 import Disk from './disk/Disk'
 import Profile from './profile/Profile'
 
 function App() {
-  const isAuth = useSelector((state) => state.user.isAuth)
+  const isAuth = useSelector((state: any) => state.user.isAuth)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(auth())
+    if (localStorage.getItem('token')) {
+      dispatch(checkAuth())
+    }
   }, [])
 
   return (
@@ -32,7 +34,7 @@ function App() {
           ) : (
             <Routes>
               <Route path='/' element={<Disk />} />
-              <Route exact path='/profile' element={<Profile />} />
+              <Route path='/profile' element={<Profile />} />
               <Route path='*' element={<Disk />} />
             </Routes>
           )}

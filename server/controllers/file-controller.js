@@ -2,9 +2,9 @@ const path = require('path')
 const fs = require('fs')
 const Uuid = require('uuid')
 
-const fileService = require('../services/fileService')
-const User = require('../models/User')
-const File = require('../models/File')
+const fileService = require('../services/file-service')
+const User = require('../models/user-model')
+const File = require('../models/file-model')
 
 class FileController {
   async createDir(req, res) {
@@ -31,7 +31,8 @@ class FileController {
       await file.save()
       return res.json(file)
     } catch (error) {
-      console.log(error)
+      console.error(error)
+
       return res.status(400).json(error)
     }
   }
@@ -47,7 +48,8 @@ class FileController {
 
       return res.json(files)
     } catch (error) {
-      console.log(error)
+      console.error(error)
+      
       return res.status(500).json({ message: 'Can not get files' })
     }
   }
@@ -107,7 +109,7 @@ class FileController {
 
       res.json(dbFile)
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return res.status(500).json({ message: 'Upload error' })
     }
   }
@@ -123,7 +125,7 @@ class FileController {
 
       return res.status(400).json({ message: 'Download error' })
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return res.status(500).json({ message: 'Download error' })
     }
   }
@@ -140,8 +142,8 @@ class FileController {
       await file.remove()
 
       return res.json({ message: 'File was deleted' })
-    } catch (e) {
-      console.log(e)
+    } catch (error) {
+      console.error(error)
       return res.status(400).json({ message: 'Dir is not empty' })
     }
   }

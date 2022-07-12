@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createDir, getFiles, uploadFile } from '../../actions/file'
+import { createDir, getFiles, uploadFile } from '../../store/actions/file'
 import FileList from './fileList/FileList'
 import './disk.css'
 import Popup from './Popup'
-import { setCurrentDir, setPopupDisplay, setFileView } from '../../reducers/fileReducer'
+import { setCurrentDir, setPopupDisplay, setFileView } from '../../store/actions/file'
 import { useState } from 'react'
 import Uploader from './uploader/Uploader'
 

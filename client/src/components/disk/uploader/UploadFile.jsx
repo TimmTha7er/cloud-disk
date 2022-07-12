@@ -1,7 +1,7 @@
 import React from 'react'
 import './uploader.css'
 import { useDispatch } from 'react-redux'
-import { removeUploadFile } from '../../../reducers/uploadReducer'
+import { removeUploadFile } from '../../../store/actions/upload'
 
 const UploadFile = ({ file }) => {
   const dispatch = useDispatch()

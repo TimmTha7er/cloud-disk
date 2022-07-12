@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Input from '../../utils/input/Input'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPopupDisplay } from '../../reducers/fileReducer'
-import { createDir } from '../../actions/file'
+import { setPopupDisplay } from '../../store/actions/file'
+import { createDir } from '../../store/actions/file'
 
 const Popup = () => {
   const [dirName, setDirName] = useState('')

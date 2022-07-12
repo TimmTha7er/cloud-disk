@@ -1,22 +1,32 @@
-const jwt = require('jsonwebtoken')
+const ApiError = require('../exceptions/api-error')
 
-module.exports = (req, res, next) => {
-  if (req.method === 'OPRIONS') {
-    next()
-  }
+const tokenService = require('../services/token-service')
 
+const authMiddleware = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(' ')[1]
+    const authorizationHeader = req.headers.authorization
 
-    if (!token) {
-      return res.status(401).json({ message: 'Auth error' })
+    if (!authorizationHeader) {
+      return next(ApiError.UnauthorizedError())
     }
 
-    const decoded = jwt.verify(token, process.env.SECRET_KEY)
-    req.user = decoded
+    const accessToken = authorizationHeader.split(' ')[1]
 
+    if (!accessToken) {
+      return next(ApiError.UnauthorizedError())
+    }
+
+    const userData = tokenService.validateAccessToken(accessToken)
+
+    if (!userData) {
+      return next(ApiError.UnauthorizedError())
+    }
+
+    req.user = userData
     next()
   } catch (error) {
-    return res.status(401).json({ message: 'Auth error' })
+    return next(ApiError.UnauthorizedError())
   }
 }
+
+module.exports = authMiddleware

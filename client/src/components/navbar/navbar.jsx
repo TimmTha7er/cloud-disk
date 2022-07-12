@@ -4,10 +4,11 @@ import Logo from '../../assets/img/navbar-logo.svg'
 import avatarLogo from '../../assets/img/avatar.svg'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../../reducers/userReducer'
-import { showLoader } from '../../reducers/appReducer'
-import { getFiles, searchFiles } from '../../actions/file'
+import { logout } from '../../store/actions/user'
+import { showLoader } from '../../store/actions/app'
+import { getFiles, searchFiles } from '../../store/actions/file'
 import { API_URL } from '../../config'
+import { setDefault } from '../../store/actions/file'
 
 const Navbar = () => {
   const [searchName, setSearchName] = useState('')
@@ -17,8 +18,6 @@ const Navbar = () => {
   const currentDir = useSelector((state) => state.files.currentDir)
   const currentUser = useSelector((state) => state.user.currentUser)
   const dispatch = useDispatch()
-
-  console.log('currentUser', currentUser)
 
   const avatar = currentUser.avatar
     ? `${API_URL + currentUser.avatar}`
@@ -48,6 +47,11 @@ const Navbar = () => {
     }
   }
 
+  const logoutHandler = () => {
+    dispatch(logout())
+    dispatch(setDefault())
+  }
+
   return (
     <div className='navbar'>
       <div className='container'>
@@ -73,7 +77,7 @@ const Navbar = () => {
           </div>
         )}
         {isAuth && (
-          <div className='navbar__login' onClick={() => dispatch(logout())}>
+          <div className='navbar__login' onClick={logoutHandler}>
             Выход
           </div>
         )}
