@@ -1,28 +1,28 @@
-import $api from './http'
+import axiosAuth from '../utils/axiosAuth'
 import { AxiosResponse } from 'axios'
-import { AuthResponse } from '../models/AuthResponse'
+import { AuthResponse } from '../models/user'
 
 class AuthService {
   static async login(
     email: string,
     password: string
   ): Promise<AxiosResponse<AuthResponse>> {
-    return $api.post<AuthResponse>('/auth/login', { email, password })
+    return axiosAuth.post<AuthResponse>('/auth/login', { email, password })
   }
 
   static async registration(
     email: string,
     password: string
   ): Promise<AxiosResponse<AuthResponse>> {
-    return $api.post<AuthResponse>('/auth/registration', { email, password })
+    return axiosAuth.post<AuthResponse>('/auth/registration', { email, password })
   }
 
   static async checkAuth(): Promise<AxiosResponse<AuthResponse>> {
-    return $api.get<AuthResponse>('/auth/refresh')
+    return axiosAuth.get<AuthResponse>('/auth/refresh')
   }
 
   static async logout(): Promise<void> {
-    return $api.post('/auth/logout')
+    return axiosAuth.post('/auth/logout')
   }
 }
 

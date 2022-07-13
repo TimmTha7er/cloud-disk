@@ -1,20 +1,20 @@
 import { AxiosResponse } from 'axios'
-import $api from './http'
-import { IUser } from '../models/IUser'
+import axiosAuth from '../utils/axiosAuth'
+import { IUser } from '../models/user'
 
 export default class UserService {
   static fetchUsers(): Promise<AxiosResponse<IUser[]>> {
-    return $api.get<IUser[]>('/users')
+    return axiosAuth.get<IUser[]>('/users')
   }
 
-  static async uploadAvatar(file: any): Promise<AxiosResponse<IUser>> {
+  static async uploadAvatar(file: File): Promise<AxiosResponse<IUser>> {
     const formData = new FormData()
     formData.append('file', file)
 
-    return $api.post<IUser>(`/files/avatar`, formData)
+    return axiosAuth.post<IUser>(`/files/avatar`, formData)
   }
 
   static async deleteAvatar(): Promise<AxiosResponse<IUser>> {
-    return $api.delete<IUser>(`/files/avatar`)
+    return axiosAuth.delete<IUser>(`/files/avatar`)
   }
 }

@@ -3,11 +3,12 @@ import UploadFile from './UploadFile'
 import './uploader.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { hideUploader } from '../../../store/actions/upload'
+import { RootState } from '../../../store'
 
-const Uploader = () => {
-    const files = useSelector((state) => state.upload.files)
-    const isVisible = useSelector((state) => state.upload.isVisible)
-    const dispatch = useDispatch()
+const Uploader: React.FC = () => {
+  const files = useSelector((state: RootState) => state.upload.files)
+  const isVisible = useSelector((state: RootState) => state.upload.isVisible)
+  const dispatch = useDispatch()
 
   return (
     isVisible && (

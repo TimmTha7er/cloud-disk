@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Input from '../../utils/input/Input'
+import Input from '../input/Input'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPopupDisplay } from '../../store/actions/file'
 import { createDir } from '../../store/actions/file'
@@ -12,8 +12,8 @@ const Popup = () => {
 
   function createHandler() {
     dispatch(createDir(currentDir, dirName))
-		setDirName('')
-		dispatch(setPopupDisplay('none'))
+    setDirName('')
+    dispatch(setPopupDisplay('none'))
   }
 
   return (

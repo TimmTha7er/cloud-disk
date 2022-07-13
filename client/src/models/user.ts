@@ -6,3 +6,8 @@ export interface IUser {
   usedSpace: number
   avatar: string
 }
+
+export interface AuthResponse extends IUser {
+  accessToken: string
+  refreshToken: string
+}

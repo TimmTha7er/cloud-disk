@@ -1,32 +1,29 @@
-import { ThunkAction } from 'redux-thunk';
-import { IUser } from '../../models/IUser';
-import { RootState } from '../store';
-
+import { ThunkAction } from 'redux-thunk'
+import { IUser } from '../../models/user'
+import { RootState } from '..'
 
 // action types
 export enum UserActionTypes {
-	SET_USER = 'SET_USER',
-	LOGOUT = 'LOGOUT',
+  SET_USER = 'user/SET_USER',
+  LOGOUT = 'user/LOGOUT',
 }
 
 // reducer
 export interface UserState {
-	currentUser: IUser | {},
-  isAuth: Boolean,
+  currentUser: IUser | null
+  isAuth: Boolean
 }
 
 // actions
 interface SetUser {
-  type: typeof UserActionTypes.SET_USER;
-	payload: UserState['currentUser'];
+  type: typeof UserActionTypes.SET_USER
+  payload: UserState['currentUser']
 }
 
 interface Logout {
-  type: typeof UserActionTypes.LOGOUT;
+  type: typeof UserActionTypes.LOGOUT
 }
 
-export type UserAction =
-  | SetUser
-  | Logout;
+export type UserAction = SetUser | Logout
 
-export type UserThunkAction = ThunkAction<void, RootState, null, UserAction>;
+export type UserThunkAction = ThunkAction<void, RootState, null, UserAction>

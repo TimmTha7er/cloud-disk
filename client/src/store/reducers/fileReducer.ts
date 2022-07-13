@@ -2,7 +2,7 @@ import { FileAction, FileState, FileActionTypes } from '../types/file'
 
 const initialState: FileState = {
   files: [],
-  currentDir: null,
+  currentDir: '',
   popupDisplay: 'none',
   dirStack: [],
   view: 'list',

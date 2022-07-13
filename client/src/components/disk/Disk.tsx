@@ -4,15 +4,20 @@ import { createDir, getFiles, uploadFile } from '../../store/actions/file'
 import FileList from './fileList/FileList'
 import './disk.css'
 import Popup from './Popup'
-import { setCurrentDir, setPopupDisplay, setFileView } from '../../store/actions/file'
+import {
+  setCurrentDir,
+  setPopupDisplay,
+  setFileView,
+} from '../../store/actions/file'
 import { useState } from 'react'
 import Uploader from './uploader/Uploader'
+import { RootState } from '../../store'
 
-const Disk = () => {
+const Disk: React.FC = () => {
   const dispatch = useDispatch()
-  const currentDir = useSelector((state) => state.files.currentDir)
-  const loader = useSelector((state) => state.app.loader)
-  const dirStack = useSelector((state) => state.files.dirStack)
+  const currentDir = useSelector((state: RootState) => state.files.currentDir)
+  const loader = useSelector((state: RootState) => state.app.loader)
+  const dirStack = useSelector((state: RootState) => state.files.dirStack)
   const [dragEnter, setDragEnter] = useState(false)
   const [sort, setSort] = useState('type')
 
@@ -27,28 +32,29 @@ const Disk = () => {
   const backClickHandler = () => {
     const backDirId = dirStack.pop()
 
+    // @ts-ignore: Unreachable code error
     dispatch(setCurrentDir(backDirId))
   }
 
-  const fileUploadHandler = (event) => {
+  const fileUploadHandler = (event: any) => {
     const files = [...event.target.files]
 
     files.forEach((file) => dispatch(uploadFile(file, currentDir)))
   }
 
-  const dragEnterHandler = (event) => {
+  const dragEnterHandler = (event: any) => {
     event.preventDefault()
     setDragEnter(true)
   }
 
   const dragOverHandler = dragEnterHandler
 
-  const dragLeaveHandler = (event) => {
+  const dragLeaveHandler = (event: any) => {
     event.preventDefault()
     setDragEnter(false)
   }
 
-  const dropHandler = (event) => {
+  const dropHandler = (event: any) => {
     event.preventDefault()
 
     let files = [...event.dataTransfer.files]
@@ -86,7 +92,7 @@ const Disk = () => {
           </label>
           <input
             multiple={true}
-            onChange={(event) => fileUploadHandler(event)}
+            onChange={fileUploadHandler}
             type='file'
             id='disk__upload-input'
             className='disk__upload-input'

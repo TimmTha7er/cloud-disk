@@ -9,39 +9,40 @@ import { showLoader } from '../../store/actions/app'
 import { getFiles, searchFiles } from '../../store/actions/file'
 import { API_URL } from '../../config'
 import { setDefault } from '../../store/actions/file'
+import { RootState } from '../../store'
 
 const Navbar = () => {
-  const [searchName, setSearchName] = useState('')
-  const [searchTimeout, setSearchTimeout] = useState(false)
+  const [searchName, setSearchName] = useState<string>('')
+  const [searchTimeout, setSearchTimeout] = useState<number>(0)
 
-  const isAuth = useSelector((state) => state.user.isAuth)
-  const currentDir = useSelector((state) => state.files.currentDir)
-  const currentUser = useSelector((state) => state.user.currentUser)
+  const isAuth = useSelector((state: RootState) => state.user.isAuth)
+  const currentDir = useSelector((state: RootState) => state.files.currentDir)
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
   const dispatch = useDispatch()
 
-  const avatar = currentUser.avatar
+  const avatar = currentUser?.avatar
     ? `${API_URL + currentUser.avatar}`
     : avatarLogo
 
-  const searchChangeHandler = (event) => {
+  const searchChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchName(event.target.value)
 
-    if (searchTimeout !== false) {
+    if (searchTimeout) {
       clearTimeout(searchTimeout)
     }
 
     dispatch(showLoader())
 
     if (event.target.value !== '') {
-      setSearchTimeout(
-        setTimeout(
-          (value) => {
-            dispatch(searchFiles(value))
-          },
-          500,
-          event.target.value
-        )
+      const timerId: ReturnType<typeof setTimeout> = setTimeout(
+        (value) => {
+          dispatch(searchFiles(value))
+        },
+        500,
+        event.target.value
       )
+
+      setSearchTimeout(Number(timerId))
     } else {
       dispatch(getFiles(currentDir))
     }

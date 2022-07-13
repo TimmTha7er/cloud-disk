@@ -1,28 +1,28 @@
 import { ThunkAction } from 'redux-thunk';
-import { IFile } from '../../models/IFile';
-import { RootState } from '../store';
+import { IFile } from '../../models/file';
+import { RootState } from '..';
 import { AppAction } from './app';
 
 
 // action types
 export enum FileActionTypes {
-	SET_FILES = 'SET_FILES',
-	SET_CURRENT_DIR = 'SET_CURRENT_DIR',
-	ADD_FILE = 'ADD_FILE',
-	SET_POPUP_DISPLAY = 'SET_POPUP_DISPLAY',
-	PUSH_TO_STACK = 'PUSH_TO_STACK',
-	DELETE_FILE = 'DELETE_FILE',
-	SET_VIEW = 'SET_VIEW',
-	SET_DEFAULT = 'SET_DEFAULT',
+	SET_FILES = 'file/SET_FILES',
+	SET_CURRENT_DIR = 'file/SET_CURRENT_DIR',
+	ADD_FILE = 'file/ADD_FILE',
+	SET_POPUP_DISPLAY = 'file/SET_POPUP_DISPLAY',
+	PUSH_TO_STACK = 'file/PUSH_TO_STACK',
+	DELETE_FILE = 'file/DELETE_FILE',
+	SET_VIEW = 'file/SET_VIEW',
+	SET_DEFAULT = 'file/SET_DEFAULT',
 }
 
 // reducer
 export interface FileState {
 	files: IFile[],
-  currentDir: String | null,
+  currentDir: string,
 	popupDisplay: 'none' | 'flex',
   // TODO : ??
-  dirStack: String[] | [],
+  dirStack: String[],
   view: 'list' | 'plate',
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './authorization.css'
-import Input from '../../utils/input/Input'
+import Input from '../input/Input'
 import { useDispatch } from "react-redux";
 import { login } from "../../store/actions/user";
 

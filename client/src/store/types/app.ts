@@ -1,10 +1,10 @@
 import { ThunkAction } from 'redux-thunk'
-import { RootState } from '../store'
+import { RootState } from '..'
 
 // action types
 export enum AppActionTypes {
-  SHOW_LOADER = 'SHOW_LOADER',
-  HIDE_LOADER = 'HIDE_LOADER',
+  SHOW_LOADER = 'app/SHOW_LOADER',
+  HIDE_LOADER = 'app/HIDE_LOADER',
 }
 
 // reducer
@@ -22,5 +22,4 @@ interface HideLoader {
 }
 
 export type AppAction = ShowLoader | HideLoader
-
 export type AppThunkAction = ThunkAction<void, RootState, null, AppAction>

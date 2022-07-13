@@ -1,3 +1,9 @@
+export interface IUploadFile {
+	id: number,
+  name: string
+ 	progress: number
+}
+
 export interface IFile {
 	_id: string,
   name: string
@@ -10,3 +16,4 @@ export interface IFile {
   parent?: string | null
   children?: [{ number: string }]
 }
+

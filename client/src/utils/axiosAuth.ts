@@ -1,20 +1,19 @@
 import axios from 'axios'
-import { AuthResponse } from '../models/AuthResponse'
+import { API_URL } from '../config'
+import { AuthResponse } from '../models/user'
 
-export const API_URL = `http://localhost:5000/api`
-
-const $api = axios.create({
+const axiosAuth = axios.create({
   withCredentials: true,
-  baseURL: API_URL,
+  baseURL: API_URL + 'api',
 })
 
-$api.interceptors.request.use((config) => {
+axiosAuth.interceptors.request.use((config) => {
   config.headers!.Authorization = `Bearer ${localStorage.getItem('token')}`
 
   return config
 })
 
-$api.interceptors.response.use(
+axiosAuth.interceptors.response.use(
   (config) => {
     return config
   },
@@ -35,7 +34,7 @@ $api.interceptors.response.use(
 
         localStorage.setItem('token', response.data.accessToken)
 
-        return $api.request(originalRequest)
+        return axiosAuth.request(originalRequest)
       } catch (error) {
         console.error('НЕ АВТОРИЗОВАН')
       }
@@ -45,4 +44,4 @@ $api.interceptors.response.use(
   }
 )
 
-export default $api
+export default axiosAuth

@@ -1,23 +1,23 @@
-import $api from './http'
+import axiosAuth from '../utils/axiosAuth'
 import { AxiosResponse } from 'axios'
 import {
   addUploadFile,
   changeUploadFile,
   showUploader,
 } from '../store/actions/upload'
-import { IFile } from '../models/IFile'
+import { IFile } from '../models/file'
 
 class FileService {
-  static async getFiles(dirId: string, sort: string): Promise<AxiosResponse<IFile[]>> {
+  static async getFiles(dirId: string, sort?: string): Promise<AxiosResponse<IFile[]>> {
     const dirIdQuery = dirId ? `parent=${dirId}&` : ''
     const sortQuery = sort ? `sort=${sort}` : ''
     const url = `/files?${dirIdQuery}${sortQuery}`
 
-    return $api.get<IFile[]>(url)
+    return axiosAuth.get<IFile[]>(url)
   }
 
   static async createDir(dirId: string, name: string): Promise<AxiosResponse<IFile>> {
-    return $api.post<IFile>('/files', { name, parent: dirId, type: 'dir' })
+    return axiosAuth.post<IFile>('/files', { name, parent: dirId, type: 'dir' })
   }
 
   static async uploadFile(file: any, dirId: any, dispatch: any) {
@@ -34,7 +34,7 @@ class FileService {
     dispatch(showUploader())
     dispatch(addUploadFile(uploadFile))
 
-    return $api.post(`files/upload`, formData, {
+    return axiosAuth.post(`files/upload`, formData, {
       onUploadProgress: (progressEvent) => {
         const totalLength = progressEvent.lengthComputable
           ? progressEvent.total
@@ -56,7 +56,7 @@ class FileService {
   }
 
   static async downloadFile(file: any) {
-    const response = await $api.get(`/files/download?id=${file._id}`, {
+    const response = await axiosAuth.get(`/files/download?id=${file._id}`, {
       responseType: 'blob',
     })
 
@@ -76,13 +76,13 @@ class FileService {
   static async deleteFile(id: any): Promise<AxiosResponse<any>> {
     const url = `/files?id=${id}`
 
-    return $api.delete<any>(url)
+    return axiosAuth.delete<any>(url)
   }
 
   static async searchFiles(search: any): Promise<AxiosResponse<any>> {
     const url = `/files/search?search=${search}`
 
-    return $api.get<any>(url)
+    return axiosAuth.get<any>(url)
   }
 }
 

@@ -6,8 +6,8 @@ import {
   FileState,
   FileAction,
 } from '../types/file'
-import { IFile } from '../../models/IFile'
-import { AppAction, AppThunkAction } from '../types/app'
+import { IFile } from '../../models/file'
+import { AxiosError } from 'axios'
 
 export const setFiles = (files: IFile[]): FileAction => ({
   type: FileActionTypes.SET_FILES,
@@ -46,18 +46,16 @@ export const setFileView = (view: FileState['view']): FileAction => ({
 
 export const setDefault = (): FileAction => ({ type: FileActionTypes.SET_DEFAULT })
 
-export const getFiles = (dirId: string, sort: string): FileThunkAction => {
+export const getFiles = (dirId: string, sort?: string): FileThunkAction => {
   return async (dispatch) => {
     try {
- 
       dispatch(showLoader())
 
       const response = await FileService.getFiles(dirId, sort)
 
       dispatch(setFiles(response.data))
     } catch (error) {
-      // @ts-ignore: Unreachable code error
-      console.error(error.response.data.message)
+      console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     } finally {
       dispatch(hideLoader())
     }
@@ -71,8 +69,7 @@ export const createDir = (dirId: string, name: string): FileThunkAction => {
 
       dispatch(addFile(response.data))
     } catch (error) {
-      // @ts-ignore: Unreachable code error
-      console.error(error.response.data.message)
+      console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     }
   }
 }
@@ -84,8 +81,7 @@ export const uploadFile = (file: IFile, dirId: string): FileThunkAction => {
 
       dispatch(addFile(response.data))
     } catch (error) {
-      // @ts-ignore: Unreachable code error
-      console.error(error.response.data.message)
+      console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     }
   }
 }
@@ -102,8 +98,7 @@ export const deleteFile = (file: IFile): FileThunkAction => {
       dispatch(deleteFileAction(file._id))
       console.error(response.data.message)
     } catch (error) {
-      // @ts-ignore: Unreachable code error
-      console.error(error?.response?.data?.message)
+      console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     }
   }
 }
@@ -115,8 +110,7 @@ export const searchFiles = (search: string): FileThunkAction => {
 
       dispatch(setFiles(response.data))
     } catch (error) {
-      // @ts-ignore: Unreachable code error
-      console.error(error?.response?.data?.message)
+      console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     } finally {
       dispatch(hideLoader())
     }

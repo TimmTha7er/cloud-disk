@@ -2,9 +2,18 @@ import React from 'react'
 import './uploader.css'
 import { useDispatch } from 'react-redux'
 import { removeUploadFile } from '../../../store/actions/upload'
+import { IUploadFile } from '../../../models/file'
 
-const UploadFile = ({ file }) => {
+interface UploadFileProps {
+  file: IUploadFile
+}
+
+const UploadFile: React.FC<UploadFileProps> = ({ file }) => {
   const dispatch = useDispatch()
+
+  const removeUploadFileHandler = () => {
+    dispatch(removeUploadFile(file.id))
+  }
 
   return (
     <div className='upload-file'>
@@ -12,7 +21,7 @@ const UploadFile = ({ file }) => {
         <div className='upload-file__name'>{file.name}</div>
         <button
           className='upload-file__remove'
-          onClick={() => dispatch(removeUploadFile(file.id))}
+          onClick={removeUploadFileHandler}
         >
           X
         </button>

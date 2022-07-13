@@ -1,4 +1,4 @@
-import { IUploadFile } from '../../models/IUploadFile'
+import { IUploadFile } from '../../models/file'
 import { UploadAction, UploadActionTypes } from '../types/upload'
 
 export const showUploader = (): UploadAction => ({

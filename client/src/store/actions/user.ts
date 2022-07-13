@@ -1,5 +1,5 @@
-import { IFile } from '../../models/IFile'
-import { IUser } from '../../models/IUser'
+import { AxiosError } from 'axios'
+import { IUser } from '../../models/user'
 import AuthService from '../../services/AuthService'
 import UserService from '../../services/UserService'
 import { UserAction, UserActionTypes, UserThunkAction } from '../types/user'
@@ -21,10 +21,8 @@ export const registration = (
 
       dispatch(setUser(response.data))
       localStorage.setItem('token', response.data.accessToken)
-      console.log(response.data)
     } catch (error) {
-      // @ts-ignore: Unreachable code error
-      console.error(error.response.data.message)
+      console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`)
     }
   }
 }
@@ -36,10 +34,9 @@ export const login = (email: string, password: string): UserThunkAction => {
 
       dispatch(setUser(response.data))
       localStorage.setItem('token', response.data.accessToken)
-      console.log(response.data)
     } catch (error) {
-      // @ts-ignore: Unreachable code error
-      console.error(error.response.data.message)
+      console.log('error', error)
+      console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`)
     }
   }
 }
@@ -52,21 +49,20 @@ export const checkAuth = (): UserThunkAction => {
       dispatch(setUser(response.data))
       localStorage.setItem('token', response.data.accessToken)
     } catch (error) {
-      // @ts-ignore: Unreachable code error
-      console.error(error.response.data.message)
+      console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
       localStorage.removeItem('token')
     }
   }
 }
 
-export const uploadAvatar = (file: IFile): UserThunkAction => {
+export const uploadAvatar = (file: File): UserThunkAction => {
   return async (dispatch) => {
     try {
       const response = await UserService.uploadAvatar(file)
 
       dispatch(setUser(response.data))
     } catch (error) {
-      console.error(error)
+      console.warn(error);
     }
   }
 }

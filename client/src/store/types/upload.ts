@@ -1,14 +1,14 @@
 import { ThunkAction } from 'redux-thunk'
-import { IUploadFile } from '../../models/IUploadFile'
-import { RootState } from '../store'
+import { IUploadFile } from '../../models/file'
+import { RootState } from '..'
 
 // action types
 export enum UploadActionTypes {
-  SHOW_UPLOADER = 'SHOW_UPLOADER',
-  HIDE_UPLOADER = 'HIDE_UPLOADER',
-  ADD_UPLOAD_FILE = 'ADD_UPLOAD_FILE',
-  REMOVE_UPLOAD_FILE = 'REMOVE_UPLOAD_FILE',
-  CHANGE_UPLOAD_FILE = 'CHANGE_UPLOAD_FILE',
+  SHOW_UPLOADER = 'upload/SHOW_UPLOADER',
+  HIDE_UPLOADER = 'upload/HIDE_UPLOADER',
+  ADD_UPLOAD_FILE = 'upload/ADD_UPLOAD_FILE',
+  REMOVE_UPLOAD_FILE = 'upload/REMOVE_UPLOAD_FILE',
+  CHANGE_UPLOAD_FILE = 'upload/CHANGE_UPLOAD_FILE',
 }
 
 // reducer
