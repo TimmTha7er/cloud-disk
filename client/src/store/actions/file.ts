@@ -46,7 +46,7 @@ export const setFileView = (view: FileState['view']): FileAction => ({
 
 export const setDefault = (): FileAction => ({ type: FileActionTypes.SET_DEFAULT })
 
-export const getFiles = (dirId: string, sort?: string): FileThunkAction => {
+export const getFiles = (dirId: string | null, sort?: string): FileThunkAction => {
   return async (dispatch) => {
     try {
       dispatch(showLoader())
@@ -62,9 +62,11 @@ export const getFiles = (dirId: string, sort?: string): FileThunkAction => {
   }
 }
 
-export const createDir = (dirId: string, name: string): FileThunkAction => {
+export const createDir = (dirId: string | null, name: string): FileThunkAction => {
   return async (dispatch) => {
     try {
+      console.log('dirId', dirId)
+      console.log('name', name)
       const response = await FileService.createDir(dirId, name)
 
       dispatch(addFile(response.data))
@@ -74,7 +76,7 @@ export const createDir = (dirId: string, name: string): FileThunkAction => {
   }
 }
 
-export const uploadFile = (file: IFile, dirId: string): FileThunkAction => {
+export const uploadFile = (file: IFile, dirId: string | null): FileThunkAction => {
   return async (dispatch) => {
     try {
       const response = await FileService.uploadFile(file, dirId, dispatch)

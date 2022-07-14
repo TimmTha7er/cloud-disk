@@ -8,7 +8,7 @@ import {
 import { IFile } from '../models/file'
 
 class FileService {
-  static async getFiles(dirId: string, sort?: string): Promise<AxiosResponse<IFile[]>> {
+  static async getFiles(dirId: string | null, sort?: string): Promise<AxiosResponse<IFile[]>> {
     const dirIdQuery = dirId ? `parent=${dirId}&` : ''
     const sortQuery = sort ? `sort=${sort}` : ''
     const url = `/files?${dirIdQuery}${sortQuery}`
@@ -16,7 +16,7 @@ class FileService {
     return axiosAuth.get<IFile[]>(url)
   }
 
-  static async createDir(dirId: string, name: string): Promise<AxiosResponse<IFile>> {
+  static async createDir(dirId: string | null, name: string): Promise<AxiosResponse<IFile>> {
     return axiosAuth.post<IFile>('/files', { name, parent: dirId, type: 'dir' })
   }
 

@@ -1,13 +1,12 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import './file.css'
-import dirLogo from '../../../../assets/img/dir.svg'
-import fileLogo from '../../../../assets/img/file.svg'
-import { pushToStack, setCurrentDir } from '../../../../store/actions/file'
-import { deleteFile, downloadFile } from '../../../../store/actions/file'
-import sizeFormat from '../../../../utils/sizeFormat'
-import { RootState } from '../../../../store'
-import { IFile } from '../../../../models/file'
+import dirLogo from '../../assets/img/dir.svg'
+import fileLogo from '../../assets/img/file.svg'
+import { pushToStack, setCurrentDir } from '../../store/actions/file'
+import { deleteFile, downloadFile } from '../../store/actions/file'
+import sizeFormat from '../../utils/sizeFormat'
+import { RootState } from '../../store'
+import { IFile } from '../../models/file'
 
 interface FileProps {
   file: IFile

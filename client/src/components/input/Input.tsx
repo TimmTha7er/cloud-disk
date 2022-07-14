@@ -1,5 +1,4 @@
 import React from "react";
-import './input.css'
 
 // interface InputProps {
 //   onChange: (event: React.FormEvent<HTMLInputElement>) => void,

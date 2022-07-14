@@ -1,10 +1,9 @@
 import React from 'react'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import './fileList.css'
 import { useSelector } from 'react-redux'
-import File from './file/File'
-import { RootState } from '../../../store'
-import { IFile } from '../../../models/file'
+import File from './File'
+import { RootState } from '../../store'
+import { IFile } from '../../models/file'
 
 const FileList: React.FC = () => {
   const files = useSelector((state: RootState) => state.files.files)

@@ -19,7 +19,7 @@ export enum FileActionTypes {
 // reducer
 export interface FileState {
 	files: IFile[],
-  currentDir: string,
+  currentDir: string | null,
 	popupDisplay: 'none' | 'flex',
   // TODO : ??
   dirStack: String[],

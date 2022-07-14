@@ -1,0 +1,29 @@
+$component: 'uploader';
+
+.#{$component} {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+
+  width: 300px;
+  height: 300px;
+  padding: 20px;
+  overflow-y: auto;
+
+  background-color: #566885;
+  border-radius: 12px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__title {
+    color: #e9e6e6;
+    font-size: 1.2rem;
+  }
+
+  &__close {
+    padding: 3px;
+  }
+}

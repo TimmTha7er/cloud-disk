@@ -1,5 +1,4 @@
 import React from 'react'
-import './uploader.css'
 import { useDispatch } from 'react-redux'
 import { removeUploadFile } from '../../../store/actions/upload'
 import { IUploadFile } from '../../../models/file'

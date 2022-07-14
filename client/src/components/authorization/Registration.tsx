@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './authorization.css'
 import Input from '../input/Input'
 import { useDispatch } from "react-redux";
 import { registration } from '../../store/actions/user'

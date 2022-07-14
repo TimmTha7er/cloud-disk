@@ -1,6 +1,5 @@
 import React from 'react'
 import UploadFile from './UploadFile'
-import './uploader.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { hideUploader } from '../../../store/actions/upload'
 import { RootState } from '../../../store'

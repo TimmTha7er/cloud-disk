@@ -3,11 +3,12 @@ import Input from '../input/Input'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPopupDisplay } from '../../store/actions/file'
 import { createDir } from '../../store/actions/file'
+import { RootState } from '../../store'
 
-const Popup = () => {
+const Popup: React.FC = () => {
   const [dirName, setDirName] = useState('')
-  const popupDisplay = useSelector((state) => state.files.popupDisplay)
-  const currentDir = useSelector((state) => state.files.currentDir)
+  const popupDisplay = useSelector((state: RootState) => state.files.popupDisplay)
+  const currentDir = useSelector((state: RootState) => state.files.currentDir)
   const dispatch = useDispatch()
 
   function createHandler() {

@@ -1,0 +1,81 @@
+$component: 'file';
+
+.#{$component} {
+  display: grid;
+  grid-template-columns: 1fr 4fr repeat(4, 1fr);
+  align-items: center;
+  margin: 10px 0;
+
+  border-bottom: solid 2px #566885;
+
+  &:hover {
+    transform: scale(1.02);
+
+    .#{$component} {
+      &__date {
+        grid-column-start: 3;
+      }
+
+      &__size {
+        grid-column-start: 4;
+      }
+
+      &__download {
+        display: block;
+        grid-column-start: 5;
+      }
+
+      &__delete {
+        display: block;
+        grid-column-start: 6;
+      }
+    }
+  }
+
+  &__img {
+    justify-self: center;
+  }
+
+  &__date {
+    grid-column-start: 5;
+    justify-self: center;
+  }
+
+  &__size {
+    grid-column-start: 6;
+    justify-self: center;
+  }
+
+  &__btn {
+    display: none;
+  }
+
+  &-plate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+
+    cursor: pointer;
+
+    &__img {
+      width: 100px;
+      height: 100px;
+    }
+
+    &__btns {
+      display: none;
+    }
+
+    &__name {
+      text-align: center;
+    }
+
+    &:hover {
+      .#{$component}-plate__btns {
+        display: flex;
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+$component: 'upload-file';
+
+.#{$component} {
+  margin: 5px 0;
+  padding: 5px 10px;
+
+  background-color: #e9e6e6;
+  border-radius: 8px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__progress-bar {
+    display: flex;
+    height: 1rem;
+    margin: 3px 0;
+
+    background-color: #566885;
+    border-radius: 8px;
+  }
+
+  &__upload-bar {
+    background-color: green;
+    border-radius: 8px;
+  }
+
+  &__percent {
+    position: absolute;
+    left: 50%;
+
+    color: #e9e6e6;
+  }
+}
