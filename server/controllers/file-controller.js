@@ -1,194 +1,108 @@
-const path = require('path')
-const fs = require('fs')
-const Uuid = require('uuid')
-
 const fileService = require('../services/file-service')
-const User = require('../models/user-model')
-const File = require('../models/file-model')
 
 class FileController {
-  async createDir(req, res) {
+  async createDir(req, res, next) {
     try {
       const { name, type, parent } = req.body
-      const file = new File({
+      const filePath = req.filePath
+      const userId = req.user.id
+      const file = await fileService.createDir(
         name,
         type,
         parent,
-        user: req.user.id,
-      })
-      const parentFile = await File.findOne({ _id: parent })
+        filePath,
+        userId
+      )
 
-      if (!parentFile) {
-        file.path = name
-        await fileService.createDir(req, file)
-      } else {
-        file.path = path.join(parentFile.path, file.name)
-        await fileService.createDir(req, file)
-        parentFile.children.push(file._id)
-        await parentFile.save()
-      }
-
-      await file.save()
       return res.json(file)
     } catch (error) {
-      console.error(error)
-
-      return res.status(400).json(error)
+      next(error)
     }
   }
 
-  async getFiles(req, res) {
+  async getFiles(req, res, next) {
     try {
-      const { sort } = req.query
-
-      const files = await File.find({
-        user: req.user.id,
-        parent: req.query.parent,
-      }).sort({ [sort]: 1 })
+      const { sort, parent } = req.query
+      const userId = req.user.id
+      const files = await fileService.getFiles(userId, parent, sort)
 
       return res.json(files)
     } catch (error) {
-      console.error(error)
-      
-      return res.status(500).json({ message: 'Can not get files' })
+      next(error)
     }
   }
 
-  async uploadFile(req, res) {
+  async uploadFile(req, res, next) {
     try {
       const file = req.files.file
-
-      const parent = await File.findOne({
-        user: req.user.id,
-        _id: req.body.parent,
-      })
-      const user = await User.findOne({ _id: req.user.id })
-
-      if (user.usedSpace + file.size > user.diskSpace) {
-        return res.status(400).json({ message: 'There no space on the disk' })
-      }
-
-      user.usedSpace = user.usedSpace + file.size
-
-      let filePath
-      if (parent) {
-        filePath = path.resolve(
-          'files',
-          user._id.toString(),
-          parent.path,
-          file.name
-        )
-      } else {
-        filePath = path.resolve('files', user._id.toString(), file.name)
-      }
-
-      if (fs.existsSync(filePath)) {
-        return res.status(400).json({ message: 'File already exist' })
-      }
-
-      file.mv(filePath)
-
-      const type = file.name.split('.').pop()
-
-      filePath = file.name
-      if (parent) {
-        filePath = path.join(parent.path, file.name)
-      }
-
-      const dbFile = new File({
-        name: file.name,
-        type,
-        size: file.size,
-        path: filePath,
-        parent: parent?._id,
-        user: user._id,
-      })
-
-      await dbFile.save()
-      await user.save()
+      const userId = req.user.id
+      const parent = req.body.parent
+      const dbFile = await fileService.uploadFile(file, userId, parent)
 
       res.json(dbFile)
     } catch (error) {
-      console.error(error)
-      return res.status(500).json({ message: 'Upload error' })
+      next(error)
     }
   }
 
-  async downloadFile(req, res) {
+  async downloadFile(req, res, next) {
     try {
-      const file = await File.findOne({ _id: req.query.id, user: req.user.id })
-      const filePath = fileService.getPath(req, file)
-
-      if (fs.existsSync(filePath)) {
-        return res.download(filePath, file.name)
-      }
-
-      return res.status(400).json({ message: 'Download error' })
+      const fileId = req.query.id
+      const userId = req.user.id
+      const filePath = req.filePath
+     
+      await fileService.downloadFile(filePath, res, fileId, userId)
     } catch (error) {
-      console.error(error)
-      return res.status(500).json({ message: 'Download error' })
+      next(error)
     }
   }
 
-  async deleteFile(req, res) {
+  async deleteFile(req, res, next) {
     try {
-      const file = await File.findOne({ _id: req.query.id, user: req.user.id })
+      const fileId = req.query.id
+      const userId = req.user.id
+      const filePath = req.filePath
 
-      if (!file) {
-        return res.status(400).json({ message: 'file not found' })
-      }
-
-      fileService.deleteFile(req, file)
-      await file.remove()
+      await fileService.deleteFile(filePath, fileId, userId)
 
       return res.json({ message: 'File was deleted' })
     } catch (error) {
-      console.error(error)
-      return res.status(400).json({ message: 'Dir is not empty' })
+      next(error)
     }
   }
 
-  async searchFiles(req, res) {
+  async searchFiles(req, res, next) {
     try {
       const searchName = req.query.search
-      const files = await File.find({ user: req.user.id })
-      const sortedFiles = files.filter((file) => file.name.includes(searchName))
+      const userId = req.user.id
+      const sortedFiles = await fileService.searchFiles(searchName, userId)
 
       return res.json(sortedFiles)
     } catch (error) {
-      return res.status(400).json({ message: 'Search error' })
+      next(error)
     }
   }
 
-  async uploadAvatar(req, res) {
+  async uploadAvatar(req, res, next) {
     try {
       const file = req.files.file
-      const user = await User.findById(req.user.id)
-      const avatarName = Uuid.v4() + '.jpg'
-      const filePath = path.resolve('static', avatarName)
-
-      file.mv(filePath)
-      user.avatar = avatarName
-      await user.save()
+      const userId = req.user.id
+      const user = await fileService.uploadAvatar(file, userId)
 
       return res.json(user)
     } catch (error) {
-      return res.status(400).json({ message: 'Upload avatar error' })
+      next(error)
     }
   }
 
-  async deleteAvatar(req, res) {
+  async deleteAvatar(req, res, next) {
     try {
-      const user = await User.findById(req.user.id)
-      const filePath = path.resolve('static', user.avatar)
-
-      fs.unlinkSync(filePath)
-      user.avatar = null
-      await user.save()
+      const userId = req.user.id
+      const user = await fileService.deleteAvatar(userId)
 
       return res.json(user)
     } catch (error) {
-      return res.status(400).json({ message: 'Delete avatar error' })
+      next(error)
     }
   }
 }

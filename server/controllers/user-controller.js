@@ -19,12 +19,13 @@ class UserController {
       const user = await userService.registration(email, password)
 
       tokenService.setCookie(res, user.refreshToken)
-      await fileService.createDir(req, new File({ user: user.id, name: '' }))
+      await fileService.createFile(
+        req.filePath,
+        new File({ user: user.id, name: '' })
+      )
 
       return res.json(user)
     } catch (error) {
-      console.error('error', error)
-      
       next(error)
     }
   }

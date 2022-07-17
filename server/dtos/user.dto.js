@@ -2,9 +2,9 @@ module.exports = class UserDto {
   email
   id
   isActivated
-	diskSpace
-	usedSpace
-	avatar
+  diskSpace
+  usedSpace
+  avatar
 
   constructor(model) {
     this.email = model.email
