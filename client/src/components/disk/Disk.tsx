@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createDir, getFiles, uploadFile } from '../../store/actions/file'
-import FileList from './FileList'
+
+import { getFiles, uploadFile } from '../../store/actions/file'
+import { FileList, Uploader } from '../../components'
 import Popup from './Popup'
 import {
   setCurrentDir,
   setPopupDisplay,
   setFileView,
 } from '../../store/actions/file'
-import { useState } from 'react'
-import Uploader from './uploader/Uploader'
 import { RootState } from '../../store'
 
 const Disk: React.FC = () => {
@@ -29,31 +28,31 @@ const Disk: React.FC = () => {
   }
 
   const backClickHandler = () => {
-    const backDirId = dirStack.pop()
-
-    // @ts-ignore: Unreachable code error
+    const backDirId = dirStack.pop() || null
+      
     dispatch(setCurrentDir(backDirId))
   }
 
-  const fileUploadHandler = (event: any) => {
-    const files = [...event.target.files]
+  const fileUploadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // @ts-ignore: Unreachable code error
+    const files: File[] = [...event.target.files]
 
     files.forEach((file) => dispatch(uploadFile(file, currentDir)))
   }
 
-  const dragEnterHandler = (event: any) => {
+  const dragEnterHandler = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
     setDragEnter(true)
   }
 
   const dragOverHandler = dragEnterHandler
 
-  const dragLeaveHandler = (event: any) => {
+  const dragLeaveHandler = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
     setDragEnter(false)
   }
 
-  const dropHandler = (event: any) => {
+  const dropHandler = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
 
     let files = [...event.dataTransfer.files]
@@ -66,7 +65,7 @@ const Disk: React.FC = () => {
   if (loader) {
     return (
       <div className='loader'>
-        <div className='lds-dual-ring'></div>
+        <div className='loader__dual-ring'></div>
       </div>
     )
   }

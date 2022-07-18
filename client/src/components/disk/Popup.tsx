@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import Input from '../input/Input'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { Input } from '../../components'
 import { setPopupDisplay } from '../../store/actions/file'
 import { createDir } from '../../store/actions/file'
 import { RootState } from '../../store'

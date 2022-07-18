@@ -1,0 +1,39 @@
+$component: 'loader';
+
+.#{$component} {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 50px);
+
+  &__dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+  }
+
+  &__dual-ring:after {
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+
+    border: 6px solid #000000;
+    border-color: #000000 transparent #000000 transparent;
+    border-radius: 50%;
+
+    animation: lds-dual-ring 1.2s linear infinite;
+
+    content: ' ';
+  }
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

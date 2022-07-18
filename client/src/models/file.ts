@@ -5,13 +5,13 @@ export interface IUploadFile {
 }
 
 export interface IFile {
-	_id: string,
+	id: string,
   name: string
   type: string
   accessLink?: string
-  size?: number
+  size: number
   path?: string
-  date?: Date
+  date: string
   user?: string
   parent?: string | null
   children?: [{ number: string }]

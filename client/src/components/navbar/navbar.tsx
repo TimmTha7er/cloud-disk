@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
+
 import Logo from '../../assets/img/navbar-logo.svg'
 import avatarLogo from '../../assets/img/avatar.svg'
-import { NavLink } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../store/actions/user'
 import { showLoader } from '../../store/actions/app'
 import { getFiles, searchFiles } from '../../store/actions/file'
@@ -56,7 +57,7 @@ const Navbar = () => {
     <div className='navbar'>
       <div className='container'>
         <img className='navbar__logo' src={Logo} alt='' />
-        <div className='navbar__header'>MERN CLOUD</div>
+        <div className='navbar__header'>CLOUD</div>
         {isAuth && (
           <input
             value={searchName}

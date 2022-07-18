@@ -32,7 +32,7 @@ export default function fileReducer(
     case FileActionTypes.DELETE_FILE: {
       return {
         ...state,
-        files: [...state.files.filter((file) => file._id !== action.payload)],
+        files: [...state.files.filter((file) => file.id !== action.payload)],
       }
     }
     case FileActionTypes.SET_VIEW: {

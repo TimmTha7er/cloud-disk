@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import dirLogo from '../../assets/img/dir.svg'
 import fileLogo from '../../assets/img/file.svg'
 import { pushToStack, setCurrentDir } from '../../store/actions/file'
@@ -12,7 +13,6 @@ interface FileProps {
   file: IFile
 }
 
-// @ts-ignore: Unreachable code error
 const File: React.FC<FileProps> = ({ file }) => {
   const dispatch = useDispatch()
   const currentDir = useSelector((state: RootState) => state.files.currentDir)
@@ -21,7 +21,7 @@ const File: React.FC<FileProps> = ({ file }) => {
   const openDirHandler = () => {
     if (file.type === 'dir') {
       dispatch(pushToStack(currentDir))
-      dispatch(setCurrentDir(file._id))
+      dispatch(setCurrentDir(file.id))
     }
   }
 
@@ -64,37 +64,34 @@ const File: React.FC<FileProps> = ({ file }) => {
     )
   }
 
-  if (fileView === 'list') {
-    return (
-      <div className='file' onClick={() => openDirHandler()}>
-        <img
-          src={file.type === 'dir' ? dirLogo : fileLogo}
-          alt=''
-          className='file__img'
-        />
-        <div className='file__name'>{file.name}</div>
-        {/* @ts-ignore: Unreachable code error */}
-        <div className='file__date'>{file.date.slice(0, 10)}</div>
-        {/*  @ts-ignore: Unreachable code error */}
-        <div className='file__size'>{sizeFormat(file.size)}</div>
+  return (
+    <div className='file' onClick={() => openDirHandler()}>
+      <img
+        src={file.type === 'dir' ? dirLogo : fileLogo}
+        alt=''
+        className='file__img'
+      />
+      <div className='file__name'>{file.name}</div>
+      <div className='file__date'>{file.date.slice(0, 10)}</div>
 
-        {file.type !== 'dir' && (
-          <button
-            className='file__btn file__download'
-            onClick={(event) => downloadClickHandler(event)}
-          >
-            скачать
-          </button>
-        )}
+      <div className='file__size'>{sizeFormat(file.size)}</div>
+
+      {file.type !== 'dir' && (
         <button
-          className='file__btn file__delete'
-          onClick={(event) => deleteClickHandler(event)}
+          className='file__btn file__download'
+          onClick={(event) => downloadClickHandler(event)}
         >
-          удалить
+          скачать
         </button>
-      </div>
-    )
-  }
+      )}
+      <button
+        className='file__btn file__delete'
+        onClick={(event) => deleteClickHandler(event)}
+      >
+        удалить
+      </button>
+    </div>
+  )
 }
 
 export default File

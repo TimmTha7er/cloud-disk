@@ -6,6 +6,7 @@ import {
   showUploader,
 } from '../store/actions/upload'
 import { IFile } from '../models/file'
+import { Dispatch } from 'redux'
 
 class FileService {
   static async getFiles(dirId: string | null, sort?: string): Promise<AxiosResponse<IFile[]>> {
@@ -20,7 +21,7 @@ class FileService {
     return axiosAuth.post<IFile>('/files', { name, parent: dirId, type: 'dir' })
   }
 
-  static async uploadFile(file: any, dirId: any, dispatch: any) {
+  static async uploadFile(file: File, dirId: string | null, dispatch: Dispatch): Promise<AxiosResponse<IFile>> {
     const formData = new FormData()
 
     formData.append('file', file)
@@ -39,9 +40,9 @@ class FileService {
         const totalLength = progressEvent.lengthComputable
           ? progressEvent.total
           : progressEvent.target.getResponseHeader('content-length') ||
-            progressEvent.target.getResponseHeader(
-              'x-decompressed-content-length'
-            )
+          progressEvent.target.getResponseHeader(
+            'x-decompressed-content-length'
+          )
 
         if (totalLength) {
           const progress = Math.round(
@@ -55,8 +56,8 @@ class FileService {
     })
   }
 
-  static async downloadFile(file: any) {
-    const response = await axiosAuth.get(`/files/download?id=${file._id}`, {
+  static async downloadFile(file: IFile) {
+    const response = await axiosAuth.get(`/files/download?id=${file.id}`, {
       responseType: 'blob',
     })
 
@@ -73,16 +74,16 @@ class FileService {
     }
   }
 
-  static async deleteFile(id: any): Promise<AxiosResponse<any>> {
+  static async deleteFile(id: string): Promise<AxiosResponse<{ message: string }>> {
     const url = `/files?id=${id}`
 
-    return axiosAuth.delete<any>(url)
+    return axiosAuth.delete<{ message: string }>(url)
   }
 
-  static async searchFiles(search: any): Promise<AxiosResponse<any>> {
+  static async searchFiles(search: string): Promise<AxiosResponse<IFile[]>> {
     const url = `/files/search?search=${search}`
 
-    return axiosAuth.get<any>(url)
+    return axiosAuth.get<IFile[]>(url)
   }
 }
 

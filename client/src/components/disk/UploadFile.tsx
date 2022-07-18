@@ -1,7 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { removeUploadFile } from '../../../store/actions/upload'
-import { IUploadFile } from '../../../models/file'
+
+import { removeUploadFile } from '../../store/actions/upload'
+import { IUploadFile } from '../../models/file'
 
 interface UploadFileProps {
   file: IUploadFile

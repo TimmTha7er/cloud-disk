@@ -1,7 +1,8 @@
 import React from 'react'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { useSelector } from 'react-redux'
-import File from './File'
+
+import { File } from '../../components'
 import { RootState } from '../../store'
 import { IFile } from '../../models/file'
 
@@ -17,7 +18,7 @@ const FileList: React.FC = () => {
     return (
       <div className='fileplate'>
         {files.map((file: IFile) => (
-          <File key={file._id} file={file} />
+          <File key={file.id} file={file} />
         ))}
       </div>
     )
@@ -35,12 +36,12 @@ const FileList: React.FC = () => {
       <TransitionGroup>
         {files.map((file) => (
           <CSSTransition
-            key={file._id}
+            key={file.id}
             timeout={500}
             classNames={'file'}
             exit={false}
           >
-            <File file={file} />
+            <File key={file.id} file={file} />
           </CSSTransition>
         ))}
       </TransitionGroup>

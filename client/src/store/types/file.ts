@@ -21,8 +21,7 @@ export interface FileState {
 	files: IFile[],
   currentDir: string | null,
 	popupDisplay: 'none' | 'flex',
-  // TODO : ??
-  dirStack: String[],
+  dirStack: [],
   view: 'list' | 'plate',
 }
 
@@ -54,7 +53,6 @@ interface PushToStack {
 
 interface DeleteFile {
   type: typeof FileActionTypes.DELETE_FILE;
-	// TODO
 	payload: String;
 }
 

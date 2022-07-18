@@ -1,6 +1,7 @@
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+
 import { checkAuth } from '../store/actions/user'
 import { RootState } from '../store'
 import { authRoutes, publicRoutes } from '../utils/routes'

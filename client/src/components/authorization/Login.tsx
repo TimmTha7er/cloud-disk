@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import Input from '../input/Input'
-import { useDispatch } from "react-redux";
-import { login } from "../../store/actions/user";
+import { useDispatch } from "react-redux"
+
+import { Input } from '../../components'
+import { login } from "../../store/actions/user"
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('')

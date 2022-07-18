@@ -3,11 +3,11 @@
   margin: 0;
   padding: 0;
 
-  color: #566885;
+  color: #000000;
 }
 
 body {
-  background-color: #e9e6e6;
+  font-family: 'Roboto';
 }
 
 #root {
@@ -38,7 +38,7 @@ input {
 
   background: transparent;
   border: none;
-  border-bottom: #566885 solid 3px;
+  border-bottom: #000000 solid 3px;
 }
 
 input:focus {

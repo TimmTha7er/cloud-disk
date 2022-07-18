@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+
 import { deleteAvatar, uploadAvatar } from '../../store/actions/user'
 
 const Profile: React.FC = () => {

@@ -5,6 +5,7 @@ const ApiError = require('../exceptions/api-error')
 
 const File = require('../models/file-model')
 const User = require('../models/user-model')
+const FileDto = require('../dtos/file.dto')
 
 class FileService {
   async createDir(name, type, parent, filePath, userId) {
@@ -28,7 +29,7 @@ class FileService {
 
     await file.save()
 
-    return file
+    return new FileDto(file)
   }
 
   async getFiles(userId, parent, sort) {
@@ -37,7 +38,7 @@ class FileService {
       parent: parent,
     }).sort({ [sort]: 1 })
 
-    return files
+    return files.map((file) => new FileDto(file))
   }
 
   async downloadFile(path, res, fileId, userId) {
@@ -48,7 +49,7 @@ class FileService {
     if (!isPathExists) {
       throw ApiError.BadRequest(`Download error`)
     }
-   
+
     res.download(filePath, file.name)
   }
 
@@ -76,7 +77,7 @@ class FileService {
       file.name.toLowerCase().includes(searchName)
     )
 
-    return sortedFiles
+    return sortedFiles.map((file) => new FileDto(file))
   }
 
   async uploadAvatar(file, userId) {
@@ -100,22 +101,14 @@ class FileService {
     return await user.save()
   }
 
-  createFile(filePath, file) {
+  async createFile(filePath, file) {
     const path = this.getPath(filePath, file)
 
-    return new Promise((resolve, reject) => {
-      try {
-        if (fs.existsSync(path)) {
-          return reject({ message: 'File already exist' })
-        }
+    if (fs.existsSync(path)) {
+      throw ApiError.BadRequest(`File already exist`)
+    }
 
-        fs.mkdirSync(path)
-
-        return resolve({ message: 'File was created' })
-      } catch (error) {
-        return reject({ message: 'File error' })
-      }
-    })
+    fs.mkdirSync(path)
   }
 
   async uploadFile(file, userId, parentId) {
@@ -168,7 +161,7 @@ class FileService {
     await dbFile.save()
     await user.save()
 
-    return dbFile
+    return new FileDto(dbFile)
   }
 
   getPath(filePath, file) {

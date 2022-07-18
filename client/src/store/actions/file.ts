@@ -76,7 +76,7 @@ export const createDir = (dirId: string | null, name: string): FileThunkAction =
   }
 }
 
-export const uploadFile = (file: IFile, dirId: string | null): FileThunkAction => {
+export const uploadFile = (file: File, dirId: string | null): FileThunkAction => {
   return async (dispatch) => {
     try {
       const response = await FileService.uploadFile(file, dirId, dispatch)
@@ -95,9 +95,9 @@ export const downloadFile = async (file: IFile) => {
 export const deleteFile = (file: IFile): FileThunkAction => {
   return async (dispatch) => {
     try {
-      const response = await FileService.deleteFile(file._id)
+      const response = await FileService.deleteFile(file.id)
 
-      dispatch(deleteFileAction(file._id))
+      dispatch(deleteFileAction(file.id))
       console.error(response.data.message)
     } catch (error) {
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);

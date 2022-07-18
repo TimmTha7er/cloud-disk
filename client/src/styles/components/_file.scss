@@ -4,12 +4,15 @@ $component: 'file';
   display: grid;
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
   align-items: center;
-  margin: 10px 0;
+  padding: 10px 0;
 
-  border-bottom: solid 2px #566885;
+  border-bottom: solid 2px #000000;
+  cursor: pointer;
 
   &:hover {
     transform: scale(1.02);
+
+    transition: transform 0.1s ease-in-out;
 
     .#{$component} {
       &__date {
@@ -34,6 +37,8 @@ $component: 'file';
 
   &__img {
     justify-self: center;
+    max-width: 48px;
+    max-height: 48px;
   }
 
   &__date {

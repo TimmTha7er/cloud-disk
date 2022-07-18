@@ -1,0 +1,14 @@
+$component: 'drop-area';
+
+.#{$component} {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 50px - 40px);
+  margin: 20px;
+
+  font-size: 40px;
+
+  border: dashed #000000 2px;
+}

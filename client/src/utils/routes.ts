@@ -1,7 +1,4 @@
-import Registration from '../components/authorization/Registration'
-import Login from '../components/authorization/Login'
-import Disk from '../components/disk/Disk'
-import Profile from '../components/profile/Profile'
+import { Registration, Login, Disk, Profile } from '../components'
 import { AuthRoutes, PublicRoutes, IRoute } from '../models/routes'
 
 export const authRoutes: IRoute[] = [

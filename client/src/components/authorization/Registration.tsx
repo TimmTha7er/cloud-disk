@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import Input from '../input/Input'
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"
+
+import { Input } from '../../components'
 import { registration } from '../../store/actions/user'
 
 const Registration: React.FC = () => {
