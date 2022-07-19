@@ -18,6 +18,7 @@ const Navbar = () => {
   const isAuth = useSelector((state: RootState) => state.user.isAuth)
   const currentDir = useSelector((state: RootState) => state.files.currentDir)
   const currentUser = useSelector((state: RootState) => state.user.currentUser)
+  const loading = useSelector((state: RootState) => state.user.loading)
   const dispatch = useDispatch()
 
   const avatar = currentUser?.avatar
@@ -51,6 +52,14 @@ const Navbar = () => {
   const logoutHandler = () => {
     dispatch(logout())
     dispatch(setDefault())
+  }
+
+  if (loading) {
+    return (
+      <div className='loader'>
+        <div className='loader__dual-ring'></div>
+      </div>
+    )
   }
 
   return (

@@ -3,6 +3,9 @@ import { UserAction, UserActionTypes, UserState } from '../types/user'
 const initialState: UserState = {
   currentUser: null,
   isAuth: false,
+  loading: true,
+  error: { message: '' },
+  success: '',
 }
 
 export default function userReducer(
@@ -15,12 +18,22 @@ export default function userReducer(
         ...state,
         currentUser: action.payload,
         isAuth: true,
+        loading: false
       }
     }
     case UserActionTypes.LOGOUT: {
       localStorage.removeItem('token')
 
-      return initialState
+      return {
+        ...initialState,
+        loading: false,
+      }
+    }
+    case UserActionTypes.SET_LOADING: {
+      return {
+        ...state,
+        loading: action.payload
+      }
     }
 
     default:

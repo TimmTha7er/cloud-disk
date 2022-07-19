@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { checkAuth } from '../store/actions/user'
+import { checkAuth, setLoading } from '../store/actions/user'
 import { RootState } from '../store'
 import { authRoutes, publicRoutes } from '../utils/routes'
 
@@ -15,6 +15,8 @@ const AppRouter: React.FC = () => {
 
     if (token) {
       dispatch(checkAuth())
+    } else {
+      dispatch(setLoading(false))
     }
   }, [])
 

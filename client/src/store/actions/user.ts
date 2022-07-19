@@ -44,10 +44,13 @@ export const login = (email: string, password: string): UserThunkAction => {
 export const checkAuth = (): UserThunkAction => {
   return async (dispatch) => {
     try {
+      dispatch(setLoading(true))
       const response = await AuthService.checkAuth()
 
       dispatch(setUser(response.data))
       localStorage.setItem('token', response.data.accessToken)
+      dispatch(setLoading(false))
+      console.log('checkAuth')
     } catch (error) {
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
       localStorage.removeItem('token')
@@ -78,3 +81,24 @@ export const deleteAvatar = (): UserThunkAction => {
     }
   }
 }
+
+export const setLoading = (value: any): UserAction => {
+  return {
+    type: UserActionTypes.SET_LOADING,
+    payload: value,
+  };
+};
+
+export const setError = (msg: any): UserAction => {
+  return {
+    type: UserActionTypes.SET_ERROR,
+    payload: msg,
+  };
+};
+
+export const setSuccess = (msg: any): UserAction => {
+  return {
+    type: UserActionTypes.SET_SUCCESS,
+    payload: msg,
+  };
+};

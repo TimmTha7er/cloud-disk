@@ -15,6 +15,7 @@ const Disk: React.FC = () => {
   const dispatch = useDispatch()
   const currentDir = useSelector((state: RootState) => state.files.currentDir)
   const loader = useSelector((state: RootState) => state.app.loader)
+  const loading = useSelector((state: RootState) => state.user.loading)
   const dirStack = useSelector((state: RootState) => state.files.dirStack)
   const [dragEnter, setDragEnter] = useState(false)
   const [sort, setSort] = useState('type')
@@ -62,13 +63,14 @@ const Disk: React.FC = () => {
     setDragEnter(false)
   }
 
-  if (loader) {
+  if (loading) {
     return (
       <div className='loader'>
         <div className='loader__dual-ring'></div>
       </div>
     )
   }
+  
 
   return !dragEnter ? (
     <div
