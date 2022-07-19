@@ -84,7 +84,7 @@ input:focus {
   font-weight: 700;
 }
 
-.link {
+a {
   color: inherit;
   text-decoration: none;
 
@@ -101,7 +101,7 @@ input:focus {
   }
 
   &:hover {
-    // color: $accent-color;
+    color: #5f0fff;
   }
 
   &:active {

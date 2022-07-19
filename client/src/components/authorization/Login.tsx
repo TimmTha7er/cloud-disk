@@ -25,7 +25,7 @@ const Login: React.FC = () => {
         placeholder='Введите пароль...'
       />
       <button
-        className='authorization__btn'
+        className='authorization__btn btn'
         onClick={() => dispatch(login(email, password))}
       >
         Войти

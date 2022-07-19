@@ -15,7 +15,7 @@ const Registration: React.FC = () => {
       <Input
         value={email}
         setValue={setEmail}
-        type='text'
+        type='email'
         placeholder='Введите email...'
       />
       <Input
@@ -25,7 +25,7 @@ const Registration: React.FC = () => {
         placeholder='Введите пароль...'
       />
       <button
-        className='authorization__btn'
+        className='authorization__btn btn'
         onClick={() => dispatch(registration(email, password))}
       >
         Зарегистрироваться
