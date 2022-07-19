@@ -6,41 +6,27 @@ $component: 'filelist';
   &__header {
     display: grid;
     grid-template-columns: 1fr 4fr repeat(4, 1fr);
+
+    font-size: 18px;
   }
 
   &__name {
     grid-column-start: 2;
+
+    font-weight: 500;
   }
 
   &__date {
     grid-column-start: 5;
     justify-self: center;
+
+    font-weight: 500;
   }
 
   &__size {
     grid-column-start: 6;
     justify-self: center;
-  }
-}
 
-.fileplate {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 20px 0;
-}
-
-.file-enter-active {
-  animation: file-enter 500ms forwards;
-}
-
-@keyframes file-enter {
-  0% {
-    transform: translateY(-50%);
-    opacity: 0;
-  }
-
-  100% {
-    transform: translateY(0);
-    opacity: 1;
+    font-weight: 500;
   }
 }

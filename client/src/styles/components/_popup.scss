@@ -15,11 +15,19 @@ $component: 'popup';
 
   background: rgba(0, 0, 0, 0.5);
 
+  &__title {
+    font-weight: 600;
+    font-size: 18px;
+  }
+
   &__content {
+    position: relative;
+
     display: flex;
     flex-direction: column;
-    width: 400px;
-    padding: 20px;
+    width: 100%;
+    max-width: 480px;
+    padding: 32px;
 
     background: white;
     border-radius: 12px;
@@ -34,7 +42,25 @@ $component: 'popup';
     justify-content: space-between;
   }
 
+  &__close {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+
+    padding: 8px 16px;
+  }
+
   input {
-    margin: 20px 0;
+    width: 304px;
+    margin-top: 32px;
+    margin-bottom: 24px;
+    padding: 8px 8px 8px 0;
+
+    font-size: 16px;
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.3);
+      font-size: 16px;
+    }
   }
 }

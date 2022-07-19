@@ -1,0 +1,9 @@
+$component: 'profile';
+
+.#{$component} {
+  padding: 24px 0;
+
+  &__btn {
+    margin-bottom: 32px;
+  }
+}

@@ -4,9 +4,9 @@ $component: 'file';
   display: grid;
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
   align-items: center;
-  padding: 10px 0;
+  padding: 8px 0;
 
-  border-bottom: solid 2px #000000;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 
   &:hover {
@@ -31,6 +31,7 @@ $component: 'file';
       &__delete {
         display: block;
         grid-column-start: 6;
+        margin-left: 8px;
       }
     }
   }
@@ -59,14 +60,14 @@ $component: 'file';
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 150px;
-    height: 150px;
+    width: 128px;
+    height: 128px;
 
     cursor: pointer;
 
     &__img {
-      width: 100px;
-      height: 100px;
+      width: 88px;
+      height: 88px;
     }
 
     &__btns {
@@ -74,6 +75,8 @@ $component: 'file';
     }
 
     &__name {
+      margin-top: 8px;
+
       text-align: center;
     }
 
@@ -82,5 +85,27 @@ $component: 'file';
         display: flex;
       }
     }
+  }
+}
+
+.fileplate {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 32px 0 0 16px;
+}
+
+.file-enter-active {
+  animation: file-enter 500ms forwards;
+}
+
+@keyframes file-enter {
+  0% {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

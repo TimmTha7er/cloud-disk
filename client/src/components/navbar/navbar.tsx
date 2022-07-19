@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 import Logo from '../../assets/img/navbar-logo.svg'
 import avatarLogo from '../../assets/img/avatar.svg'
@@ -55,9 +55,11 @@ const Navbar = () => {
 
   return (
     <div className='navbar'>
-      <div className='container'>
-        <img className='navbar__logo' src={Logo} alt='' />
-        <div className='navbar__header'>CLOUD</div>
+      <div className="navbar__col">
+        <Link to='/' className='navbar__link link'>
+          <img className='navbar__logo' src={Logo} alt='' />
+          <div className='navbar__header'>CLOUD</div>
+        </Link>
         {isAuth && (
           <input
             value={searchName}
@@ -67,6 +69,8 @@ const Navbar = () => {
             placeholder='Название файла...'
           />
         )}
+      </div>
+      <div className="navbar__col">
         {!isAuth && (
           <div className='navbar__login'>
             <NavLink to='/login'>Войти</NavLink>

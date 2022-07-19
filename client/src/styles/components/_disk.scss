@@ -1,39 +1,17 @@
 $component: 'disk';
 
 .#{$component} {
-  margin-top: 20px;
-
-  &__back {
-    padding: 14px 20px;
-
-    color: #ffffff;
-    font-size: 16px;
-    // font-family: 'Druck';
-    text-decoration: none;
-
-    background: #000000;
-    border: none;
-    outline: none;
-    cursor: pointer;
-
-    transition: all 0.1s ease;
-
-    -webkit-mask-image: paint(squircle);
-
-    --squircle-radius: 16px;
-    --squircle-smooth: 0.5;
-
-    &:hover {
-      background: #5f0fff;
-    }
-  }
+  margin-top: 40px;
 
   &__btns {
     display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 0 32px 0 20px;
   }
 
   &__create {
-    margin-left: 10px;
+    margin-left: 12px;
   }
 
   &__upload-input {
@@ -41,22 +19,31 @@ $component: 'disk';
   }
 
   &__upload-label {
-    margin-left: 10px;
-    padding: 5px 10px;
+    margin-left: 12px;
+    padding: 12px 24px;
 
-    border: 2px dashed #000000;
+    border: 2px dashed #222222;
     cursor: pointer;
+
+    transition: border 0.1s ease-in-out, padding 0.1s ease-in-out;
+
+    &:hover {
+      padding: 11px 23px;
+
+      border: 3px dashed #222222;
+    }
   }
 
   &__select {
+    height: 32px;
     margin-left: auto;
   }
 
   &__list,
   &__plate {
-    width: 20px;
-    height: 20px;
-    margin: 0 10px;
+    width: 32px;
+    height: 32px;
+    margin: 0 12px;
 
     background: no-repeat center center;
     background-size: contain;

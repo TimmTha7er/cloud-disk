@@ -78,14 +78,14 @@ const File: React.FC<FileProps> = ({ file }) => {
 
       {file.type !== 'dir' && (
         <button
-          className='file__btn file__download'
+          className='file__btn file__download btn btn_sm'
           onClick={(event) => downloadClickHandler(event)}
         >
           скачать
         </button>
       )}
       <button
-        className='file__btn file__delete'
+        className='file__btn file__delete btn btn_sm'
         onClick={(event) => deleteClickHandler(event)}
       >
         удалить

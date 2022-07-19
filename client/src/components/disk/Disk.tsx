@@ -78,10 +78,10 @@ const Disk: React.FC = () => {
       onDragOver={dragOverHandler}
     >
       <div className='disk__btns'>
-        <button className='disk__back' onClick={() => backClickHandler()}>
+        <button className='disk__back btn' onClick={() => backClickHandler()}>
           Назад
         </button>
-        <button className='disk__create' onClick={() => showPopupHandler()}>
+        <button className='disk__create btn' onClick={() => showPopupHandler()}>
           Создать папку
         </button>
         <div className='disk__upload'>

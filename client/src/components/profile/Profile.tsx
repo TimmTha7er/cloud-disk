@@ -19,9 +19,10 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div>
-      <button onClick={onDeleteAvatarBtnClick}>Удалить аватар</button>
+    <div className='profile'>
+      <button className='profile__btn btn' onClick={onDeleteAvatarBtnClick}>Удалить аватар</button>
       <input
+        className='profile__input'
         accept='image/*'
         onChange={inputChooseFileChangeHandler}
         type='file'

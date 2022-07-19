@@ -31,7 +31,7 @@ const Popup: React.FC = () => {
         <div className='popup__header'>
           <div className='popup__title'>Создать новую папку</div>
           <button
-            className='popup__close'
+            className='popup__close btn'
             onClick={() => dispatch(setPopupDisplay('none'))}
           >
             X
@@ -42,8 +42,9 @@ const Popup: React.FC = () => {
           placeholder='Введите название папки...'
           value={dirName}
           setValue={setDirName}
+          className='popup__input'
         />
-        <button className='popup__create' onClick={() => createHandler()}>
+        <button className='popup__create btn' onClick={() => createHandler()}>
           Создать
         </button>
       </div>

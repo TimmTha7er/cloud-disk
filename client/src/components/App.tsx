@@ -7,11 +7,9 @@ import '../styles/app.scss'
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <div className='app'>
+      <div className='container'>
         <Navbar></Navbar>
-        <div className='wrap'>
-          <AppRouter />
-        </div>
+        <AppRouter />
       </div>
     </BrowserRouter>
   )

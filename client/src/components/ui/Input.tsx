@@ -5,6 +5,7 @@ interface InputProps {
   value: string,
   type: string,
   placeholder: string
+  className?: string
 }
 
 const Input: React.FC<InputProps> = (props) => {
@@ -14,6 +15,7 @@ const Input: React.FC<InputProps> = (props) => {
       value={props.value}
       type={props.type}
       placeholder={props.placeholder}
+      className={props.className}
     />
   )
 }

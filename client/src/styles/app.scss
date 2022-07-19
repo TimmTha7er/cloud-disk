@@ -2,6 +2,7 @@
 @import 'abstracts/animation';
 
 @import 'base/fonts';
+@import 'base/normalize';
 @import 'base/scaffold';
 
 @import 'components/authorization';
@@ -14,3 +15,4 @@
 @import 'components/popup';
 @import 'components/uploader';
 @import 'components/upload-file';
+@import 'components/profile';
