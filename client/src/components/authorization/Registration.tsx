@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import { Input } from '../../components'
+import { RootState } from '../../store'
 import { registration } from '../../store/actions/user'
+import Alert from './Alert'
 
 const Registration: React.FC = () => {
+  const error = useSelector((state: RootState) => state.user.error)
+
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const dispatch = useDispatch()
@@ -12,6 +16,11 @@ const Registration: React.FC = () => {
   return (
     <div className='authorization'>
       <div className='authorization__header'>Регистрация</div>
+
+      {error.map((err: any) => 
+        <Alert className='sign-in__message' type='danger' msg={err?.msg} />
+      )}
+
       <Input
         value={email}
         setValue={setEmail}

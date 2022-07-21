@@ -13,8 +13,10 @@ class ApiError extends Error {
     return new ApiError(401, 'Пользователь не авторизован')
   }
 
-  static BadRequest(message, errors = []) {
-    return new ApiError(400, message, errors)
+  static BadRequest(message, errors) {
+    const errorList = errors ? errors: [{ msg: message}]
+
+    return new ApiError(400, message, errorList)
   }
 }
 

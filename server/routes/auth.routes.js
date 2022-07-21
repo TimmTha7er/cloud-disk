@@ -7,14 +7,13 @@ const router = new Router()
 
 router.post(
   '/registration',
-  body('email').isEmail(),
-  body('password').isLength({ min: 3, max: 32 }),
+  body('email').isEmail().withMessage('введите корректный email'),
+  body('password').isLength({ min: 3, max: 32 }).withMessage('минимальная длина пароля 3 символа'),
   userController.registration
 )
 router.post(
   '/login',
-  body('email').isEmail(),
-  body('password').isLength({ min: 3, max: 32 }),
+  body('email').isEmail().withMessage('введите корректный email'),
   userController.login
 )
 router.post('/logout', userController.logout)

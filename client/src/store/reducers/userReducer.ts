@@ -4,7 +4,7 @@ const initialState: UserState = {
   currentUser: null,
   isAuth: false,
   loading: true,
-  error: { message: '' },
+  error: [],
   success: '',
 }
 
@@ -18,7 +18,8 @@ export default function userReducer(
         ...state,
         currentUser: action.payload,
         isAuth: true,
-        loading: false
+        loading: false,
+        error: [],
       }
     }
     case UserActionTypes.LOGOUT: {
@@ -27,12 +28,21 @@ export default function userReducer(
       return {
         ...initialState,
         loading: false,
+        error: [],
       }
     }
     case UserActionTypes.SET_LOADING: {
       return {
         ...state,
-        loading: action.payload
+        loading: action.payload,
+        error: [],
+      }
+    }
+
+    case UserActionTypes.SET_ERROR: {
+      return {
+        ...state,
+        error: action.payload
       }
     }
 

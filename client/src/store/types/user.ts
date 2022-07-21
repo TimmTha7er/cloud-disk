@@ -16,7 +16,7 @@ export interface UserState {
   currentUser: IUser | null
   isAuth: Boolean
   loading: boolean
-  error: null | { message: string; }
+  error: []
   success: string
 }
 

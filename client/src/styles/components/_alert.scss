@@ -1,0 +1,58 @@
+$component: 'alert';
+
+.#{$component} {
+  width: 100%;
+  margin-bottom: 8px;
+
+  font-size: 1rem;
+
+  border-radius: 0.375em;
+
+  &_danger {
+    background-color: #feecf0;
+
+    & .#{$component}__body {
+      color: #cc0f35;
+
+      border-color: #f14668;
+    }
+  }
+
+  &_warning {
+    background-color: #fffaeb;
+
+    & .#{$component}__body {
+      color: #946c00;
+
+      border-color: #ffe08a;
+    }
+  }
+
+  &_success {
+    background-color: #effaf5;
+
+    & .#{$component}__body {
+      color: #257953;
+
+      border-color: #48c78e;
+    }
+  }
+
+  &_info {
+    background-color: #eff5fb;
+
+    & .#{$component}__body {
+      color: #296fa8;
+
+      border-color: #3e8ed0;
+    }
+  }
+
+  &__body {
+    padding: 0.5em 1.5em;
+
+    border-style: solid;
+    border-width: 0 0 0 4px;
+    border-radius: 0.375em;
+  }
+}

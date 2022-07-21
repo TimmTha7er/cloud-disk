@@ -22,6 +22,7 @@ export const registration = (
       dispatch(setUser(response.data))
       localStorage.setItem('token', response.data.accessToken)
     } catch (error) {
+      dispatch(setError((error as AxiosError)?.response?.data?.errors))
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`)
     }
   }
@@ -35,7 +36,7 @@ export const login = (email: string, password: string): UserThunkAction => {
       dispatch(setUser(response.data))
       localStorage.setItem('token', response.data.accessToken)
     } catch (error) {
-      console.log('error', error)
+      dispatch(setError((error as AxiosError)?.response?.data?.errors))
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`)
     }
   }

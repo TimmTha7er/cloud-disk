@@ -1,5 +1,6 @@
 export { default as Login } from './authorization/Login';
 export { default as Registration } from './authorization/Registration';
+export { default as Message } from './authorization/Alert';
 
 export { default as Uploader } from './disk/Uploader';
 export { default as UploadFile } from './disk/UploadFile';

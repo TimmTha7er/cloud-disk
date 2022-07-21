@@ -4,6 +4,7 @@
 @import 'base/fonts';
 @import 'base/normalize';
 @import 'base/scaffold';
+@import 'base/ui';
 
 @import 'components/authorization';
 @import 'components/disk';
@@ -16,3 +17,4 @@
 @import 'components/uploader';
 @import 'components/upload-file';
 @import 'components/profile';
+@import 'components/alert';
