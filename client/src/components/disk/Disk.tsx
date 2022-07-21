@@ -10,13 +10,15 @@ import {
   setFileView,
 } from '../../store/actions/file'
 import { RootState } from '../../store'
+import Alert from '../authorization/Alert'
 
 const Disk: React.FC = () => {
   const dispatch = useDispatch()
   const currentDir = useSelector((state: RootState) => state.files.currentDir)
-  const loader = useSelector((state: RootState) => state.app.loader)
   const loading = useSelector((state: RootState) => state.user.loading)
   const dirStack = useSelector((state: RootState) => state.files.dirStack)
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
+
   const [dragEnter, setDragEnter] = useState(false)
   const [sort, setSort] = useState('type')
 
@@ -79,6 +81,14 @@ const Disk: React.FC = () => {
       onDragLeave={dragLeaveHandler}
       onDragOver={dragOverHandler}
     >
+      {!currentUser?.isActivated && (
+        <Alert
+          className="sign-in__message"
+          type="success"
+          msg={"Пожалуйста, подтвердите свой адрес электронной почты."}
+        />
+      )}
+
       <div className='disk__btns'>
         <button className='disk__back btn' onClick={() => backClickHandler()}>
           Назад
