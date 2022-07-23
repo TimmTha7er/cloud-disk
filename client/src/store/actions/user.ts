@@ -2,9 +2,9 @@ import { AxiosError } from 'axios'
 import { IUser } from '../../models/user'
 import AuthService from '../../services/AuthService'
 import UserService from '../../services/UserService'
-import { UserAction, UserActionTypes, UserThunkAction } from '../types/user'
+import { UserAction, UserActionTypes, UserState, UserThunkAction } from '../types/user'
 
-export const setUser = (user: IUser): UserAction => ({
+export const setUser = (user: UserState['currentUser']): UserAction => ({
   type: UserActionTypes.SET_USER,
   payload: user,
 })
@@ -12,7 +12,7 @@ export const setUser = (user: IUser): UserAction => ({
 export const logout = (): UserAction => ({ type: UserActionTypes.LOGOUT })
 
 export const registration = (
-  email: string,
+  email: IUser['email'],
   password: string
 ): UserThunkAction => {
   return async (dispatch) => {
@@ -28,7 +28,7 @@ export const registration = (
   }
 }
 
-export const login = (email: string, password: string): UserThunkAction => {
+export const login = (email: IUser['email'], password: string): UserThunkAction => {
   return async (dispatch) => {
     try {
       const response = await AuthService.login(email, password)
@@ -51,7 +51,6 @@ export const checkAuth = (): UserThunkAction => {
       dispatch(setUser(response.data))
       localStorage.setItem('token', response.data.accessToken)
       dispatch(setLoading(false))
-      console.log('checkAuth')
     } catch (error) {
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
       localStorage.removeItem('token')
@@ -83,21 +82,21 @@ export const deleteAvatar = (): UserThunkAction => {
   }
 }
 
-export const setLoading = (value: any): UserAction => {
+export const setLoading = (value: UserState['loading']): UserAction => {
   return {
     type: UserActionTypes.SET_LOADING,
     payload: value,
   };
 };
 
-export const setError = (msg: any): UserAction => {
+export const setError = (msg: UserState['error']): UserAction => {
   return {
     type: UserActionTypes.SET_ERROR,
     payload: msg,
   };
 };
 
-export const setSuccess = (msg: any): UserAction => {
+export const setSuccess = (msg: UserState['success']): UserAction => {
   return {
     type: UserActionTypes.SET_SUCCESS,
     payload: msg,

@@ -1,3 +1,14 @@
+export enum FilesSort {
+  type = 'type',
+  date = 'date',
+  name = 'name'
+}
+
+export enum FilesView {
+  plate = 'plate',
+  list = 'list',
+}
+
 export interface IUploadFile {
 	id: number,
   name: string

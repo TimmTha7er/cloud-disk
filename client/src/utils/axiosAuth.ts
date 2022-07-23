@@ -36,7 +36,7 @@ axiosAuth.interceptors.response.use(
 
         return axiosAuth.request(originalRequest)
       } catch (error) {
-        console.error('НЕ АВТОРИЗОВАН')
+        console.error('Пользователь не авторизован')
       }
     }
 

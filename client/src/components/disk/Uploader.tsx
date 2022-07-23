@@ -6,9 +6,10 @@ import { hideUploader } from '../../store/actions/upload'
 import { RootState } from '../../store'
 
 const Uploader: React.FC = () => {
+  const dispatch = useDispatch()
+  
   const files = useSelector((state: RootState) => state.upload.files)
   const isVisible = useSelector((state: RootState) => state.upload.isVisible)
-  const dispatch = useDispatch()
 
   return (
     isVisible && (

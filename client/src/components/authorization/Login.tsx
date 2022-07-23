@@ -1,23 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 
 import { Input } from '../../components'
+import { IUser } from '../../models/user'
 import { RootState } from '../../store'
-import { login } from "../../store/actions/user"
+import { login, setError } from "../../store/actions/user"
 import Alert from './Alert'
 
 const Login: React.FC = () => {
+  const dispatch = useDispatch()
   const error = useSelector((state: RootState) => state.user.error)
   
-  const [email, setEmail] = useState<string>('')
+  const [email, setEmail] = useState<IUser['email']>('')
   const [password, setPassword] = useState<string>('')
-	const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setError([]))
+  }, [])
+
+  const loginClickHandler = () => {
+    dispatch(login(email, password))
+  }
 
   return (
     <div className='authorization'>
       <div className='authorization__header'>Авторизация</div>
 
-      {error.map((err: any) => 
+      {error.map((err) => 
         <Alert className='sign-in__message' type='danger' msg={err?.msg} />
       )}
 
@@ -35,7 +44,7 @@ const Login: React.FC = () => {
       />
       <button
         className='authorization__btn btn'
-        onClick={() => dispatch(login(email, password))}
+        onClick={loginClickHandler}
       >
         Войти
       </button>

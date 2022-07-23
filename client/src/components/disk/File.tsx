@@ -7,7 +7,7 @@ import { pushToStack, setCurrentDir } from '../../store/actions/file'
 import { deleteFile, downloadFile } from '../../store/actions/file'
 import sizeFormat from '../../utils/sizeFormat'
 import { RootState } from '../../store'
-import { IFile } from '../../models/file'
+import { FilesView, IFile } from '../../models/file'
 
 interface FileProps {
   file: IFile
@@ -15,6 +15,7 @@ interface FileProps {
 
 const File: React.FC<FileProps> = ({ file }) => {
   const dispatch = useDispatch()
+  
   const currentDir = useSelector((state: RootState) => state.files.currentDir)
   const fileView = useSelector((state: RootState) => state.files.view)
 
@@ -35,7 +36,7 @@ const File: React.FC<FileProps> = ({ file }) => {
     dispatch(deleteFile(file))
   }
 
-  if (fileView === 'plate') {
+  if (fileView === FilesView.plate) {
     return (
       <div className='file-plate' onClick={openDirHandler}>
         <img

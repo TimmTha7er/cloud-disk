@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { File } from '../../components'
 import { RootState } from '../../store'
-import { IFile } from '../../models/file'
+import { FilesView, IFile } from '../../models/file'
 
 const FileList: React.FC = () => {
   const files = useSelector((state: RootState) => state.files.files)
@@ -14,7 +14,7 @@ const FileList: React.FC = () => {
     return <div className='loader'>Файлы не найдены</div>
   }
 
-  if (fileView === 'plate') {
+  if (fileView === FilesView.plate) {
     return (
       <div className='fileplate'>
         {files.map((file: IFile) => (
