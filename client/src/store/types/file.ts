@@ -1,7 +1,6 @@
 import { ThunkAction } from 'redux-thunk';
-import { IFile } from '../../models/file';
+import { FilesView, IFile } from '../../models/file';
 import { RootState } from '..';
-import { AppAction } from './app';
 
 
 // action types
@@ -14,6 +13,9 @@ export enum FileActionTypes {
 	DELETE_FILE = 'file/DELETE_FILE',
 	SET_VIEW = 'file/SET_VIEW',
 	SET_DEFAULT = 'file/SET_DEFAULT',
+  SET_LOADING = 'file/SET_LOADING',
+  SET_ERROR = 'file/SET_ERROR',
+  SET_SUCCESS = 'file/SET_SUCCESS',
 }
 
 // reducer
@@ -22,7 +24,10 @@ export interface FileState {
   currentDir: string | null,
 	popupDisplay: 'none' | 'flex',
   dirStack: [],
-  view: 'list' | 'plate',
+  view: FilesView,
+  loading: boolean
+  error: { value: string, msg: string }[]
+  success: string
 }
 
 // actions
@@ -65,6 +70,21 @@ interface SetDefault {
   type: typeof FileActionTypes.SET_DEFAULT;
 }
 
+interface SetLoading {
+  type: typeof FileActionTypes.SET_LOADING
+  payload: FileState['loading']
+}
+
+interface SetError {
+  type: typeof FileActionTypes.SET_ERROR;
+  payload: FileState['error']
+}
+
+interface SetSuccess {
+  type: typeof FileActionTypes.SET_SUCCESS;
+  payload: FileState['success']
+}
+
 export type FileAction =
   | SetFiles
   | SetCurrentDir
@@ -73,7 +93,9 @@ export type FileAction =
   | PushToStack
   | DeleteFile
   | SetView
-  | SetDefault
-  | AppAction;
+  | SetDefault 
+  | SetLoading 
+  | SetError 
+  | SetSuccess
 
 export type FileThunkAction = ThunkAction<void, RootState, null, FileAction>;

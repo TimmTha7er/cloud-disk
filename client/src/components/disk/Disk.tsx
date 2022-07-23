@@ -11,16 +11,18 @@ import {
 } from '../../store/actions/file'
 import { RootState } from '../../store'
 import Alert from '../authorization/Alert'
+import { FilesSort, FilesView } from '../../models/file'
 
 const Disk: React.FC = () => {
   const dispatch = useDispatch()
+  
   const currentDir = useSelector((state: RootState) => state.files.currentDir)
-  const loading = useSelector((state: RootState) => state.user.loading)
+  const loading = useSelector((state: RootState) => state.files.loading)
   const dirStack = useSelector((state: RootState) => state.files.dirStack)
   const currentUser = useSelector((state: RootState) => state.user.currentUser)
 
-  const [dragEnter, setDragEnter] = useState(false)
-  const [sort, setSort] = useState('type')
+  const [dragEnter, setDragEnter] = useState<boolean>(false)
+  const [sort, setSort] = useState<FilesSort>(FilesSort.type)
 
   useEffect(() => {
     dispatch(getFiles(currentDir, sort))
@@ -72,7 +74,6 @@ const Disk: React.FC = () => {
       </div>
     )
   }
-  
 
   return !dragEnter ? (
     <div
@@ -90,10 +91,10 @@ const Disk: React.FC = () => {
       )}
 
       <div className='disk__btns'>
-        <button className='disk__back btn' onClick={() => backClickHandler()}>
+        <button className='disk__back btn' onClick={backClickHandler}>
           Назад
         </button>
-        <button className='disk__create btn' onClick={() => showPopupHandler()}>
+        <button className='disk__create btn' onClick={showPopupHandler}>
           Создать папку
         </button>
         <div className='disk__upload'>
@@ -110,20 +111,20 @@ const Disk: React.FC = () => {
         </div>
         <select
           value={sort}
-          onChange={(e) => setSort(e.target.value)}
+          onChange={(e) => setSort(e.target.value as FilesSort)}
           className='disk__select'
         >
-          <option value='name'>По имени</option>
-          <option value='type'>По типу</option>
-          <option value='date'>По дате</option>
+          <option value={FilesSort.name}>По имени</option>
+          <option value={FilesSort.type}>По типу</option>
+          <option value={FilesSort.date}>По дате</option>
         </select>
         <button
           className='disk__plate'
-          onClick={() => dispatch(setFileView('plate'))}
+          onClick={() => dispatch(setFileView(FilesView.plate))}
         />
         <button
           className='disk__list'
-          onClick={() => dispatch(setFileView('list'))}
+          onClick={() => dispatch(setFileView(FilesView.list))}
         />
       </div>
       <FileList />

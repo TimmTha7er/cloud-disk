@@ -1,4 +1,3 @@
-import { hideLoader, showLoader } from '../actions/app'
 import FileService from '../../services/FileService'
 import {
   FileActionTypes,
@@ -6,10 +5,10 @@ import {
   FileState,
   FileAction,
 } from '../types/file'
-import { IFile } from '../../models/file'
+import { IFile, FilesSort } from '../../models/file'
 import { AxiosError } from 'axios'
 
-export const setFiles = (files: IFile[]): FileAction => ({
+export const setFiles = (files: FileState['files']): FileAction => ({
   type: FileActionTypes.SET_FILES,
   payload: files,
 })
@@ -34,7 +33,7 @@ export const pushToStack = (dir: FileState['currentDir']): FileAction => ({
   payload: dir,
 })
 
-export const deleteFileAction = (dirId: string): FileAction => ({
+export const deleteFileAction = (dirId: IFile['id']): FileAction => ({
   type: FileActionTypes.DELETE_FILE,
   payload: dirId,
 })
@@ -46,10 +45,10 @@ export const setFileView = (view: FileState['view']): FileAction => ({
 
 export const setDefault = (): FileAction => ({ type: FileActionTypes.SET_DEFAULT })
 
-export const getFiles = (dirId: string | null, sort?: string): FileThunkAction => {
+export const getFiles = (dirId: IFile['id'] | null, sort?: FilesSort): FileThunkAction => {
   return async (dispatch) => {
     try {
-      dispatch(showLoader())
+      dispatch(setLoading(true))
 
       const response = await FileService.getFiles(dirId, sort)
 
@@ -57,16 +56,14 @@ export const getFiles = (dirId: string | null, sort?: string): FileThunkAction =
     } catch (error) {
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     } finally {
-      dispatch(hideLoader())
+      dispatch(setLoading(false))
     }
   }
 }
 
-export const createDir = (dirId: string | null, name: string): FileThunkAction => {
+export const createDir = (dirId: IFile['id'] | null, name: IFile['name']): FileThunkAction => {
   return async (dispatch) => {
     try {
-      console.log('dirId', dirId)
-      console.log('name', name)
       const response = await FileService.createDir(dirId, name)
 
       dispatch(addFile(response.data))
@@ -76,7 +73,7 @@ export const createDir = (dirId: string | null, name: string): FileThunkAction =
   }
 }
 
-export const uploadFile = (file: File, dirId: string | null): FileThunkAction => {
+export const uploadFile = (file: File, dirId: IFile['id']  | null): FileThunkAction => {
   return async (dispatch) => {
     try {
       const response = await FileService.uploadFile(file, dirId, dispatch)
@@ -114,7 +111,28 @@ export const searchFiles = (search: string): FileThunkAction => {
     } catch (error) {
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     } finally {
-      dispatch(hideLoader())
+      dispatch(setLoading(false))
     }
   }
 }
+
+export const setLoading = (value: FileState['loading']): FileAction => {
+  return {
+    type: FileActionTypes.SET_LOADING,
+    payload: value,
+  };
+};
+
+export const setError = (msg: FileState['error']): FileAction => {
+  return {
+    type: FileActionTypes.SET_ERROR,
+    payload: msg,
+  };
+};
+
+export const setSuccess = (msg: FileState['success']): FileAction => {
+  return {
+    type: FileActionTypes.SET_SUCCESS,
+    payload: msg,
+  };
+};

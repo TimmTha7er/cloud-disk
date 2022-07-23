@@ -5,8 +5,7 @@ import { Link, NavLink } from 'react-router-dom'
 import Logo from '../../assets/img/navbar-logo.svg'
 import avatarLogo from '../../assets/img/avatar.svg'
 import { logout } from '../../store/actions/user'
-import { showLoader } from '../../store/actions/app'
-import { getFiles, searchFiles } from '../../store/actions/file'
+import { getFiles, searchFiles, setLoading } from '../../store/actions/file'
 import { API_URL } from '../../config'
 import { setDefault } from '../../store/actions/file'
 import { RootState } from '../../store'
@@ -32,7 +31,7 @@ const Navbar = () => {
       clearTimeout(searchTimeout)
     }
 
-    dispatch(showLoader())
+    dispatch(setLoading(true))
 
     if (event.target.value !== '') {
       const timerId: ReturnType<typeof setTimeout> = setTimeout(
@@ -72,7 +71,7 @@ const Navbar = () => {
         {isAuth && (
           <input
             value={searchName}
-            onChange={(e) => searchChangeHandler(e)}
+            onChange={searchChangeHandler}
             className='navbar__search'
             type='text'
             placeholder='Название файла...'

@@ -16,7 +16,7 @@ export interface UserState {
   currentUser: IUser | null
   isAuth: Boolean
   loading: boolean
-  error: []
+  error: { value: string, msg: string }[]
   success: string
 }
 
@@ -31,20 +31,25 @@ interface Logout {
 }
 
 interface SetLoading {
-  type: typeof UserActionTypes.SET_LOADING;
-  payload: UserState['loading'];
+  type: typeof UserActionTypes.SET_LOADING
+  payload: UserState['loading']
 }
 
 interface SetError {
   type: typeof UserActionTypes.SET_ERROR;
-  payload: UserState['error'];
+  payload: UserState['error']
 }
 
 interface SetSuccess {
   type: typeof UserActionTypes.SET_SUCCESS;
-  payload: UserState['success'];
+  payload: UserState['success']
 }
 
-export type UserAction = SetUser | Logout | SetLoading | SetError | SetSuccess
+export type UserAction = 
+  SetUser 
+| Logout 
+| SetLoading 
+| SetError 
+| SetSuccess
 
 export type UserThunkAction = ThunkAction<void, RootState, null, UserAction>

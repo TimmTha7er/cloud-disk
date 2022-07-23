@@ -22,6 +22,7 @@ export default function userReducer(
         error: [],
       }
     }
+
     case UserActionTypes.LOGOUT: {
       localStorage.removeItem('token')
 
@@ -31,6 +32,7 @@ export default function userReducer(
         error: [],
       }
     }
+    
     case UserActionTypes.SET_LOADING: {
       return {
         ...state,
@@ -42,7 +44,8 @@ export default function userReducer(
     case UserActionTypes.SET_ERROR: {
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        loading: false,
       }
     }
 
