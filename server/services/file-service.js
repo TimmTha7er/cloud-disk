@@ -62,10 +62,35 @@ class FileService {
 
     const path = this.getPath(filePath, file)
 
-    if (file.type === 'dir') {
-      fs.rmdirSync(path)
-    } else {
-      fs.unlinkSync(path)
+    await this.deleteDbFiles(file, userId)
+    fs.rmSync(path, { recursive: true, force: true })
+  }
+
+  deleteDbFiles = async (file, userId) => {
+    const children = file.children
+
+    if (children.length === 0) {
+      return
+    }
+
+    for (let idx = 0; idx < children.length; idx++) {
+      const childId = children[idx]
+      const nestedFile = await File.findOne({ _id: childId, user: userId })
+
+      if (nestedFile.parent) {
+        const parentFile = await File.findOne({ _id: nestedFile.parent })
+
+        if (parentFile) {
+          parentFile.children = parentFile.children.filter(
+            (id) => id.toString() !== nestedFile._id.toString()
+          )
+
+          await parentFile.save()
+        }
+      }
+
+      await nestedFile.remove()
+      await this.deleteDbFiles(nestedFile, userId)
     }
 
     await file.remove()
@@ -105,7 +130,7 @@ class FileService {
     const path = this.getPath(filePath, file)
 
     if (fs.existsSync(path)) {
-      throw ApiError.BadRequest(`File already exist`)
+      throw ApiError.BadRequest(`Файл "${file.name}" уже есть`)
     }
 
     fs.mkdirSync(path)
@@ -119,7 +144,7 @@ class FileService {
     const user = await User.findOne({ _id: userId })
 
     if (user.usedSpace + file.size > user.diskSpace) {
-      throw ApiError.BadRequest(`There no space on the disk`)
+      throw ApiError.BadRequest(`Нет места на диске`)
     }
 
     user.usedSpace = user.usedSpace + file.size
@@ -134,10 +159,6 @@ class FileService {
       )
     } else {
       filePath = path.resolve('files', user._id.toString(), file.name)
-    }
-
-    if (fs.existsSync(filePath)) {
-      throw ApiError.BadRequest(`File "${file.name}" already exist`)
     }
 
     file.mv(filePath)
@@ -157,6 +178,11 @@ class FileService {
       parent: parent?._id,
       user: user._id,
     })
+
+    if (parent) {
+      parent.children.push(dbFile._id)
+      await parent.save()
+    }
 
     await dbFile.save()
     await user.save()
