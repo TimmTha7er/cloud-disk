@@ -54,6 +54,7 @@ export const getFiles = (dirId: IFile['id'] | null, sort?: FilesSort): FileThunk
 
       dispatch(setFiles(response.data))
     } catch (error) {
+      dispatch(setError((error as AxiosError)?.response?.data?.errors))
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     } finally {
       dispatch(setLoading(false))
@@ -68,6 +69,7 @@ export const createDir = (dirId: IFile['id'] | null, name: IFile['name']): FileT
 
       dispatch(addFile(response.data))
     } catch (error) {
+      dispatch(setError((error as AxiosError)?.response?.data?.errors))
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     }
   }
@@ -80,6 +82,7 @@ export const uploadFile = (file: File, dirId: IFile['id']  | null): FileThunkAct
 
       dispatch(addFile(response.data))
     } catch (error) {
+      dispatch(setError((error as AxiosError)?.response?.data?.errors))
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     }
   }
@@ -96,7 +99,9 @@ export const deleteFile = (file: IFile): FileThunkAction => {
 
       dispatch(deleteFileAction(file.id))
       console.error(response.data.message)
-    } catch (error) {
+    } catch (error: any) {
+      console.log('dfd', {...error})
+      dispatch(setError((error as AxiosError)?.response?.data?.errors))
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     }
   }
@@ -109,6 +114,7 @@ export const searchFiles = (search: string): FileThunkAction => {
 
       dispatch(setFiles(response.data))
     } catch (error) {
+      dispatch(setError((error as AxiosError)?.response?.data?.errors))
       console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
     } finally {
       dispatch(setLoading(false))

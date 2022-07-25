@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import { deleteAvatar, uploadAvatar } from '../../store/actions/user'
+import { deleteAvatar, uploadAvatar } from '../store/actions/user'
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch()
@@ -20,7 +20,9 @@ const Profile: React.FC = () => {
 
   return (
     <div className='profile'>
-      <button className='profile__btn btn' onClick={onDeleteAvatarBtnClick}>Удалить аватар</button>
+      <button className='profile__btn btn' onClick={onDeleteAvatarBtnClick}>
+        Удалить аватар
+      </button>
       <input
         className='profile__input'
         accept='image/*'

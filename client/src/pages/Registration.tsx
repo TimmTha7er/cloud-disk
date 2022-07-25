@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from 'react-redux'
 
-import { Input } from '../../components'
-import { RootState } from '../../store'
-import { registration, setError } from '../../store/actions/user'
-import Alert from './Alert'
+import { RootState } from '../store'
+import { registration, setError } from '../store/actions/user'
+import Alert from '../components/helpers/Alert'
 
 const Registration: React.FC = () => {
   const dispatch = useDispatch()
@@ -21,23 +20,31 @@ const Registration: React.FC = () => {
     dispatch(registration(email, password))
   }
 
+  const emailChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value)
+  }
+
+  const passwordChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value)
+  }
+
   return (
     <div className='authorization'>
       <div className='authorization__header'>Регистрация</div>
 
-      {error.map((err) => 
+      {error.map((err) => (
         <Alert className='sign-in__message' type='danger' msg={err?.msg} />
-      )}
+      ))}
 
-      <Input
+      <input
         value={email}
-        setValue={setEmail}
+        onChange={emailChangeHandler}
         type='email'
         placeholder='Введите email...'
       />
-      <Input
+      <input
         value={password}
-        setValue={setPassword}
+        onChange={passwordChangeHandler}
         type='password'
         placeholder='Введите пароль...'
       />

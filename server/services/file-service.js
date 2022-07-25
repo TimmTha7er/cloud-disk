@@ -66,10 +66,27 @@ class FileService {
     fs.rmSync(path, { recursive: true, force: true })
   }
 
+  deleteFromParentFile = async (file, userId) => {
+    if (file.parent) {
+      const parentFile = await File.findOne({ _id: file.parent, user: userId })
+
+      if (parentFile) {
+        parentFile.children = parentFile.children.filter(
+          (id) => id.toString() !== file._id.toString()
+        )
+
+        await parentFile.save()
+      }
+    }
+  }
+
   deleteDbFiles = async (file, userId) => {
     const children = file.children
 
     if (children.length === 0) {
+      await this.deleteFromParentFile(file, userId)
+      await file.remove()
+
       return
     }
 
@@ -77,18 +94,7 @@ class FileService {
       const childId = children[idx]
       const nestedFile = await File.findOne({ _id: childId, user: userId })
 
-      if (nestedFile.parent) {
-        const parentFile = await File.findOne({ _id: nestedFile.parent })
-
-        if (parentFile) {
-          parentFile.children = parentFile.children.filter(
-            (id) => id.toString() !== nestedFile._id.toString()
-          )
-
-          await parentFile.save()
-        }
-      }
-
+      await this.deleteFromParentFile(nestedFile, userId)
       await nestedFile.remove()
       await this.deleteDbFiles(nestedFile, userId)
     }

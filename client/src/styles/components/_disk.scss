@@ -3,6 +3,11 @@ $component: 'disk';
 .#{$component} {
   margin-top: 40px;
 
+  &__alert {
+    margin-top: -12px;
+    margin-bottom: 16px !important;
+  }
+
   &__btns {
     display: flex;
     align-items: center;

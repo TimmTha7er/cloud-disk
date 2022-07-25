@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import dirLogo from '../../assets/img/dir.svg'
 import fileLogo from '../../assets/img/file.svg'
@@ -14,6 +15,7 @@ interface FileProps {
 }
 
 const File: React.FC<FileProps> = ({ file }) => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   
   const currentDir = useSelector((state: RootState) => state.files.currentDir)
@@ -21,6 +23,8 @@ const File: React.FC<FileProps> = ({ file }) => {
 
   const openDirHandler = () => {
     if (file.type === 'dir') {
+      navigate(`${file.id}`)
+      
       dispatch(pushToStack(currentDir))
       dispatch(setCurrentDir(file.id))
     }
@@ -49,16 +53,16 @@ const File: React.FC<FileProps> = ({ file }) => {
           {file.type !== 'dir' && (
             <button
               onClick={downloadClickHandler}
-              className='file-plate__btn file-plate__download'
+              className='file-plate__btn file-plate__download btn btn_sm'
             >
-              download
+              скачать
             </button>
           )}
           <button
             onClick={deleteClickHandler}
-            className='file-plate__btn file-plate__delete'
+            className='file-plate__btn file-plate__delete btn btn_sm'
           >
-            delete
+            удалить
           </button>
         </div>
       </div>
@@ -66,7 +70,7 @@ const File: React.FC<FileProps> = ({ file }) => {
   }
 
   return (
-    <div className='file' onClick={() => openDirHandler()}>
+    <div className='file' onClick={openDirHandler}>
       <img
         src={file.type === 'dir' ? dirLogo : fileLogo}
         alt=''
@@ -80,14 +84,14 @@ const File: React.FC<FileProps> = ({ file }) => {
       {file.type !== 'dir' && (
         <button
           className='file__btn file__download btn btn_sm'
-          onClick={(event) => downloadClickHandler(event)}
+          onClick={downloadClickHandler}
         >
           скачать
         </button>
       )}
       <button
         className='file__btn file__delete btn btn_sm'
-        onClick={(event) => deleteClickHandler(event)}
+        onClick={deleteClickHandler}
       >
         удалить
       </button>
