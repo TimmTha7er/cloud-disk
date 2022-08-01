@@ -21,11 +21,17 @@ const FileOrder: React.FC = () => {
     dispatch(setFileView(viewType))
   }
 
+  const fileSortHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value as FilesSort
+
+    setSort(value)
+  }
+
   return (
     <>
       <select
         value={sort}
-        onChange={(e) => setSort(e.target.value as FilesSort)}
+        onChange={fileSortHandler}
         className='disk__select'
       >
         <option value={FilesSort.name}>По имени</option>

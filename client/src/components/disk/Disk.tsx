@@ -16,7 +16,6 @@ const Disk: React.FC = () => {
 
   const [dragEnter, setDragEnter] = useState<boolean>(false)
 
-
   const dragEnterHandler = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
     setDragEnter(true)

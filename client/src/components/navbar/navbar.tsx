@@ -8,15 +8,6 @@ import { Search, UserBar } from '../../components'
 
 const Navbar = () => {
   const isAuth = useSelector((state: RootState) => state.user.isAuth)
-  const loading = useSelector((state: RootState) => state.user.loading)
-
-  if (loading) {
-    return (
-      <div className='loader'>
-        <div className='loader__dual-ring'></div>
-      </div>
-    )
-  }
 
   return (
     <div className='navbar'>

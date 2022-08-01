@@ -7,7 +7,9 @@ import Alert from '../components/helpers/Alert'
 
 const Registration: React.FC = () => {
   const dispatch = useDispatch()
+
   const error = useSelector((state: RootState) => state.user.error)
+  const loading = useSelector((state: RootState) => state.user.loading)
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -26,6 +28,14 @@ const Registration: React.FC = () => {
 
   const passwordChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value)
+  }
+  
+  if (loading) {
+    return (
+      <div className='loader'>
+        <div className='loader__dual-ring'></div>
+      </div>
+    )
   }
 
   return (
