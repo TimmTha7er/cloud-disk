@@ -1,23 +1,20 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux'
 
-import { setCurrentDir, setPopupDisplay } from '../../store/actions/file'
-import { RootState } from '../../store'
+import { setPopupDisplay } from '../../store/actions/file'
 import { FileOrder, UploadButton } from '../../components'
 
 const ControlPanel: React.FC = () => {
   const dispatch = useDispatch()
-
-  const dirStack = useSelector((state: RootState) => state.files.dirStack)
+  const navigate = useNavigate()
 
   const showPopupHandler = () => {
     dispatch(setPopupDisplay('flex'))
   }
 
   const backClickHandler = () => {
-    const backDirId = dirStack.pop() || null
-
-    dispatch(setCurrentDir(backDirId))
+    navigate(-1)
   }
 
   return (

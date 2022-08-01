@@ -9,7 +9,6 @@ export enum FileActionTypes {
 	SET_CURRENT_DIR = 'file/SET_CURRENT_DIR',
 	ADD_FILE = 'file/ADD_FILE',
 	SET_POPUP_DISPLAY = 'file/SET_POPUP_DISPLAY',
-	PUSH_TO_STACK = 'file/PUSH_TO_STACK',
 	DELETE_FILE = 'file/DELETE_FILE',
 	SET_VIEW = 'file/SET_VIEW',
 	SET_DEFAULT = 'file/SET_DEFAULT',
@@ -23,7 +22,6 @@ export interface FileState {
 	files: IFile[],
   currentDir: string | null,
 	popupDisplay: 'none' | 'flex',
-  dirStack: [],
   view: FilesView,
   loading: boolean
   error: { value: string, msg: string }[]
@@ -49,11 +47,6 @@ interface AddFile {
 interface SetPopupDisplay {
   type: typeof FileActionTypes.SET_POPUP_DISPLAY;
 	payload: FileState['popupDisplay'];
-}
-
-interface PushToStack {
-  type: typeof FileActionTypes.PUSH_TO_STACK;
-	payload: FileState['currentDir'];
 }
 
 interface DeleteFile {
@@ -90,7 +83,6 @@ export type FileAction =
   | SetCurrentDir
   | AddFile
   | SetPopupDisplay
-  | PushToStack
   | DeleteFile
   | SetView
   | SetDefault 

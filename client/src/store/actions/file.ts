@@ -28,11 +28,6 @@ export const setPopupDisplay = (display: FileState['popupDisplay']): FileAction 
   payload: display,
 })
 
-export const pushToStack = (dir: FileState['currentDir']): FileAction => ({
-  type: FileActionTypes.PUSH_TO_STACK,
-  payload: dir,
-})
-
 export const deleteFileAction = (dirId: IFile['id']): FileAction => ({
   type: FileActionTypes.DELETE_FILE,
   payload: dirId,

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import dirLogo from '../../assets/img/dir.svg'
 import fileLogo from '../../assets/img/file.svg'
-import { pushToStack, setCurrentDir } from '../../store/actions/file'
+import { setCurrentDir } from '../../store/actions/file'
 import { deleteFile, downloadFile } from '../../store/actions/file'
 import sizeFormat from '../../utils/sizeFormat'
 import { RootState } from '../../store'
@@ -25,7 +25,6 @@ const File: React.FC<FileProps> = ({ file }) => {
     if (file.type === 'dir') {
       navigate(`${file.id}`)
       
-      dispatch(pushToStack(currentDir))
       dispatch(setCurrentDir(file.id))
     }
   }

@@ -5,7 +5,6 @@ const initialState: FileState = {
   files: [],
   currentDir: null,
   popupDisplay: 'none',
-  dirStack: [],
   view: FilesView.list,
   loading: true,
   error: [],
@@ -36,11 +35,6 @@ export default function fileReducer(
 
     case FileActionTypes.SET_POPUP_DISPLAY: {
       return { ...state, popupDisplay: action.payload }
-    }
-
-    case FileActionTypes.PUSH_TO_STACK: {
-      // @ts-ignore: Unreachable code error
-      return { ...state, dirStack: [...state.dirStack, action.payload] }
     }
 
     case FileActionTypes.DELETE_FILE: {
