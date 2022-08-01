@@ -18,7 +18,6 @@ const File: React.FC<FileProps> = ({ file }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   
-  const currentDir = useSelector((state: RootState) => state.files.currentDir)
   const fileView = useSelector((state: RootState) => state.files.view)
 
   const openDirHandler = () => {

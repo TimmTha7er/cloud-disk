@@ -1,26 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import { File } from '../../components'
 import { RootState } from '../../store'
 import { FilesView, IFile } from '../../models/file'
-import { setCurrentDir } from '../../store/actions/file'
 
 const FileList: React.FC = () => {
-  const dispatch = useDispatch()
-  const location = useLocation()
-
   const files = useSelector((state: RootState) => state.files.files)
   const fileView = useSelector((state: RootState) => state.files.view)
   const loading = useSelector((state: RootState) => state.files.loading)
-
-  useEffect(() => {
-    const { pathname } = location;
-    console.log("New path:", pathname)
-    dispatch(setCurrentDir(pathname.slice(1) || null))
-  }, [location.pathname])
 
   if (loading) {
     return (

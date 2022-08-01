@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 
-import { getFiles } from '../../store/actions/file'
-import { setFileView } from '../../store/actions/file'
-import { RootState } from '../../store'
+import { setFileView, setCurrentDir, getFiles } from '../../store/actions/file'
 import { FilesSort, FilesView } from '../../models/file'
 
 const FileOrder: React.FC = () => {
   const dispatch = useDispatch()
-
-  const currentDir = useSelector((state: RootState) => state.files.currentDir)
+  const location = useLocation()
 
   const [sort, setSort] = useState<FilesSort>(FilesSort.type)
 
   useEffect(() => {
+    const currentDir = location.pathname.slice(1)
+    
     dispatch(getFiles(currentDir, sort))
-  }, [currentDir, sort])
+    dispatch(setCurrentDir(currentDir || null))
+  }, [location.pathname, sort])
 
   const viewClickHandler = (viewType: FilesView) => () => {
     dispatch(setFileView(viewType))
