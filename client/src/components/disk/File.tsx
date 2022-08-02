@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import classNames from 'classnames'
 
 import dirLogo from '../../assets/img/dir.svg'
 import fileLogo from '../../assets/img/file.svg'
@@ -19,7 +20,6 @@ const File: React.FC<FileProps> = ({ file }) => {
   const dispatch = useDispatch()
 
   const fileView = useSelector((state: RootState) => state.files.view)
-  const plate = fileView === FilesView.plate ? 'file_plate' : ''
 
   const openDirHandler = () => {
     if (file.type === 'dir') {
@@ -40,14 +40,19 @@ const File: React.FC<FileProps> = ({ file }) => {
   }
 
   return (
-    <div className={`file ${plate}`} onClick={openDirHandler}>
+    <div
+      className={classNames('file', {
+        file_plate: fileView === FilesView.plate,
+      })}
+      onClick={openDirHandler}
+    >
       <img
         src={file.type === 'dir' ? dirLogo : fileLogo}
         alt=''
         className='file__img'
       />
       <div className='file__name'>{file.name}</div>
-      
+
       <div className='file__date'>{file.date.slice(0, 10)}</div>
       <div className='file__size'>{sizeFormat(file.size)}</div>
 

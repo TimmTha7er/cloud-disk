@@ -1,6 +1,6 @@
 import React from 'react'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { useSelector } from 'react-redux'
+import classNames from 'classnames'
 
 import { File } from '../../components'
 import { RootState } from '../../store'
@@ -23,37 +23,24 @@ const FileList: React.FC = () => {
     return <div className='loader'>Файлы не найдены</div>
   }
 
-  if (fileView === FilesView.plate) {
-    return (
-      <div className='fileplate'>
-        {files.map((file: IFile) => (
-          <File key={file.id} file={file} />
-        ))}
-      </div>
-    )
-  }
-
-  // list
   return (
-    <div className='filelist'>
-      <div className='filelist__header'>
-        <div className='filelist__name'>Название</div>
-        <div className='filelist__date'>Дата</div>
-        <div className='filelist__size'>Размер</div>
-      </div>
+    <div
+      className={classNames(
+        { filelist: fileView === FilesView.list },
+        { fileplate: fileView === FilesView.plate }
+      )}
+    >
+      {fileView === FilesView.list && (
+        <div className='filelist__header'>
+          <div className='filelist__name'>Название</div>
+          <div className='filelist__date'>Дата</div>
+          <div className='filelist__size'>Размер</div>
+        </div>
+      )}
 
-      <TransitionGroup>
-        {files.map((file) => (
-          <CSSTransition
-            key={file.id}
-            timeout={500}
-            classNames={'file'}
-            exit={false}
-          >
-            <File key={file.id} file={file} />
-          </CSSTransition>
-        ))}
-      </TransitionGroup>
+      {files.map((file: IFile) => (
+        <File key={file.id} file={file} />
+      ))}
     </div>
   )
 }
