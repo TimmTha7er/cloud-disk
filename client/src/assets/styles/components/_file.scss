@@ -15,22 +15,26 @@ $component: 'file';
     transition: transform 0.1s ease-in-out;
 
     .#{$component} {
+      &__btns {
+        display: flex;
+      }
+
       &__date {
-        grid-column-start: 3;
+        grid-column-start: 4;
       }
 
       &__size {
-        grid-column-start: 4;
+        grid-column-start: 5;
       }
 
       &__download {
         display: block;
-        grid-column-start: 5;
+        grid-column-start: 6;
       }
 
       &__delete {
         display: block;
-        grid-column-start: 6;
+        grid-column-start: 7;
         margin-left: 8px;
       }
     }
@@ -56,32 +60,34 @@ $component: 'file';
     display: none;
   }
 
-  &-plate {
+  &_plate {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 128px;
     height: 128px;
 
+    border: 0;
     cursor: pointer;
 
-    &__img {
-      width: 88px;
-      height: 88px;
+    .#{$component}__img {
+      max-width: 88px;
+      max-height: 88px;
     }
 
-    &__btns {
+    .#{$component}__data,
+    .#{$component}__size {
       display: none;
     }
 
-    &__name {
+    .#{$component}__name {
       margin-top: 8px;
 
       text-align: center;
     }
 
     &:hover {
-      .#{$component}-plate__btns {
+      .#{$component}__btns {
         display: flex;
       }
     }

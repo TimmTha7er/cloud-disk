@@ -47,6 +47,8 @@ export const getFiles = (dirId: IFile['id'] | null, sort?: FilesSort): FileThunk
 
       const response = await FileService.getFiles(dirId, sort)
 
+      console.log('response', response)
+
       dispatch(setFiles(response.data))
     } catch (error) {
       dispatch(setError((error as AxiosError)?.response?.data?.errors))
