@@ -9,9 +9,24 @@ $component: 'navbar';
 
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 
+  @media only screen and (max-width: 768px) {
+    align-items: flex-start;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
   &__col {
     display: flex;
     align-items: center;
+
+    @media only screen and (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      &:last-child {
+        flex-direction: column-reverse;
+      }
+    }
   }
 
   &__link {
@@ -28,7 +43,7 @@ $component: 'navbar';
     margin-left: 12px;
 
     font-weight: 700;
-    font-size: 24px;
+    font-size: 30px;
   }
 
   &__login {
@@ -36,6 +51,16 @@ $component: 'navbar';
     margin-left: auto;
 
     cursor: pointer;
+
+    @media only screen and (max-width: 768px) {
+      margin-right: 0;
+    }
+  }
+
+  &__registration {
+    @media only screen and (max-width: 768px) {
+      margin-bottom: 16px;
+    }
   }
 
   &__search {
@@ -49,6 +74,11 @@ $component: 'navbar';
       color: rgba(0, 0, 0, 0.3);
       font-size: 16px;
     }
+
+    @media only screen and (max-width: 768px) {
+      margin-top: 16px;
+      margin-left: 0;
+    }
   }
 
   &__avatar {
@@ -56,5 +86,9 @@ $component: 'navbar';
     height: 40px;
 
     border-radius: 50%;
+
+    @media only screen and (max-width: 768px) {
+      margin-bottom: 4px;
+    }
   }
 }

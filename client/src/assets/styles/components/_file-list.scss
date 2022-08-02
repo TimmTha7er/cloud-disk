@@ -8,6 +8,10 @@ $component: 'filelist';
     grid-template-columns: 1fr 4fr repeat(4, 1fr);
 
     font-size: 18px;
+
+    @media only screen and (max-width: 768px) {
+      display: none;
+    }
   }
 
   &__name {

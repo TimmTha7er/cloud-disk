@@ -1,4 +1,6 @@
 body {
+  min-width: 480px;
+
   font-family: 'Roboto Condensed', Arial, sans-serif;
 
   background-color: rgba(34, 34, 34, 0.1);
@@ -13,7 +15,7 @@ body {
 
   background-color: #ffffff;
 
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width: 768px) {
     max-width: 480px;
   }
 }

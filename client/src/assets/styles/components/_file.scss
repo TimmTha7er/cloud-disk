@@ -9,6 +9,12 @@ $component: 'file';
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 
+  @media only screen and (max-width: 768px) {
+    display: flex;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
   &:hover {
     transform: scale(1.02);
 
@@ -44,20 +50,45 @@ $component: 'file';
     justify-self: center;
     max-width: 48px;
     max-height: 48px;
+
+    @media only screen and (max-width: 768px) {
+      margin-right: 16px;
+    }
   }
 
   &__date {
     grid-column-start: 5;
     justify-self: center;
+
+    @media only screen and (max-width: 768px) {
+      display: none;
+    }
   }
 
   &__size {
     grid-column-start: 6;
     justify-self: center;
+
+    @media only screen and (max-width: 768px) {
+      display: none;
+    }
   }
 
   &__btn {
     display: none;
+
+    @media only screen and (max-width: 768px) {
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
+
+  &__btns {
+    margin-left: auto;
+
+    @media only screen and (max-width: 768px) {
+      display: block;
+    }
   }
 
   &_plate {
@@ -69,6 +100,15 @@ $component: 'file';
 
     border: 0;
     cursor: pointer;
+
+    @media only screen and (max-width: 768px) {
+      margin-bottom: 40px;
+
+      .#{$component}__btn {
+        margin-top: 4px;
+        margin-bottom: 8px;
+      }
+    }
 
     .#{$component}__img {
       max-width: 88px;
@@ -98,6 +138,10 @@ $component: 'file';
   display: flex;
   flex-wrap: wrap;
   margin: 32px 0 0 16px;
+
+  @media only screen and (max-width: 768px) {
+    margin-top: 0;
+  }
 }
 
 .file-enter-active {

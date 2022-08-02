@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { IUser } from '../models/user'
 import { RootState } from '../store'
@@ -7,6 +8,7 @@ import { login, setError } from '../store/actions/user'
 import Alert from '../components/helpers/Alert'
 
 const Login: React.FC = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const error = useSelector((state: RootState) => state.user.error)
@@ -21,6 +23,7 @@ const Login: React.FC = () => {
 
   const loginClickHandler = () => {
     dispatch(login(email, password))
+    navigate('/')
   }
 
   const emailChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
