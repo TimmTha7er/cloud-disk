@@ -27,7 +27,7 @@ $component: 'popup';
     flex-direction: column;
     width: 100%;
     max-width: 480px;
-    padding: 32px;
+    padding: 20px;
 
     background: white;
     border-radius: 12px;
@@ -44,10 +44,18 @@ $component: 'popup';
 
   &__close {
     position: absolute;
-    top: 24px;
-    right: 32px;
+    top: 12px;
+    right: 12px;
 
     padding: 8px 16px;
+
+    color: #000000;
+
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 
   input {

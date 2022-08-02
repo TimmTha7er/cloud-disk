@@ -7,23 +7,33 @@ $component: 'uploader';
 
   width: 300px;
   height: 300px;
-  padding: 24px;
+  padding: 16px 16px;
   overflow-y: auto;
 
-  background-color: #566885;
+  background-color: rgba(95, 15, 255, 0.9);
   border-radius: 12px;
+  box-shadow: 0 0 0 1px rgb(34 34 34 / 10%);
 
   &__header {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
   }
 
   &__title {
-    color: #e9e6e6;
-    font-size: 1.2rem;
+    color: #ffffff;
+    font-size: 1.3rem;
   }
 
   &__close {
-    padding: 3px;
+    position: absolute;
+    top: 16px;
+    right: 12px;
+
+    color: #ffffff;
+
+    background: transparent;
+    border: 0;
+    cursor: pointer;
   }
 }
