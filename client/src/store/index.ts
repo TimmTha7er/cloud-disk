@@ -1,9 +1,8 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux'
-import thunk from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
-import fileReducer from './reducers/fileReducer'
-import uploadReducer from './reducers/uploadReducer'
-import userReducer from './reducers/userReducer'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+
+import userReducer from './reducers/user'
+import fileReducer from './reducers/file'
+import uploadReducer from './reducers/upload'
 
 const rootReducer = combineReducers({
   files: fileReducer,
@@ -11,10 +10,14 @@ const rootReducer = combineReducers({
   user: userReducer,
 })
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-)
+const setupStore = () => {
+  return configureStore({
+    reducer: rootReducer,
+  })
+}
 
 export type RootState = ReturnType<typeof rootReducer>
-export default store
+export type AppStore = ReturnType<typeof setupStore>
+export type AppDispatch = AppStore['dispatch']
+
+export default setupStore

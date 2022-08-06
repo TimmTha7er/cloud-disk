@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { checkAuth, setLoading } from '../store/actions/user'
-import { RootState } from '../store'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { checkAuth } from '../store/actions/user'
+import { setLoading } from '../store/reducers/user'
 import { authRoutes, publicRoutes } from '../utils/routes'
 
 const AppRouter: React.FC = () => {
-  const isAuth = useSelector((state: RootState) => state.user.isAuth)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+  const isAuth = useAppSelector((state) => state.user.isAuth)
 
   useEffect(() => {
     const token = localStorage.getItem('token')

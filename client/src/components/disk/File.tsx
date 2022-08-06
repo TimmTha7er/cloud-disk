@@ -1,14 +1,13 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { setCurrentDir } from '../../store/reducers/file'
+import { deleteFile, downloadFile } from '../../store/actions/file'
 import dirLogo from '../../assets/img/dir.svg'
 import fileLogo from '../../assets/img/file.svg'
-import { setCurrentDir } from '../../store/actions/file'
-import { deleteFile, downloadFile } from '../../store/actions/file'
 import sizeFormat from '../../utils/sizeFormat'
-import { RootState } from '../../store'
 import { FilesView, IFile } from '../../models/file'
 
 interface FileProps {
@@ -17,9 +16,8 @@ interface FileProps {
 
 const File: React.FC<FileProps> = ({ file }) => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-
-  const fileView = useSelector((state: RootState) => state.files.view)
+  const dispatch = useAppDispatch()
+  const fileView = useAppSelector((state) => state.files.view)
 
   const openDirHandler = () => {
     if (file.type === 'dir') {
@@ -31,11 +29,13 @@ const File: React.FC<FileProps> = ({ file }) => {
 
   const downloadClickHandler = (event: React.MouseEvent) => {
     event.stopPropagation()
+
     downloadFile(file)
   }
 
   const deleteClickHandler = (event: React.MouseEvent) => {
     event.stopPropagation()
+
     dispatch(deleteFile(file))
   }
 

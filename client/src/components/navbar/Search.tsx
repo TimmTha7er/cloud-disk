@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { getFiles, searchFiles, setLoading } from '../../store/actions/file'
-import { RootState } from '../../store'
+import { getFiles, searchFiles } from '../../store/actions/file'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { setLoading } from '../../store/reducers/file'
 
 const Search = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+  const currentDir = useAppSelector((state) => state.files.currentDir)
 
   const [searchName, setSearchName] = useState<string>('')
   const [searchTimeout, setSearchTimeout] = useState<number>(0)
-
-  const currentDir = useSelector((state: RootState) => state.files.currentDir)
 
   const searchChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchName(event.target.value)

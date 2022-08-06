@@ -1,17 +1,16 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { logout } from '../../store/reducers/user'
+import { setDefault } from '../../store/reducers/file'
 import avatarLogo from '../../assets/img/avatar.svg'
-import { logout } from '../../store/actions/user'
 import { API_URL } from '../../config'
-import { setDefault } from '../../store/actions/file'
-import { RootState } from '../../store'
 
 const UserBar = () => {
-  const isAuth = useSelector((state: RootState) => state.user.isAuth)
-  const currentUser = useSelector((state: RootState) => state.user.currentUser)
-  const dispatch = useDispatch()
+  const isAuth = useAppSelector((state) => state.user.isAuth)
+  const currentUser = useAppSelector((state) => state.user.currentUser)
+  const dispatch = useAppDispatch()
 
   const avatar = currentUser?.avatar
     ? `${API_URL + currentUser.avatar}`

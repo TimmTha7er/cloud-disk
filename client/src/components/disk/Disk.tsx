@@ -1,18 +1,16 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { uploadFile } from '../../store/actions/file'
 import { ControlPanel, FileList, Uploader } from '../../components'
 import Popup from '../popups/Popup'
-import { RootState } from '../../store'
 import Alert from '../helpers/Alert'
 
 const Disk: React.FC = () => {
-  const dispatch = useDispatch()
-
-  const currentDir = useSelector((state: RootState) => state.files.currentDir)
-  const errors = useSelector((state: RootState) => state.files.error)
-  const currentUser = useSelector((state: RootState) => state.user.currentUser)
+  const dispatch = useAppDispatch()
+  const currentDir = useAppSelector((state) => state.files.currentDir)
+  const errors = useAppSelector((state) => state.files.error)
+  const currentUser = useAppSelector((state) => state.user.currentUser)
 
   const [dragEnter, setDragEnter] = useState<boolean>(false)
 

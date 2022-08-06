@@ -1,10 +1,11 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+
+import { useAppDispatch } from '../hooks/redux'
 
 import { deleteAvatar, uploadAvatar } from '../store/actions/user'
 
 const Profile: React.FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const onDeleteAvatarBtnClick = () => {
     dispatch(deleteAvatar())

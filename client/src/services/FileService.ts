@@ -1,15 +1,19 @@
-import axiosAuth from '../utils/axiosAuth'
 import { AxiosResponse } from 'axios'
-import {
-  addUploadFile,
-  changeUploadFile,
-  showUploader,
-} from '../store/actions/upload'
-import { IFile } from '../models/file'
 import { Dispatch } from 'redux'
 
+import {
+  showUploader,
+  addUploadFile,
+  changeUploadFile,
+} from '../store/reducers/upload'
+import axiosAuth from '../utils/axiosAuth'
+import { IFile } from '../models/file'
+
 class FileService {
-  static async getFiles(dirId: string | null, sort?: string): Promise<AxiosResponse<IFile[]>> {
+  static async getFiles(
+    dirId: string | null,
+    sort?: string
+  ): Promise<AxiosResponse<IFile[]>> {
     const dirIdQuery = dirId ? `parent=${dirId}&` : ''
     const sortQuery = sort ? `sort=${sort}` : ''
     const url = `/files?${dirIdQuery}${sortQuery}`
@@ -17,11 +21,18 @@ class FileService {
     return axiosAuth.get<IFile[]>(url)
   }
 
-  static async createDir(dirId: string | null, name: string): Promise<AxiosResponse<IFile>> {
+  static async createDir(
+    dirId: string | null,
+    name: string
+  ): Promise<AxiosResponse<IFile>> {
     return axiosAuth.post<IFile>('/files', { name, parent: dirId, type: 'dir' })
   }
 
-  static async uploadFile(file: File, dirId: string | null, dispatch: Dispatch): Promise<AxiosResponse<IFile>> {
+  static async uploadFile(
+    file: File,
+    dirId: string | null,
+    dispatch: Dispatch
+  ): Promise<AxiosResponse<IFile>> {
     const formData = new FormData()
 
     formData.append('file', file)
@@ -40,9 +51,9 @@ class FileService {
         const totalLength = progressEvent.lengthComputable
           ? progressEvent.total
           : progressEvent.target.getResponseHeader('content-length') ||
-          progressEvent.target.getResponseHeader(
-            'x-decompressed-content-length'
-          )
+            progressEvent.target.getResponseHeader(
+              'x-decompressed-content-length'
+            )
 
         if (totalLength) {
           const progress = Math.round(
@@ -74,7 +85,9 @@ class FileService {
     }
   }
 
-  static async deleteFile(id: string): Promise<AxiosResponse<{ message: string }>> {
+  static async deleteFile(
+    id: string
+  ): Promise<AxiosResponse<{ message: string }>> {
     const url = `/files?id=${id}`
 
     return axiosAuth.delete<{ message: string }>(url)

@@ -1,21 +1,13 @@
 import { AxiosError } from 'axios'
+
+import { AppDispatch } from '..'
 import { IUser } from '../../models/user'
 import AuthService from '../../services/AuthService'
 import UserService from '../../services/UserService'
-import { UserAction, UserActionTypes, UserState, UserThunkAction } from '../types/user'
+import { setUser, setError, setLoading } from '../reducers/user'
 
-export const setUser = (user: UserState['currentUser']): UserAction => ({
-  type: UserActionTypes.SET_USER,
-  payload: user,
-})
-
-export const logout = (): UserAction => ({ type: UserActionTypes.LOGOUT })
-
-export const registration = (
-  email: IUser['email'],
-  password: string
-): UserThunkAction => {
-  return async (dispatch) => {
+export const registration = (email: IUser['email'], password: string) => {
+  return async (dispatch: AppDispatch) => {
     try {
       const response = await AuthService.registration(email, password)
 
@@ -28,8 +20,8 @@ export const registration = (
   }
 }
 
-export const login = (email: IUser['email'], password: string): UserThunkAction => {
-  return async (dispatch) => {
+export const login = (email: IUser['email'], password: string) => {
+  return async (dispatch: AppDispatch) => {
     try {
       const response = await AuthService.login(email, password)
 
@@ -42,8 +34,8 @@ export const login = (email: IUser['email'], password: string): UserThunkAction 
   }
 }
 
-export const checkAuth = (): UserThunkAction => {
-  return async (dispatch) => {
+export const checkAuth = () => {
+  return async (dispatch: AppDispatch) => {
     try {
       dispatch(setLoading(true))
       const response = await AuthService.checkAuth()
@@ -52,26 +44,26 @@ export const checkAuth = (): UserThunkAction => {
       localStorage.setItem('token', response.data.accessToken)
       dispatch(setLoading(false))
     } catch (error) {
-      console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`);
+      console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`)
       localStorage.removeItem('token')
     }
   }
 }
 
-export const uploadAvatar = (file: File): UserThunkAction => {
-  return async (dispatch) => {
+export const uploadAvatar = (file: File) => {
+  return async (dispatch: AppDispatch) => {
     try {
       const response = await UserService.uploadAvatar(file)
 
       dispatch(setUser(response.data))
     } catch (error) {
-      console.warn(error);
+      console.warn(error)
     }
   }
 }
 
-export const deleteAvatar = (): UserThunkAction => {
-  return async (dispatch) => {
+export const deleteAvatar = () => {
+  return async (dispatch: AppDispatch) => {
     try {
       const response = await UserService.deleteAvatar()
 
@@ -81,24 +73,3 @@ export const deleteAvatar = (): UserThunkAction => {
     }
   }
 }
-
-export const setLoading = (value: UserState['loading']): UserAction => {
-  return {
-    type: UserActionTypes.SET_LOADING,
-    payload: value,
-  };
-};
-
-export const setError = (msg: UserState['error']): UserAction => {
-  return {
-    type: UserActionTypes.SET_ERROR,
-    payload: msg,
-  };
-};
-
-export const setSuccess = (msg: UserState['success']): UserAction => {
-  return {
-    type: UserActionTypes.SET_SUCCESS,
-    payload: msg,
-  };
-};

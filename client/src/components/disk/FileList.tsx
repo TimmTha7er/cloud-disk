@@ -1,15 +1,14 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import classNames from 'classnames'
 
+import { useAppSelector } from '../../hooks/redux'
 import { File } from '../../components'
-import { RootState } from '../../store'
 import { FilesView, IFile } from '../../models/file'
 
 const FileList: React.FC = () => {
-  const files = useSelector((state: RootState) => state.files.files)
-  const fileView = useSelector((state: RootState) => state.files.view)
-  const loading = useSelector((state: RootState) => state.files.loading)
+  const files = useAppSelector((state) => state.files.files)
+  const fileView = useAppSelector((state) => state.files.view)
+  const loading = useAppSelector((state) => state.files.loading)
 
   if (loading) {
     return (

@@ -1,15 +1,15 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 
-import { removeUploadFile } from '../../store/actions/upload'
+import { useAppDispatch } from '../../hooks/redux'
 import { IUploadFile } from '../../models/file'
+import { removeUploadFile } from '../../store/reducers/upload'
 
 interface UploadFileProps {
   file: IUploadFile
 }
 
 const UploadFile: React.FC<UploadFileProps> = ({ file }) => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const removeUploadFileHandler = () => {
     dispatch(removeUploadFile(file.id))

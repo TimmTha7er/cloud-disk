@@ -1,13 +1,11 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { uploadFile } from '../../store/actions/file'
-import { RootState } from '../../store'
 
 const UploadButton: React.FC = () => {
-  const dispatch = useDispatch()
-
-  const currentDir = useSelector((state: RootState) => state.files.currentDir)
+  const dispatch = useAppDispatch()
+  const currentDir = useAppSelector((state) => state.files.currentDir)
 
   const fileUploadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     // @ts-ignore: Unreachable code error

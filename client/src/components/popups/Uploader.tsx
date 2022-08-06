@@ -1,15 +1,13 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { UploadFile } from '..'
-import { hideUploader } from '../../store/actions/upload'
-import { RootState } from '../../store'
+import { hideUploader } from '../../store/reducers/upload'
 
 const Uploader: React.FC = () => {
-  const dispatch = useDispatch()
-  
-  const files = useSelector((state: RootState) => state.upload.files)
-  const isVisible = useSelector((state: RootState) => state.upload.isVisible)
+  const dispatch = useAppDispatch()
+  const files = useAppSelector((state) => state.upload.files)
+  const isVisible = useAppSelector((state) => state.upload.isVisible)
 
   const closeUploaderHandler = () => {
     dispatch(hideUploader())
@@ -20,10 +18,7 @@ const Uploader: React.FC = () => {
       <div className='uploader'>
         <div className='uploader__header'>
           <div className='uploader__title'>Загрузки</div>
-          <button
-            className='uploader__close'
-            onClick={closeUploaderHandler}
-          >
+          <button className='uploader__close' onClick={closeUploaderHandler}>
             X
           </button>
         </div>

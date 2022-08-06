@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { RootState } from '../store'
-import { registration, setError } from '../store/actions/user'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { setError } from '../store/reducers/user'
+import { registration } from '../store/actions/user'
 import Alert from '../components/helpers/Alert'
 
 const Registration: React.FC = () => {
-  const dispatch = useDispatch()
-
-  const error = useSelector((state: RootState) => state.user.error)
-  const loading = useSelector((state: RootState) => state.user.loading)
+  const dispatch = useAppDispatch()
+  const error = useAppSelector((state) => state.user.error)
+  const loading = useAppSelector((state) => state.user.loading)
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -26,10 +25,12 @@ const Registration: React.FC = () => {
     setEmail(event.target.value)
   }
 
-  const passwordChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const passwordChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPassword(event.target.value)
   }
-  
+
   if (loading) {
     return (
       <div className='loader'>

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { setError } from '../store/reducers/user'
+import { login } from '../store/actions/user'
 import { IUser } from '../models/user'
-import { RootState } from '../store'
-import { login, setError } from '../store/actions/user'
 import Alert from '../components/helpers/Alert'
 
 const Login: React.FC = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const error = useSelector((state: RootState) => state.user.error)
-  const loading = useSelector((state: RootState) => state.user.loading)
+  const error = useAppSelector((state) => state.user.error)
+  const loading = useAppSelector((state) => state.user.loading)
 
   const [email, setEmail] = useState<IUser['email']>('')
   const [password, setPassword] = useState<string>('')
@@ -30,7 +30,9 @@ const Login: React.FC = () => {
     setEmail(event.target.value)
   }
 
-  const passwordChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const passwordChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPassword(event.target.value)
   }
 

@@ -1,13 +1,12 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { useAppSelector } from '../../hooks/redux'
 import Logo from '../../assets/img/navbar-logo.svg'
-import { RootState } from '../../store'
 import { Search, UserBar } from '../../components'
 
 const Navbar = () => {
-  const isAuth = useSelector((state: RootState) => state.user.isAuth)
+  const isAuth = useAppSelector((state) => state.user.isAuth)
 
   return (
     <div className='navbar'>

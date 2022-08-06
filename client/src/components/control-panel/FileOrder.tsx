@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 
-import { setFileView, setCurrentDir, getFiles } from '../../store/actions/file'
+import { getFiles } from '../../store/actions/file'
+import { setCurrentDir, setView } from '../../store/reducers/file'
 import { FilesSort, FilesView } from '../../models/file'
+import { useAppDispatch } from '../../hooks/redux'
 
 const FileOrder: React.FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const location = useLocation()
 
   const [sort, setSort] = useState<FilesSort>(FilesSort.type)
@@ -19,7 +20,7 @@ const FileOrder: React.FC = () => {
   }, [location.pathname, sort])
 
   const viewClickHandler = (viewType: FilesView) => () => {
-    dispatch(setFileView(viewType))
+    dispatch(setView(viewType))
   }
 
   const fileSortHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {

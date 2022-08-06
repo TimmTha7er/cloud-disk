@@ -1,12 +1,12 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux'
 
-import { setPopupDisplay } from '../../store/actions/file'
+import { useAppDispatch } from '../../hooks/redux'
 import { FileOrder, UploadButton } from '../../components'
+import { setPopupDisplay } from '../../store/reducers/file'
 
 const ControlPanel: React.FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const showPopupHandler = () => {
