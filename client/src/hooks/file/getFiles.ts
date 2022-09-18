@@ -16,8 +16,6 @@ const useGetFiles = ({ sort }: { sort?: string }) => {
     {
       onSuccess: (response) => {
         console.log('response', response)
-        // queryClient.setQueryData(['files', dirId, sort], response)
-        // dispatch(setFiles(response.data))
       },
       onError: (error) => {
         setErrors((error as AxiosError)?.response?.data?.errors)

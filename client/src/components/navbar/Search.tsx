@@ -8,8 +8,8 @@ const Search = () => {
   const [searchName, setSearchName] = useState<string>('')
   const [searchTimeout, setSearchTimeout] = useState<number>(0)
   const { refetch: searchFiles } = useSearchFile({ search: searchName })
-  // const sort = useAppSelector((state) => state.files.sort)
-  const { refetch: getFiles, data: response } = useGetFiles({})
+  const sort = useAppSelector((state) => state.files.sort)
+  const { refetch: getFiles, data: response } = useGetFiles({ sort })
 
   const searchChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const currentValue = event.target.value.trim()

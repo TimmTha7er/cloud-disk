@@ -14,12 +14,7 @@ const FileList: React.FC = () => {
   const location = useLocation()
   const isFetching = useIsFetching(['files'])
   const sort = useAppSelector((state) => state.files.sort)
-  const {
-    refetch,
-    errors,
-    isLoading,
-    data: response,
-  } = useGetFiles({})
+  const { refetch, errors, isLoading, data: response } = useGetFiles({ sort })
 
   const fileView = useAppSelector((state) => state.files.view)
 

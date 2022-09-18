@@ -3,11 +3,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
 import FileService from '../../services/FileService'
-import { useAppSelector } from '../redux'
 
 const useSearchFile = ({ search }: { search: string }) => {
-  const sort = useAppSelector((state) => state.files.sort)
-  const dirId = useAppSelector((state) => state.files.currentDir)
   const queryClient = useQueryClient()
   const [errors, setErrors] = useState<AxiosError[]>([])
 
@@ -16,7 +13,7 @@ const useSearchFile = ({ search }: { search: string }) => {
     () => FileService.searchFiles(search),
     {
       onSuccess: (response) => {
-        queryClient.setQueryData(['files', dirId, null], response)
+        queryClient.setQueriesData(['files'], response)
       },
       onError: (error) => {
         setErrors((error as AxiosError)?.response?.data?.errors)
