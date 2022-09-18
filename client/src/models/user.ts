@@ -1,5 +1,6 @@
 export interface IUser {
   email: string
+  password: string
   id: string
   isActivated: boolean
   diskSpace: number

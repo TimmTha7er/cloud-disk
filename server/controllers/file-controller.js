@@ -65,7 +65,7 @@ class FileController {
 
       await fileService.deleteFile(filePath, fileId, userId)
 
-      return res.json({ message: 'File was deleted' })
+      return res.json({ message: 'File was deleted', id: fileId })
     } catch (error) {
       next(error)
     }

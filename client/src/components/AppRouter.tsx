@@ -1,27 +1,30 @@
-import { useEffect } from 'react'
+import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { checkAuth } from '../store/actions/user'
-import { setLoading } from '../store/reducers/user'
 import { authRoutes, publicRoutes } from '../utils/routes'
+import useCheckAuth from '../hooks/user/checkAuth'
+import { useAppSelector } from '../hooks/redux'
+import Alert from '../components/helpers/Alert'
 
 const AppRouter: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const isAuth = useAppSelector((state) => state.user.isAuth)
+  const { errors, isLoading } = useCheckAuth()
+  const isAuth = useAppSelector((state) => state.user.currentUser)
 
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-
-    if (token) {
-      dispatch(checkAuth())
-    } else {
-      dispatch(setLoading(false))
-    }
-  }, [])
+  if (isLoading) {
+    return (
+      <div className='loader'>
+        <div className='loader__dual-ring'></div>
+      </div>
+    )
+  }
 
   return (
     <Routes>
+      {errors.map((err) => (
+        // @ts-ignore: Unreachable code error
+        <Alert className='sign-in__message' type='danger' msg={err?.msg} />
+      ))}
+
       {isAuth
         ? authRoutes.map(({ path, Component }) => (
             <Route key={path} path={path} element={<Component />} />

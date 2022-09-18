@@ -1,38 +1,42 @@
 import React, { useState } from 'react'
 
-import { getFiles, searchFiles } from '../../store/actions/file'
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { setLoading } from '../../store/reducers/file'
+import useSearchFile from '../../hooks/file/searchFile'
+import useGetFiles from '../../hooks/file/getFiles'
+import { useAppSelector } from '../../hooks/redux'
 
 const Search = () => {
-  const dispatch = useAppDispatch()
-  const currentDir = useAppSelector((state) => state.files.currentDir)
-
   const [searchName, setSearchName] = useState<string>('')
   const [searchTimeout, setSearchTimeout] = useState<number>(0)
+  const { refetch: searchFiles } = useSearchFile({ search: searchName })
+  // const sort = useAppSelector((state) => state.files.sort)
+  const { refetch: getFiles, data: response } = useGetFiles({})
 
   const searchChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchName(event.target.value)
+    const currentValue = event.target.value.trim()
+
+    setSearchName(currentValue)
 
     if (searchTimeout) {
       clearTimeout(searchTimeout)
     }
 
-    dispatch(setLoading(true))
+    if (event.target.value === '') {
+      getFiles()
 
-    if (event.target.value !== '') {
-      const timerId: ReturnType<typeof setTimeout> = setTimeout(
-        (value) => {
-          dispatch(searchFiles(value))
-        },
-        500,
-        event.target.value
-      )
-
-      setSearchTimeout(Number(timerId))
-    } else {
-      dispatch(getFiles(currentDir))
+      return
     }
+
+    // debounce
+    const timerId: ReturnType<typeof setTimeout> = setTimeout(
+      (_) => {
+        console.log('search')
+        searchFiles()
+      },
+      500,
+      currentValue
+    )
+
+    setSearchTimeout(Number(timerId))
   }
 
   return (

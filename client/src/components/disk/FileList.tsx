@@ -1,16 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import classNames from 'classnames'
+import { useIsFetching } from '@tanstack/react-query'
 
-import { useAppSelector } from '../../hooks/redux'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { File } from '../../components'
 import { FilesView, IFile } from '../../models/file'
+import useGetFiles from '../../hooks/file/getFiles'
+import { setCurrentDir } from '../../store/reducers/file'
+import { useLocation } from 'react-router-dom'
 
 const FileList: React.FC = () => {
-  const files = useAppSelector((state) => state.files.files)
-  const fileView = useAppSelector((state) => state.files.view)
-  const loading = useAppSelector((state) => state.files.loading)
+  const dispatch = useAppDispatch()
+  const location = useLocation()
+  const isFetching = useIsFetching(['files'])
+  const sort = useAppSelector((state) => state.files.sort)
+  const {
+    refetch,
+    errors,
+    isLoading,
+    data: response,
+  } = useGetFiles({})
 
-  if (loading) {
+  const fileView = useAppSelector((state) => state.files.view)
+
+  useEffect(() => {
+    const currentDir = location.pathname.slice(1)
+
+    dispatch(setCurrentDir(currentDir || null))
+    refetch()
+  }, [location.pathname])
+
+  if (isLoading || isFetching) {
     return (
       <div className='loader'>
         <div className='loader__dual-ring'></div>
@@ -18,7 +38,7 @@ const FileList: React.FC = () => {
     )
   }
 
-  if (files.length === 0) {
+  if (response?.data.length === 0) {
     return <div className='loader'>Файлы не найдены</div>
   }
 
@@ -37,7 +57,7 @@ const FileList: React.FC = () => {
         </div>
       )}
 
-      {files.map((file: IFile) => (
+      {response?.data.map((file: IFile) => (
         <File key={file.id} file={file} />
       ))}
     </div>

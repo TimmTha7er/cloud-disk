@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
-import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { setError } from '../store/reducers/user'
-import { registration } from '../store/actions/user'
 import Alert from '../components/helpers/Alert'
+import { IUser } from '../models/user'
+import { useNavigate } from 'react-router-dom'
+import useRegistration from '../hooks/user/registration'
 
 const Registration: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const error = useAppSelector((state) => state.user.error)
-  const loading = useAppSelector((state) => state.user.loading)
+  const { mutate, errors, isLoading } = useRegistration()
+  const navigate = useNavigate()
 
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-
-  useEffect(() => {
-    dispatch(setError([]))
-  }, [])
+  const [email, setEmail] = useState<IUser['email']>('')
+  const [password, setPassword] = useState<IUser['password']>('')
 
   const registrationClickHandler = () => {
-    dispatch(registration(email, password))
+    mutate({ email, password })
+
+    navigate('/')
   }
 
   const emailChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +28,7 @@ const Registration: React.FC = () => {
     setPassword(event.target.value)
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className='loader'>
         <div className='loader__dual-ring'></div>
@@ -43,7 +40,8 @@ const Registration: React.FC = () => {
     <div className='authorization'>
       <div className='authorization__header'>Регистрация</div>
 
-      {error.map((err) => (
+      {errors.map((err) => (
+        // @ts-ignore: Unreachable code error
         <Alert className='sign-in__message' type='danger' msg={err?.msg} />
       ))}
 

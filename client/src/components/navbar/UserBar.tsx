@@ -8,7 +8,6 @@ import avatarLogo from '../../assets/img/avatar.svg'
 import { API_URL } from '../../config'
 
 const UserBar = () => {
-  const isAuth = useAppSelector((state) => state.user.isAuth)
   const currentUser = useAppSelector((state) => state.user.currentUser)
   const dispatch = useAppDispatch()
 
@@ -23,7 +22,7 @@ const UserBar = () => {
 
   return (
     <div className='navbar__col'>
-      {!isAuth && (
+      {!currentUser && (
         <>
           <div className='navbar__login'>
             <NavLink to='/login'>Войти</NavLink>
@@ -33,7 +32,7 @@ const UserBar = () => {
           </div>
         </>
       )}
-      {isAuth && (
+      {currentUser && (
         <>
           <div className='navbar__login' onClick={logoutHandler}>
             Выход

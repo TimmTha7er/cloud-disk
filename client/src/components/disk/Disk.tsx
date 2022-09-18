@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 
-import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { uploadFile } from '../../store/actions/file'
+import { useAppSelector } from '../../hooks/redux'
 import { ControlPanel, FileList, Uploader } from '../../components'
 import Popup from '../popups/Popup'
 import Alert from '../helpers/Alert'
+import useUploadFile from '../../hooks/file/uploadFile'
 
 const Disk: React.FC = () => {
-  const dispatch = useAppDispatch()
+  const { uploadFile } = useUploadFile()
   const currentDir = useAppSelector((state) => state.files.currentDir)
-  const errors = useAppSelector((state) => state.files.error)
   const currentUser = useAppSelector((state) => state.user.currentUser)
 
   const [dragEnter, setDragEnter] = useState<boolean>(false)
@@ -31,7 +30,7 @@ const Disk: React.FC = () => {
 
     const files = [...event.dataTransfer.files]
 
-    files.forEach((file) => dispatch(uploadFile(file, currentDir)))
+    files.forEach(async (file) => await uploadFile({ file, dirId: currentDir }))
 
     setDragEnter(false)
   }
@@ -51,11 +50,11 @@ const Disk: React.FC = () => {
         />
       )}
 
-      {errors.map((err) => (
+      {/* {errors.map((err) => (
         <Alert className='disk__alert' type='danger' msg={err?.msg} />
-      ))}
+      ))} */}
 
-      <ControlPanel/>
+      <ControlPanel />
       <FileList />
       <Popup />
       <Uploader />

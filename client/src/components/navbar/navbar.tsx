@@ -6,7 +6,7 @@ import Logo from '../../assets/img/navbar-logo.svg'
 import { Search, UserBar } from '../../components'
 
 const Navbar = () => {
-  const isAuth = useAppSelector((state) => state.user.isAuth)
+  const isAuth = useAppSelector((state) => state.user.currentUser)
 
   return (
     <div className='navbar'>

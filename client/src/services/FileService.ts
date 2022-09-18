@@ -41,7 +41,7 @@ class FileService {
       formData.append('parent', dirId)
     }
 
-    const uploadFile = { name: file.name, progress: 0, id: Date.now() }
+    let uploadFile = { name: file.name, progress: 0, id: Date.now() }
 
     dispatch(showUploader())
     dispatch(addUploadFile(uploadFile))
@@ -87,10 +87,10 @@ class FileService {
 
   static async deleteFile(
     id: string
-  ): Promise<AxiosResponse<{ message: string }>> {
+  ): Promise<AxiosResponse<{ message: string; id: string }>> {
     const url = `/files?id=${id}`
 
-    return axiosAuth.delete<{ message: string }>(url)
+    return axiosAuth.delete<{ message: string; id: string }>(url)
   }
 
   static async searchFiles(search: string): Promise<AxiosResponse<IFile[]>> {

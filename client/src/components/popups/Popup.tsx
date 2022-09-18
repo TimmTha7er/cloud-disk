@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 
+import useCreateDir from '../../hooks/file/createDir'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { createDir } from '../../store/actions/file'
 import { setPopupDisplay } from '../../store/reducers/file'
 
 const Popup: React.FC = () => {
+  const { mutate, errors, isLoading } = useCreateDir()
   const dispatch = useAppDispatch()
   const popupDisplay = useAppSelector((state) => state.files.popupDisplay)
   const currentDir = useAppSelector((state) => state.files.currentDir)
@@ -12,7 +13,7 @@ const Popup: React.FC = () => {
   const [dirName, setDirName] = useState('')
 
   const createHandler = () => {
-    dispatch(createDir(currentDir, dirName))
+    mutate({ dirId: currentDir, name: dirName })
     setDirName('')
     dispatch(setPopupDisplay('none'))
   }

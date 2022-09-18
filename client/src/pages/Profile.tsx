@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import { useAppDispatch } from '../hooks/redux'
-
-import { deleteAvatar, uploadAvatar } from '../store/actions/user'
+import useUploadAvatar from '../hooks/user/uploadAvatar'
+import useDeleteAvatar from '../hooks/user/deleteAvatar'
+import Alert from '../components/helpers/Alert'
 
 const Profile: React.FC = () => {
-  const dispatch = useAppDispatch()
+  const { mutate: uploadAvatar } = useUploadAvatar()
+  const { mutate: deleteAvatar } = useDeleteAvatar()
+
+  useEffect(() => {
+    console.log('profile')
+  }, [])
 
   const onDeleteAvatarBtnClick = () => {
-    dispatch(deleteAvatar())
+    deleteAvatar()
   }
 
   const inputChooseFileChangeHandler = (
@@ -16,11 +21,17 @@ const Profile: React.FC = () => {
   ) => {
     const file: File = (event.target.files as FileList)[0]
 
-    dispatch(uploadAvatar(file))
+    uploadAvatar({ file })
   }
 
   return (
     <div className='profile'>
+      {/* TODO: */}
+      {/* {errors.map((err) => (
+        // @ts-ignore: Unreachable code error
+        <Alert className='sign-in__message' type='danger' msg={err?.msg} />
+      ))} */}
+
       <button className='profile__btn btn' onClick={onDeleteAvatarBtnClick}>
         Удалить аватар
       </button>
