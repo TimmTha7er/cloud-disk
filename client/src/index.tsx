@@ -1,26 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import store from './store'
 import { App } from './components'
+import { queryClient } from './services/QueryService'
 
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
-})
+const container = document.getElementById('root')
+const root = createRoot(container!)
 
-ReactDOM.render(
+root.render(
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <App />
     </Provider>
     <ReactQueryDevtools initialIsOpen={true} />
-  </QueryClientProvider>,
-  document.getElementById('root')
+  </QueryClientProvider>
 )
