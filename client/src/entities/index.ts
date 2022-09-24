@@ -14,7 +14,7 @@ export { default as UploadFile } from './popups/UploadFile'
 export { default as Popup } from './popups/Popup'
 export { default as Uploader } from './popups/Uploader'
 
-export { default as Navbar } from './navbar/navbar'
+export { default as Navbar } from './navbar/Navbar'
 export { default as UserBar } from './navbar/UserBar'
 export { default as Search } from './navbar/Search'
 

@@ -1,5 +1,5 @@
 import { Registration, Login, Disk, Profile } from '../entities'
-import { AuthRoutes, PublicRoutes, IRoute } from '../shared/models/routes'
+import { AuthRoutes, PublicRoutes, IRoute } from './models/routes'
 
 export const authRoutes: IRoute[] = [
   {

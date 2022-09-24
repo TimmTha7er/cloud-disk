@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../hooks/redux'
 import { setUser } from '../../../store/reducers/user'
 import { IUser } from '../../models/user'
 import AuthService from '../../services/AuthService'
+import { AuthRoutes } from '../../models/routes'
 
 interface IMutationFnProps {
   email: IUser['email']
@@ -26,7 +27,7 @@ const useRegistration = () => {
         dispatch(setUser(response.data))
         localStorage.setItem('token', response.data.accessToken)
 
-        navigate('/')
+        navigate(AuthRoutes.CLOUD_DISK_ROUTE)
       },
       onError: (error) => {
         setErrors((error as AxiosError)?.response?.data?.errors)

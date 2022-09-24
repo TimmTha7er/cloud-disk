@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { authRoutes, publicRoutes } from './routes'
+import { authRoutes, publicRoutes } from '../shared/routes'
 import useCheckAuth from '../shared/api/user/checkAuth'
 import { useAppSelector } from '../shared/hooks/redux'
 import Alert from '../shared/helpers/Alert'
@@ -20,9 +20,9 @@ const AppRouter: React.FC = () => {
 
   return (
     <Routes>
-      {errors.map((err) => (
+      {errors.map((error) => (
         // @ts-ignore: Unreachable code error
-        <Alert className='sign-in__message' type='danger' msg={err?.msg} />
+        <Alert className='sign-in__message' type='danger' msg={error?.msg} />
       ))}
 
       {isAuth
