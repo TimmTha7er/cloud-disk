@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
 import { useAppSelector } from '../../hooks/redux'
-import FileService from '../../../services/FileService'
+import FileService from '../../services/FileService'
 
 const useGetFiles = ({ sort }: { sort?: string }) => {
   const dirId = useAppSelector((state) => state.files.currentDir)

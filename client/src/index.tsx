@@ -4,8 +4,8 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import store from './store'
-import { App } from './entities'
-import { queryClient } from './services/QueryService'
+import App from './app/App'
+import { queryClient } from './shared/services/QueryService'
 
 const container = document.getElementById('root')
 const root = createRoot(container!)

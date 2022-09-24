@@ -4,7 +4,7 @@ import { AxiosError } from 'axios'
 
 import { useAppDispatch } from '../../hooks/redux'
 import { setUser } from '../../../store/reducers/user'
-import UserService from '../../../services/UserService'
+import UserService from '../../services/UserService'
 
 const useDeleteAvatar = () => {
   const dispatch = useAppDispatch()

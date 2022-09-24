@@ -7,14 +7,12 @@ export interface FileState {
   popupDisplay: 'none' | 'flex'
   view: FilesView
   sort: FilesSort
-  isLoading: boolean
 }
 
 const initialState: FileState = {
   currentDir: null,
   popupDisplay: 'none',
   view: FilesView.list,
-  isLoading: true,
   sort: FilesSort.name
 }
 

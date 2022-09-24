@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom'
 
 import { Navbar } from '../entities'
-import { AppRouter } from '../entities'
+import AppRouter from './AppRouter'
 import '../shared/assets/styles/app.scss'
 
 const App: React.FC = () => {

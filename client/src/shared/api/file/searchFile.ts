@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
-import FileService from '../../../services/FileService'
+import FileService from '../../services/FileService'
 
 const useSearchFile = ({ search }: { search: string }) => {
   const queryClient = useQueryClient()

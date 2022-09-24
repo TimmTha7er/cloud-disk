@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
 import { useAppDispatch } from '../../hooks/redux'
-import FileService from '../../../services/FileService'
+import FileService from '../../services/FileService'
 import { IFile } from '../../models/file'
 
 interface IMutationFnProps {

@@ -8,7 +8,7 @@ import dirLogo from '../../shared/assets/img/dir.svg'
 import fileLogo from '../../shared/assets/img/file.svg'
 import sizeFormat from '../../shared/utils/sizeFormat'
 import { FilesView, IFile } from '../../shared/models/file'
-import FileService from '../../services/FileService'
+import FileService from '../../shared/services/FileService'
 import useDeleteFile from '../../shared/api/file/deleteFile'
 
 interface FileProps {

@@ -4,7 +4,7 @@ import { AxiosError } from 'axios'
 
 import { useAppDispatch } from '../../hooks/redux'
 import { setUser } from '../../../store/reducers/user'
-import AuthService from '../../../services/AuthService'
+import AuthService from '../../services/AuthService'
 
 const useCheckAuth = () => {
   const dispatch = useAppDispatch()

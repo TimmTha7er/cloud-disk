@@ -19,6 +19,3 @@ export { default as UserBar } from './navbar/UserBar'
 export { default as Search } from './navbar/Search'
 
 export { default as Profile } from '../pages/Profile'
-
-export { default as App } from '../app/App'
-export { default as AppRouter } from '../app/AppRouter'

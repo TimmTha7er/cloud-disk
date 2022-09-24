@@ -5,7 +5,7 @@ import { AxiosError } from 'axios'
 import { useAppDispatch } from '../../hooks/redux'
 import { setUser } from '../../../store/reducers/user'
 import { IUser } from '../../models/user'
-import AuthService from '../../../services/AuthService'
+import AuthService from '../../services/AuthService'
 
 interface IMutationFnProps {
   email: IUser['email']
