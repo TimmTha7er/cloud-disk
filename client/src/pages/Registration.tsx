@@ -2,20 +2,16 @@ import React, { useState } from 'react'
 
 import Alert from '../shared/helpers/Alert'
 import { IUser } from '../shared/models/user'
-import { useNavigate } from 'react-router-dom'
 import useRegistration from '../shared/api/user/registration'
 
 const Registration: React.FC = () => {
   const { mutate, errors, isLoading } = useRegistration()
-  const navigate = useNavigate()
 
   const [email, setEmail] = useState<IUser['email']>('')
   const [password, setPassword] = useState<IUser['password']>('')
 
   const registrationClickHandler = () => {
     mutate({ email, password })
-
-    navigate('/')
   }
 
   const emailChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,9 +36,9 @@ const Registration: React.FC = () => {
     <div className='authorization'>
       <div className='authorization__header'>Регистрация</div>
 
-      {errors.map((err) => (
+      {errors.map((error, idx) => (
         // @ts-ignore: Unreachable code error
-        <Alert className='sign-in__message' type='danger' msg={err?.msg} />
+        <Alert key={idx} className='sign-in__message' type='danger' msg={error?.msg} />
       ))}
 
       <input
