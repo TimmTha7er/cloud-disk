@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { IUser } from '../models/user'
-import Alert from '../components/helpers/Alert'
-import useLogin from '../hooks/user/login'
+import { IUser } from '../shared/models/user'
+import Alert from '../shared/helpers/Alert'
+import useLogin from '../shared/api/user/login'
 
 const Login: React.FC = () => {
   const { mutate, errors, isLoading } = useLogin()

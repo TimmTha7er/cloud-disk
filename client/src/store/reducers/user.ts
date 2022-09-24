@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { IUser } from '../../models/user'
+import { IUser } from '../../shared/models/user'
 
 interface UserState {
   currentUser: IUser | null

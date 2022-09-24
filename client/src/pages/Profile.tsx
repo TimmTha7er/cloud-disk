@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 
-import useUploadAvatar from '../hooks/user/uploadAvatar'
-import useDeleteAvatar from '../hooks/user/deleteAvatar'
-import Alert from '../components/helpers/Alert'
+import useUploadAvatar from '../shared/api/user/uploadAvatar'
+import useDeleteAvatar from '../shared/api/user/deleteAvatar'
+import Alert from '../shared/helpers/Alert'
 
 const Profile: React.FC = () => {
   const { mutate: uploadAvatar } = useUploadAvatar()

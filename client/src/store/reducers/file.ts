@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { FilesView, FilesSort } from '../../models/file'
+import { FilesView, FilesSort } from '../../shared/models/file'
 
 export interface FileState {
   currentDir: string | null

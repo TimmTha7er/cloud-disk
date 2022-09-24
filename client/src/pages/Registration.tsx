@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-import Alert from '../components/helpers/Alert'
-import { IUser } from '../models/user'
+import Alert from '../shared/helpers/Alert'
+import { IUser } from '../shared/models/user'
 import { useNavigate } from 'react-router-dom'
-import useRegistration from '../hooks/user/registration'
+import useRegistration from '../shared/api/user/registration'
 
 const Registration: React.FC = () => {
   const { mutate, errors, isLoading } = useRegistration()

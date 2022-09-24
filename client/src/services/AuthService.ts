@@ -1,6 +1,6 @@
-import axiosAuth from '../utils/axiosAuth'
+import axiosAuth from '../shared/api/interceptors/axiosAuth'
 import { AxiosResponse } from 'axios'
-import { AuthResponse } from '../models/user'
+import { AuthResponse } from '../shared/models/user'
 
 class AuthService {
   static async login(

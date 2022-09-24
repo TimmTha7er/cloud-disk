@@ -4,7 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import store from './store'
-import { App } from './components'
+import { App } from './entities'
 import { queryClient } from './services/QueryService'
 
 const container = document.getElementById('root')

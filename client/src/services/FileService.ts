@@ -6,8 +6,8 @@ import {
   addUploadFile,
   changeUploadFile,
 } from '../store/reducers/upload'
-import axiosAuth from '../utils/axiosAuth'
-import { IFile } from '../models/file'
+import axiosAuth from '../shared/api/interceptors/axiosAuth'
+import { IFile } from '../shared/models/file'
 
 class FileService {
   static async getFiles(

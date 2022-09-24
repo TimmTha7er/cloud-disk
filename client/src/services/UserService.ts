@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
-import axiosAuth from '../utils/axiosAuth'
-import { IUser } from '../models/user'
+import axiosAuth from '../shared/api/interceptors/axiosAuth'
+import { IUser } from '../shared/models/user'
 
 export default class UserService {
   static fetchUsers(): Promise<AxiosResponse<IUser[]>> {

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { IUploadFile } from '../../models/file'
+import { IUploadFile } from '../../shared/models/file'
 
 export interface UploadState {
   isVisible: Boolean
