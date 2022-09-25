@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
+import Alert from '../../shared/helpers/Alert'
 import useCreateDir from '../../shared/api/file/createDir'
 import { useAppDispatch, useAppSelector } from '../../shared/hooks/redux'
 import { setPopupDisplay } from '../../store/reducers/file'
 
 const Popup: React.FC = () => {
-  const { mutate, errors, isLoading } = useCreateDir()
+  let { mutate, errors } = useCreateDir()
   const dispatch = useAppDispatch()
   const popupDisplay = useAppSelector((state) => state.files.popupDisplay)
   const currentDir = useAppSelector((state) => state.files.currentDir)
@@ -27,33 +28,45 @@ const Popup: React.FC = () => {
   }
 
   return (
-    <div
-      className='popup'
-      onClick={closePopupHandler}
-      style={{ display: popupDisplay }}
-    >
+    <>
+      {errors.map((error, idx) => (
+        <Alert
+          key={idx}
+          type='danger'
+          className='alert alert_global'
+          // @ts-ignore
+          msg={error?.msg}
+        />
+      ))}
+
       <div
-        className='popup__content'
-        onClick={(event) => event.stopPropagation()}
+        className='popup'
+        onClick={closePopupHandler}
+        style={{ display: popupDisplay }}
       >
-        <div className='popup__header'>
-          <div className='popup__title'>Создать новую папку</div>
-          <button className='popup__close btn' onClick={closePopupHandler}>
-            X
+        <div
+          className='popup__content'
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className='popup__header'>
+            <div className='popup__title'>Создать новую папку</div>
+            <button className='popup__close btn' onClick={closePopupHandler}>
+              X
+            </button>
+          </div>
+          <input
+            type='text'
+            placeholder='Введите название папки...'
+            value={dirName}
+            onChange={dirNameChangeHandler}
+            className='popup__input'
+          />
+          <button className='popup__create btn' onClick={createHandler}>
+            Создать
           </button>
         </div>
-        <input
-          type='text'
-          placeholder='Введите название папки...'
-          value={dirName}
-          onChange={dirNameChangeHandler}
-          className='popup__input'
-        />
-        <button className='popup__create btn' onClick={createHandler}>
-          Создать
-        </button>
       </div>
-    </div>
+    </>
   )
 }
 

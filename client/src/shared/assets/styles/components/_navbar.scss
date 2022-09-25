@@ -5,9 +5,9 @@ $component: 'navbar';
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 24px 12px 16px 12px;
+  padding: 24px 12px 16px;
 
-  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  border-bottom: solid 1px rgb(0 0 0 / 20%);
 
   @media only screen and (max-width: 768px) {
     align-items: flex-start;
@@ -42,7 +42,7 @@ $component: 'navbar';
   &__header {
     margin-left: 12px;
 
-    font-weight: 700;
+    font-weight: bold;
     font-size: 30px;
   }
 
@@ -71,7 +71,7 @@ $component: 'navbar';
     font-size: 16px;
 
     &::placeholder {
-      color: rgba(0, 0, 0, 0.3);
+      color: rgb(0 0 0 / 30%);
       font-size: 16px;
     }
 

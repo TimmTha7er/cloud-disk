@@ -1,16 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import useUploadAvatar from '../shared/api/user/uploadAvatar'
 import useDeleteAvatar from '../shared/api/user/deleteAvatar'
-import Alert from '../shared/helpers/Alert'
+import { useAppSelector } from '../shared/hooks/redux'
 
 const Profile: React.FC = () => {
+  const avatar = useAppSelector((state) => state.user.currentUser?.avatar)
   const { mutate: uploadAvatar } = useUploadAvatar()
   const { mutate: deleteAvatar } = useDeleteAvatar()
-
-  useEffect(() => {
-    console.log('profile')
-  }, [])
 
   const onDeleteAvatarBtnClick = () => {
     deleteAvatar()
@@ -26,22 +23,20 @@ const Profile: React.FC = () => {
 
   return (
     <div className='profile'>
-      {/* TODO: */}
-      {/* {errors.map((err) => (
-        // @ts-ignore: Unreachable code error
-        <Alert className='sign-in__message' type='danger' msg={err?.msg} />
-      ))} */}
-
-      <button className='profile__btn btn' onClick={onDeleteAvatarBtnClick}>
-        Удалить аватар
-      </button>
-      <input
-        className='profile__input'
-        accept='image/*'
-        onChange={inputChooseFileChangeHandler}
-        type='file'
-        placeholder='Загрузить аватар'
-      />
+      {avatar && (
+        <button className='profile__btn btn' onClick={onDeleteAvatarBtnClick}>
+          Удалить аватар
+        </button>
+      )}
+      {!avatar && (
+        <input
+          className='profile__input'
+          accept='image/*'
+          onChange={inputChooseFileChangeHandler}
+          type='file'
+          placeholder='Загрузить аватар'
+        />
+      )}
     </div>
   )
 }

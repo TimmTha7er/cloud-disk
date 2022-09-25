@@ -5,7 +5,7 @@ export interface IUser {
   isActivated: boolean
   diskSpace: number
   usedSpace: number
-  avatar: string
+  avatar: string | null
 }
 
 export interface AuthResponse extends IUser {

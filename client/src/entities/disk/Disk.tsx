@@ -50,10 +50,6 @@ const Disk: React.FC = () => {
         />
       )}
 
-      {/* {errors.map((err) => (
-        <Alert className='disk__alert' type='danger' msg={err?.msg} />
-      ))} */}
-
       <ControlPanel />
       <FileList />
       <Popup />

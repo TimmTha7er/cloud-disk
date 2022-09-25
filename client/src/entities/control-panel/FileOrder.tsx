@@ -26,12 +26,12 @@ const FileOrder: React.FC = () => {
         <option value={FilesSort.date}>По дате</option>
       </select>
       <button
-        className='disk__plate'
-        onClick={viewClickHandler(FilesView.plate)}
-      />
-      <button
         className='disk__list'
         onClick={viewClickHandler(FilesView.list)}
+      />
+      <button
+        className='disk__plate'
+        onClick={viewClickHandler(FilesView.plate)}
       />
     </>
   )

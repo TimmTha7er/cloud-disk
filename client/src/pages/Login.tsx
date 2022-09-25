@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { IUser } from '../shared/models/user'
 import Alert from '../shared/helpers/Alert'
@@ -7,14 +6,12 @@ import useLogin from '../shared/api/user/login'
 
 const Login: React.FC = () => {
   const { mutate, errors, isLoading } = useLogin()
-  const navigate = useNavigate()
 
   const [email, setEmail] = useState<IUser['email']>('')
   const [password, setPassword] = useState<IUser['password']>('')
 
   const loginClickHandler = () => {
     mutate({ email, password })
-    navigate('/')
   }
 
   const emailChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

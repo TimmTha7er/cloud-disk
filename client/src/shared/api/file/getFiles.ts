@@ -13,9 +13,7 @@ const useGetFiles = ({ sort }: { sort?: string }) => {
     ['files', dirId, sort],
     () => FileService.getFiles(dirId, sort),
     {
-      onSuccess: (response) => {
-        console.log('response', response)
-      },
+      onSuccess: () => {},
       onError: (error) => {
         setErrors((error as AxiosError)?.response?.data?.errors)
         console.warn(`Error: ${(error as AxiosError)?.response?.data?.message}`)

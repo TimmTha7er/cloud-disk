@@ -16,7 +16,7 @@ interface FileProps {
 }
 
 const File: React.FC<FileProps> = ({ file }) => {
-  const { mutate, errors, isLoading } = useDeleteFile()
+  const { mutate } = useDeleteFile()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const fileView = useAppSelector((state) => state.files.view)

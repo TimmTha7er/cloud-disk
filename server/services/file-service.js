@@ -11,6 +11,7 @@ class FileService {
   async createDir(name, type, parent, filePath, userId) {
     const file = new File({
       name,
+      lowerName: name.toLowerCase(),
       type,
       parent,
       user: userId,
@@ -33,6 +34,10 @@ class FileService {
   }
 
   async getFiles(userId, parent, sort) {
+    if (sort === 'name') {
+      sort = 'lowerName'
+    }
+
     const files = await File.find({
       user: userId,
       parent: parent,
@@ -178,6 +183,7 @@ class FileService {
 
     const dbFile = new File({
       name: file.name,
+      lowerName: file.name.toLowerCase(),
       type,
       size: file.size,
       path: filePath,

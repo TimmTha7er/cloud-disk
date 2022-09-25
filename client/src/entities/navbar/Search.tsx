@@ -9,7 +9,7 @@ const Search = () => {
   const [searchTimeout, setSearchTimeout] = useState<number>(0)
   const { refetch: searchFiles } = useSearchFile({ search: searchName })
   const sort = useAppSelector((state) => state.files.sort)
-  const { refetch: getFiles, data: response } = useGetFiles({ sort })
+  const { refetch: getFiles } = useGetFiles({ sort })
 
   const searchChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const currentValue = event.target.value.trim()
@@ -29,7 +29,6 @@ const Search = () => {
     // debounce
     const timerId: ReturnType<typeof setTimeout> = setTimeout(
       (_) => {
-        console.log('search')
         searchFiles()
       },
       500,

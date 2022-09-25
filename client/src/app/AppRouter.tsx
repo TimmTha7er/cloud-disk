@@ -21,7 +21,7 @@ const AppRouter: React.FC = () => {
   return (
     <Routes>
       {errors.map((error) => (
-        // @ts-ignore: Unreachable code error
+        // @ts-ignore
         <Alert className='sign-in__message' type='danger' msg={error?.msg} />
       ))}
 

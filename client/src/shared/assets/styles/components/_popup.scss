@@ -13,7 +13,7 @@ $component: 'popup';
   width: 100%;
   height: 100vh;
 
-  background: rgba(0, 0, 0, 0.5);
+  background: rgb(0 0 0 / 50%);
 
   &__title {
     font-weight: 600;
@@ -67,7 +67,7 @@ $component: 'popup';
     font-size: 16px;
 
     &::placeholder {
-      color: rgba(0, 0, 0, 0.3);
+      color: rgb(0 0 0 / 30%);
       font-size: 16px;
     }
   }

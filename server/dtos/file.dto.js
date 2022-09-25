@@ -1,6 +1,7 @@
 module.exports = class FileDto {
   id
   name
+  lowerName
   type
   size
   path
@@ -12,6 +13,7 @@ module.exports = class FileDto {
   constructor(model) {
     this.id = model._id
     this.name = model.name
+    this.lowerName = model.lowerName
     this.type = model.type
     this.size = model.size
     this.path = model.path

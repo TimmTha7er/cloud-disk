@@ -48,6 +48,16 @@ $component: 'alert';
     }
   }
 
+  &_global {
+    position: fixed;
+    bottom: 48px;
+    left: 50%;
+
+    max-width: 800px;
+
+    transform: translateX(-50%);
+  }
+
   &__body {
     padding: 0.5em 1.5em;
 

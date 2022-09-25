@@ -12,13 +12,13 @@ $component: 'authorization';
   padding: 30px;
 
   background-color: white;
-  border: solid 1px rgba(0, 0, 0, 0.2);
+  border: solid 1px rgb(0 0 0 / 20%);
   border-radius: 24px;
 
   &__header {
     margin-bottom: 16px;
 
-    font-weight: 700;
+    font-weight: bold;
     font-size: 26px;
   }
 
@@ -28,7 +28,7 @@ $component: 'authorization';
     font-size: 16px;
 
     &::placeholder {
-      color: rgba(0, 0, 0, 0.3);
+      color: rgb(0 0 0 / 30%);
       font-size: 16px;
     }
   }
@@ -38,7 +38,7 @@ $component: 'authorization';
     margin-top: 12px;
 
     color: white;
-    font-weight: 700;
+    font-weight: bold;
 
     border: none;
     border-radius: 8px;

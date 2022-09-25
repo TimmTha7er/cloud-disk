@@ -4,11 +4,11 @@ import useUploadFile from '../../shared/api/file/uploadFile'
 import { useAppSelector } from '../../shared/hooks/redux'
 
 const UploadButton: React.FC = () => {
-  const { uploadFile, errors, isLoading } = useUploadFile()
+  const { uploadFile } = useUploadFile()
   const currentDir = useAppSelector((state) => state.files.currentDir)
 
   const fileUploadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // @ts-ignore: Unreachable code error
+    // @ts-ignore
     const files: File[] = [...event.target.files]
 
     files.forEach(async (file) => await uploadFile({ file, dirId: currentDir }))

@@ -18,6 +18,7 @@ export interface IUploadFile {
 export interface IFile {
 	id: string,
   name: string
+  lowerName: string
   type: string
   accessLink?: string
   size: number

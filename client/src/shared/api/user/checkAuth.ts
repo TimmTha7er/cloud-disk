@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
@@ -16,7 +16,7 @@ const useCheckAuth = () => {
     if (token) {
       refetch()
     }
-  }, [])
+  }, [token])
 
   const { refetch, isLoading: loading } = useQuery(
     ['check auth'],

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
@@ -19,6 +19,7 @@ const useCreateDir = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['files'])
+        setErrors([])
       },
       onError: (error) => {
         setErrors((error as AxiosError)?.response?.data?.errors)
