@@ -1,4 +1,5 @@
-export interface IError {
-  value: string
-  msg: string
+import { AxiosError } from "axios"
+
+export interface IError extends AxiosError {
+  msg?: string;
 }

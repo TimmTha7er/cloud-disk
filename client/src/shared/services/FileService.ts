@@ -7,7 +7,7 @@ import {
   changeUploadFile,
 } from '../../store/reducers/upload'
 import axiosAuth from '../api/interceptors/axiosAuth'
-import { IFile } from '../models/file'
+import { IFile, IUploadFile } from '../models/file'
 
 class FileService {
   static async getFiles(
@@ -47,23 +47,8 @@ class FileService {
     dispatch(addUploadFile(uploadFile))
 
     return axiosAuth.post(`files/upload`, formData, {
-      onUploadProgress: (progressEvent) => {
-        const totalLength = progressEvent.lengthComputable
-          ? progressEvent.total
-          : progressEvent.target.getResponseHeader('content-length') ||
-            progressEvent.target.getResponseHeader(
-              'x-decompressed-content-length'
-            )
-
-        if (totalLength) {
-          const progress = Math.round(
-            (progressEvent.loaded * 100) / totalLength
-          )
-
-          uploadFile.progress = progress
-          dispatch(changeUploadFile(uploadFile))
-        }
-      },
+      onUploadProgress: (progressEvent) =>
+        this.uploadProgress(progressEvent, dispatch, uploadFile),
     })
   }
 
@@ -97,6 +82,23 @@ class FileService {
     const url = `/files/search?search=${search}`
 
     return axiosAuth.get<IFile[]>(url)
+  }
+
+  private static async uploadProgress(
+    progressEvent: any,
+    dispatch: Dispatch,
+    uploadFile: IUploadFile
+  ) {
+    const totalLength = progressEvent.lengthComputable
+      ? progressEvent.total
+      : progressEvent.target.getResponseHeader('content-length') as EventTarget ||
+        progressEvent.target.getResponseHeader('x-decompressed-content-length')
+
+    if (totalLength) {
+      const progress = Math.round((progressEvent.loaded * 100) / totalLength)
+
+      dispatch(changeUploadFile({ ...uploadFile, progress }))
+    }
   }
 }
 

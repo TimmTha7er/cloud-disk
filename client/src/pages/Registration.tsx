@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Alert from '../shared/helpers/Alert'
 import { IUser } from '../shared/models/user'
 import useRegistration from '../shared/api/user/registration'
+import { IError } from '../shared/models/error'
 
 const Registration: React.FC = () => {
   const { mutate, errors, isLoading } = useRegistration()
@@ -36,9 +37,13 @@ const Registration: React.FC = () => {
     <div className='authorization'>
       <div className='authorization__header'>Регистрация</div>
 
-      {errors.map((error, idx) => (
-        // @ts-ignore: Unreachable code error
-        <Alert key={idx} className='sign-in__message' type='danger' msg={error?.msg} />
+      {errors.map((error: IError, idx) => (
+        <Alert
+          key={idx}
+          className='sign-in__message'
+          type='danger'
+          msg={error?.msg}
+        />
       ))}
 
       <input

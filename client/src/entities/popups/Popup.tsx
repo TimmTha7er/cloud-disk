@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import Alert from '../../shared/helpers/Alert'
 import useCreateDir from '../../shared/api/file/createDir'
 import { useAppDispatch, useAppSelector } from '../../shared/hooks/redux'
 import { setPopupDisplay } from '../../store/reducers/file'
+import { IError } from '../../shared/models/error'
 
 const Popup: React.FC = () => {
   let { mutate, errors } = useCreateDir()
@@ -29,12 +30,11 @@ const Popup: React.FC = () => {
 
   return (
     <>
-      {errors.map((error, idx) => (
+      {errors.map((error: IError, idx) => (
         <Alert
           key={idx}
           type='danger'
           className='alert alert_global'
-          // @ts-ignore
           msg={error?.msg}
         />
       ))}

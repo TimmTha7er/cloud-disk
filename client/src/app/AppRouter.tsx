@@ -5,6 +5,7 @@ import { authRoutes, publicRoutes } from '../shared/routes'
 import useCheckAuth from '../shared/api/user/checkAuth'
 import { useAppSelector } from '../shared/hooks/redux'
 import Alert from '../shared/helpers/Alert'
+import { IError } from '../shared/models/error'
 
 const AppRouter: React.FC = () => {
   const { errors, isLoading } = useCheckAuth()
@@ -20,8 +21,7 @@ const AppRouter: React.FC = () => {
 
   return (
     <Routes>
-      {errors.map((error) => (
-        // @ts-ignore
+      {errors.map((error: IError) => (
         <Alert className='sign-in__message' type='danger' msg={error?.msg} />
       ))}
 

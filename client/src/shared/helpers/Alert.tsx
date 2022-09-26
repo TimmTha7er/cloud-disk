@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface AlertProps {
-  msg: string
+  msg?: string
   type: 'danger' | 'success' | 'warning' | 'info'
   className?: string
 }

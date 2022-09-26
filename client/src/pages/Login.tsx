@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { IUser } from '../shared/models/user'
 import Alert from '../shared/helpers/Alert'
 import useLogin from '../shared/api/user/login'
+import { IError } from '../shared/models/error'
 
 const Login: React.FC = () => {
   const { mutate, errors, isLoading } = useLogin()
@@ -36,8 +37,7 @@ const Login: React.FC = () => {
     <div className='authorization'>
       <div className='authorization__header'>Авторизация</div>
 
-      {errors.map((err) => (
-        // @ts-ignore: Unreachable code error
+      {errors.map((err: IError) => (
         <Alert className='sign-in__message' type='danger' msg={err?.msg} />
       ))}
 

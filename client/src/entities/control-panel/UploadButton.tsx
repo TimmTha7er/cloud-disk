@@ -8,8 +8,7 @@ const UploadButton: React.FC = () => {
   const currentDir = useAppSelector((state) => state.files.currentDir)
 
   const fileUploadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // @ts-ignore
-    const files: File[] = [...event.target.files]
+    const files: File[] = event.target.files ? [...event.target.files]: []
 
     files.forEach(async (file) => await uploadFile({ file, dirId: currentDir }))
   }

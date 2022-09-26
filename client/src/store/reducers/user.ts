@@ -4,7 +4,6 @@ import { IUser } from '../../shared/models/user'
 
 interface UserState {
   currentUser: IUser | null
-  // error: { value: string; msg: string }[]
 }
 
 const initialState: UserState = {
