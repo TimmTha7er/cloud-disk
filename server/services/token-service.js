@@ -87,6 +87,8 @@ class TokenService {
     res.cookie('refreshToken', refreshToken, {
       maxAge: this.MILLISECONDS_IN_A_MONTH,
       httpOnly: true,
+      sameSite: 'none',
+      secure: true
     })
   }
 }
