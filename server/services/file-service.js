@@ -144,7 +144,7 @@ class FileService {
       throw ApiError.BadRequest(`Файл "${file.name}" уже есть`)
     }
 
-    fs.mkdirSync(path)
+    fs.mkdirSync(path, { recursive: true })
   }
 
   async uploadFile(file, userId, parentId) {
